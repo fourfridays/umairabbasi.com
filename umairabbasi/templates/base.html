@@ -1,5 +1,4 @@
 {% load static wagtailuserbar %}
-
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -13,6 +12,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
         {# Global stylesheets #}
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="{% static 'css/umairabbasi.css' %}">
 
         {% block extra_css %}
@@ -21,9 +21,7 @@
     </head>
 
     <body class="{% block body_class %}{% endblock %}">
-        {% wagtailuserbar %}
 
-        {% block content %}{% endblock %}
         <main class="container" role="main">
             {% if self.body %}
                 <div class="body-content">
@@ -34,6 +32,8 @@
 
 
         {# Global javascript #}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="https://use.fontawesome.com/7d5bc87b96.js"></script>
         <script type="text/javascript" src="{% static 'js/umairabbasi.js' %}"></script>
 
         {% block extra_js %}
