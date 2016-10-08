@@ -2,6 +2,7 @@ from __future__ import absolute_import, unicode_literals
 
 
 from django.core.exceptions import ValidationError
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db import models
 from django.conf import settings
 from django.contrib.auth import get_user_model
@@ -79,6 +80,75 @@ class BlogStreamBlock(StreamBlock):
     pullquote = PullQuoteBlock()
     aligned_html = AlignedHTMLBlock(icon="code", label='Raw HTML')
     document = DocumentChooserBlock(icon="doc-full-inverse")
+
+
+
+
+#Blog Index Page
+class BlogIndexPage(Page):
+    @property
+    def blogs(self):
+        # Get list of blog pages that are descendants of this page
+        blogs = BlogPage.objects.descendant_of(self).live()
+        blogs = blogs.order_by(
+            '-date'
+        ).select_related('owner').prefetch_related(
+            'tagged_items__tag',
+            'categories',
+            'categories__category',
+        )
+        return blogs
+
+    def get_context(self, request, tag=None, category=None, author=None, *args,
+                    **kwargs):
+        context = super(BlogIndexPage, self).get_context(
+            request, *args, **kwargs)
+        blogs = self.blogs
+
+        if tag is None:
+            tag = request.GET.get('tag')
+        if tag:
+            blogs = blogs.filter(tags__slug=tag)
+        if category is None:  # Not coming from category_view in views.py
+            if request.GET.get('category'):
+                category = get_object_or_404(
+                    BlogCategory, slug=request.GET.get('category'))
+        if category:
+            if not request.GET.get('category'):
+                category = get_object_or_404(BlogCategory, slug=category)
+            blogs = blogs.filter(categories__category__name=category)
+        if author:
+            if isinstance(author, str) and not author.isdigit():
+                blogs = blogs.filter(author__username=author)
+            else:
+                blogs = blogs.filter(author_id=author)
+
+        # Pagination
+        page = request.GET.get('page')
+        page_size = 10
+        if hasattr(settings, 'BLOG_PAGINATION_PER_PAGE'):
+            page_size = settings.BLOG_PAGINATION_PER_PAGE
+
+        if page_size is not None:
+            paginator = Paginator(blogs, page_size)  # Show 10 blogs per page
+            try:
+                blogs = paginator.page(page)
+            except PageNotAnInteger:
+                blogs = paginator.page(1)
+            except EmptyPage:
+                blogs = paginator.page(paginator.num_pages)
+
+        context['blogs'] = blogs
+        context['category'] = category
+        context['tag'] = tag
+        context['author'] = author
+        context = get_blog_context(context)
+
+        return context
+
+    class Meta:
+        verbose_name = _('Blog index')
+    subpage_types = ['blog.BlogPage']
 
 
 def get_blog_context(context):
@@ -179,45 +249,6 @@ def limit_author_choices():
         limit = {'is_staff': True}
     return limit
 
-
-#Blog Index Page
-class BlogIndexPage(Page):
-    intro = RichTextField(blank=True)
-
-    search_fields = Page.search_fields + [
-        index.SearchField('intro'),
-    ]
-
-    @property
-    def blogs(self):
-        # Get list of live blog pages that are descendants of this page
-        blogs = BlogPage.objects.live().descendant_of(self)
-
-        # Order by most recent date first
-        blogs = blogs.order_by('-date')
-
-        return blogs
-
-    def get_context(self, request):
-        # Get blogs
-        blogs = self.blogs
-
-        # Filter by tag
-        tag = request.GET.get('tag')
-        if tag:
-            blogs = blogs.filter(tags__name=tag)
-
-        # Update template context
-        context = super(BlogIndexPage, self).get_context(request)
-        context['blogs'] = blogs
-        return context
-
-BlogIndexPage.content_panels = [
-    FieldPanel('title', classname="full title"),
-    FieldPanel('intro', classname="full"),
-]
-
-BlogIndexPage.promote_panels = Page.promote_panels
 
 #Blog Page
 class BlogPage(Page):

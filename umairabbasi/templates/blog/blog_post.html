@@ -3,8 +3,35 @@
 
 <div class="article">
     <h1>{{ blog.title }}</h1>
-    <p class="small">Posted by {{ blog.author }} on {{ blog.date|date:"F jS, Y" }}</p>
+    
+    <div class="row">
+        <div class="col-sm-12 col-md-8">
+            <p class="small text-muted">
+                Posted by {{ blog.author.first_name }} {{ blog.author.last_name }} on {{ blog.date }}        
+                {% if blog.categories.all %}
+                    in 
+                    {% for cat in blog.categories.all %}
+                        <span style="text-transform: lowercase;">{{ cat.category.name }}</span> {% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </p>
+        </div>
+
+        <div class="col-sm-12 col-md-4">
+            <p class="small .text-muted">
+                {% if blog.tags.all %}
+                    <i class="fa fa-tags" aria-hidden="true"></i>
+                    {% for tag in blog.tags.all %}
+                        {{ tag }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </p>
+        </div>
+    </div>
+
+    <hr style="margin-top: 0;">
 
     {% include "includes/streamfield.html" with content=self.body %}
+
 </div>
 
