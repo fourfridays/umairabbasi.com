@@ -45,14 +45,6 @@
         </header>
 
         <main class="container" role="main">
-            {% if self.body %}
-                <div class="row">
-                    <div class="col-md-offset-1 col-md-10">
-                        {% include "includes/streamfield.html" with content=self.body %}
-                    </div>
-                </div>
-            {% endif %}
-
             <div class="row">
                 <div class="col-md-offset-1 col-md-10">
                     {% block content %}{% endblock %}
