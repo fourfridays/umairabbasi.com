@@ -179,6 +179,46 @@ def limit_author_choices():
         limit = {'is_staff': True}
     return limit
 
+
+#Blog Index Page
+class BlogIndexPage(Page):
+    intro = RichTextField(blank=True)
+
+    search_fields = Page.search_fields + [
+        index.SearchField('intro'),
+    ]
+
+    @property
+    def blogs(self):
+        # Get list of live blog pages that are descendants of this page
+        blogs = BlogPage.objects.live().descendant_of(self)
+
+        # Order by most recent date first
+        blogs = blogs.order_by('-date')
+
+        return blogs
+
+    def get_context(self, request):
+        # Get blogs
+        blogs = self.blogs
+
+        # Filter by tag
+        tag = request.GET.get('tag')
+        if tag:
+            blogs = blogs.filter(tags__name=tag)
+
+        # Update template context
+        context = super(BlogIndexPage, self).get_context(request)
+        context['blogs'] = blogs
+        return context
+
+BlogIndexPage.content_panels = [
+    FieldPanel('title', classname="full title"),
+    FieldPanel('intro', classname="full"),
+]
+
+BlogIndexPage.promote_panels = Page.promote_panels
+
 #Blog Page
 class BlogPage(Page):
     date = models.DateField(
