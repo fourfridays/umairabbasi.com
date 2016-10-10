@@ -5,7 +5,7 @@
     <h1>{{ blog.title }}</h1>
     
     <p class="small text-muted">
-        Posted by {{ blog.author.first_name }} {{ blog.author.last_name }} on {{ blog.date }}        
+        Posted by <a target="_blank" href="https://plus.google.com/108981224841144081190?rel=author">{{ blog.author.first_name }} {{ blog.author.last_name }}</a> on {{ blog.date }}        
         {% if blog.categories.all %}
             in 
             {% for cat in blog.categories.all %}
