@@ -18,16 +18,18 @@
 
     {% include "includes/streamfield.html" with content=self.body %}
 
-    <hr style="margin-top: 0; margin-bottom: 10px;">
+    {% if blog.tags.all %}
+        <hr style="margin-top: 0; margin-bottom: 10px;">
 
-    <p class="small .text-muted">
-        {% if blog.tags.all %}
-            <i class="fa fa-tags" aria-hidden="true"></i>
-            {% for tag in blog.tags.all %}
-                {{ tag }}{% if not forloop.last %}, {% endif %}
-            {% endfor %}
-        {% endif %}
-    </p>
+        <p class="small .text-muted">
+            
+                <i class="fa fa-tags" aria-hidden="true"></i>
+                {% for tag in blog.tags.all %}
+                    {{ tag }}{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            
+        </p>
+    {% endif %}
 
 </div>
 
