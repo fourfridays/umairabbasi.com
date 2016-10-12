@@ -1,3 +1,16 @@
 from django.shortcuts import render
+from django.utils import timezone
+from django.shortcuts import render_to_response, get_object_or_404
 
-# Create your views here.
+from wagtail.wagtailcore.models import Page
+
+from .models import BlogIndexPage, BlogPage
+
+def posts(request):
+	posts = BlogPage.objects.all().filter(date__lte=timezone.now()).order_by('-date')
+	return render(request, 'blog/blog_index_page.html', {'posts': posts})
+
+def post(request, slug):
+	return render_to_response('blog/blog_page.html', {
+        'post': get_object_or_404(BlogPage, slug=slug)
+    })
