@@ -3,5 +3,9 @@
 {% load wagtailcore_tags %}
 
 {% block content %}
-	{% include "blog/blog_post.html" with blog=self %}
+    <div class="row">
+        <div class="col-md-offset-1 col-md-10">
+	       {% include "blog/blog_post.html" with blog=self %}
+       </div>
+   </div>
 {% endblock %}
