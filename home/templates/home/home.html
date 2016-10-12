@@ -5,13 +5,7 @@
 {% block body_class %}template-home{% endblock %}
 
 <article>
-    {% for block in page.body %}
-        {% if block.block_type == 'rawhtml' %}
-            {{ block.value }}
-        {% else %}
-            <section class="block-{{ block.block_type }}">
-                {% include_block block %}
-            </section>
-        {% endif %}
-    {% endfor %}
+    {% block content %}
+        {% include "includes/streamfield.html" with content=self.body %}
+    {% endblock %}
 </article>
