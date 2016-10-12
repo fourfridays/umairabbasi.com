@@ -2,13 +2,13 @@
 
 
 <div class="article">
-    <h1>{{ blog.title }}</h1>
+    <h1>{{ post.title }}</h1>
     
     <p class="small text-muted">
-        Posted by <a target="_blank" href="https://plus.google.com/108981224841144081190?rel=author">{{ blog.author.first_name }} {{ blog.author.last_name }}</a> on {{ blog.date }}        
-        {% if blog.categories.all %}
+        Posted by <a target="_blank" href="https://plus.google.com/108981224841144081190?rel=author">{{ post.author.first_name }} {{ post.author.last_name }}</a> on {{ post.date }}        
+        {% if post.categories.all %}
             in 
-            {% for cat in blog.categories.all %}
+            {% for cat in post.categories.all %}
                 <span style="text-transform: lowercase;">{{ cat.category.name }}</span> {% if not forloop.last %}, {% endif %}
             {% endfor %}
         {% endif %}
@@ -16,15 +16,15 @@
 
     <hr style="margin-top: 0;">
 
-    {% include "includes/streamfield.html" with content=self.body %}
+    {% include "includes/streamfield.html" with content=post.body %}
 
-    {% if blog.tags.all %}
+    {% if post.tags.all %}
         <hr style="margin-top: 0; margin-bottom: 10px;">
 
         <p class="small .text-muted">
             
                 <i class="fa fa-tags" aria-hidden="true"></i>
-                {% for tag in blog.tags.all %}
+                {% for tag in post.tags.all %}
                     {{ tag }}{% if not forloop.last %}, {% endif %}
                 {% endfor %}
             
