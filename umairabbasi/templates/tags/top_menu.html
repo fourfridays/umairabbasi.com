@@ -16,7 +16,7 @@
     <div class="collapse navbar-collapse" id="navbar-collapse-3">
         <ul class="nav navbar-nav">
             {% for menuitem in menuitems %}
-                <li class="{% if menuitem.active %}active{% endif %}">
+                <li {% if menuitem.active %} class="active" {% endif %}>
                     {% if menuitem.show_dropdown %}
                         <a href="{{ menuitem.url }}">{{ menuitem.title }}</a>
                         {% top_menu_children parent=menuitem %}
