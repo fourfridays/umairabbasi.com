@@ -76,7 +76,7 @@ a {
    ========================================================================== */
 /* Figure */
 figure img {
-  width: 75%;
+  width: 35%;
 }
 figure figcaption p:before {
   content: "Caption: ";
