@@ -30,8 +30,9 @@
                 {% else %}
                     {% image child.value.image width-1280 as theimage %}
                 {% endif %}
-
-                <img class="img-responsive img-thumbnail" src="{{ theimage.url }}" width="{{ theimage.width }}" height="{{ theimage.height }}" alt="{{ theimage.alt }}" />
+                <p class="text-center">
+                    <img class="img-responsive img-thumbnail" src="{{ theimage.url }}" width="{{ theimage.width }}" height="{{ theimage.height }}" alt="{{ theimage.alt }}" />
+                </p>
 
                 {% if child.value.caption %}
                     <figcaption>
