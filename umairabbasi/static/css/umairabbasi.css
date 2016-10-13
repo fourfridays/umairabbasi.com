@@ -24,6 +24,33 @@ a {
     overflow: hidden;
 }
 
+.responsive-object {
+  display: block;
+  padding: 0;
+  height: 0;
+  overflow: hidden;
+  position: relative;
+  padding-bottom: 56.25%;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  display: block;
+  line-height: 1.42857;
+  margin-bottom: 20px;
+  padding: 4px;
+  transition: border 0.2s ease-in-out 0s;
+}
+
+.responsive-object iframe,
+.responsive-object object,
+.responsive-object embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
 /* ==========================================================================
   HEADER
    ========================================================================== */
