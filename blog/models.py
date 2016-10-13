@@ -23,6 +23,7 @@ from wagtail.wagtailsearch import index
 from wagtail.wagtailcore.blocks import TextBlock, StructBlock, StreamBlock, FieldBlock, CharBlock, RichTextBlock, RawHTMLBlock
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 from wagtail.wagtaildocs.blocks import DocumentChooserBlock
+from wagtail.wagtailembeds.blocks import EmbedBlock
 
 from taggit.models import TaggedItemBase, Tag
 
@@ -68,6 +69,30 @@ class AlignedHTMLBlock(StructBlock):
     class Meta:
         icon = "code"
 
+class TwoColumnBlock(StructBlock):
+    left_column = StreamBlock ([
+        ('h2', CharBlock(classname="title")),
+        ('h3', CharBlock(classname="title")),
+        ('h4', CharBlock(classname="title")),
+        ('paragraph', RichTextBlock()),
+        ('image', ImageChooserBlock()),
+        ('embedded_video', EmbedBlock()),
+        ('html', RawHTMLBlock()),
+        ], icon='arrow-left', label='Left column content')
+    right_column = StreamBlock ([
+        ('h2', CharBlock(classname="title")),
+        ('h3', CharBlock(classname="title")),
+        ('h4', CharBlock(classname="title")),
+        ('paragraph', RichTextBlock()),
+        ('image', ImageChooserBlock()),
+        ('embedded_video', EmbedBlock()),
+        ('html', RawHTMLBlock()),
+        ], icon='arrow-right', label='Right column content')
+
+    class Meta:
+        template = 'blog/two_column_block.html'
+        icon = 'placeholder'
+        label = 'Two Columns'
 
 class BlogStreamBlock(StreamBlock):
     h2 = CharBlock(icon="title", classname="title")
@@ -79,8 +104,7 @@ class BlogStreamBlock(StreamBlock):
     pullquote = PullQuoteBlock()
     aligned_html = AlignedHTMLBlock(icon="code", label='Raw HTML')
     document = DocumentChooserBlock(icon="doc-full-inverse")
-
-
+    two_columns = TwoColumnBlock()
 
 
 #Blog Index Page

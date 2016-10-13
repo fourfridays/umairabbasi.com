@@ -8,6 +8,7 @@ from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, StreamFieldPanel
 
+from blog.models import PullQuoteBlock, ImageFormatChoiceBlock, HTMLAlignmentChoiceBlock, ImageBlock, AlignedHTMLBlock, BlogStreamBlock
 
 class Home(Page):
     body = StreamField ([
@@ -16,20 +17,16 @@ class Home(Page):
         ('rawhtml', blocks.RawHTMLBlock()),
     ])
 
-    content_panels = Page.content_panels + [
+Home.content_panels = [
         StreamFieldPanel('body'),
     ]
 
 class Bootstrap12(Page):
-    body = StreamField ([
-        ('heading', blocks.CharBlock(classname="full title")),
-        ('paragraph', blocks.RichTextBlock()),
-        ('rawhtml', blocks.RawHTMLBlock()),
-    ])
+    body = StreamField(BlogStreamBlock())
 
     class Meta:
         verbose_name = _('Bootstrap 12 Column')
 
-    content_panels = Page.content_panels + [
+Bootstrap12.content_panels = [
         StreamFieldPanel('body'),
     ]
