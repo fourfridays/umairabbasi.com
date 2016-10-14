@@ -18,8 +18,8 @@ class Home(Page):
     ])
 
 Home.content_panels = [
-        StreamFieldPanel('body'),
-    ]
+    StreamFieldPanel('body'),
+]
 
 class Bootstrap12(Page):
     body = StreamField(BlogStreamBlock())
@@ -28,5 +28,6 @@ class Bootstrap12(Page):
         verbose_name = _('Bootstrap 12 Column')
 
 Bootstrap12.content_panels = [
-        StreamFieldPanel('body'),
-    ]
+    FieldPanel('title', classname="full title"),
+    StreamFieldPanel('body'),
+]
