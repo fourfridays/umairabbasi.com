@@ -47,7 +47,7 @@
             <div class="col-xs-12 col-sm-12 col-md-6 footerRight">
                 <ul>
                     <li><a href="mailto:umair.abbasi@fourfridays.com">umair dot abbasi at fourfridays.com</a></li>
-                    <li class="copyright">Copyright 2016 Umair Abbasi</li>
+                    <li class="copyright">Copyright {% now "Y" %} Umair Abbasi</li>
                     <li class="links">
                     <a class="text-muted" onclick="_gaq.push(['_trackEvent', 'footer links', 'styleguide', 'clicked',, false]);" href="/style-guide/"> Style Guide</a> 
                     •
@@ -60,7 +60,7 @@
         {# Global javascript #}
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
         <script src="//use.fontawesome.com/7d5bc87b96.js"></script>
-        <script type="text/javascript" src="{% static 'js/umairabbasi.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/umairabbasi.min.js' %}"></script>
 
         {% block extra_js %}
             {# Override this in templates to add extra javascript #}
