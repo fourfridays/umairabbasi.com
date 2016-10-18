@@ -32,9 +32,7 @@ from modelcluster.fields import ParentalKey
 
 import datetime
 
-
 # Global Streamfield definition
-
 
 class PullQuoteBlock(StructBlock):
     quote = TextBlock("quote title")
@@ -108,6 +106,7 @@ class BlogStreamBlock(StreamBlock):
 
 
 #Blog Index Page
+
 class BlogIndexPage(Page):
     @property
     def blogs(self):
