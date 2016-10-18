@@ -1,0 +1,266 @@
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Droid Serif', serif;
+  color: #403F3C;
+}
+h1 {
+  text-transform: uppercase;
+}
+p {
+  font-family: 'Droid Sans', sans-serif;
+  font-size: 18px;
+  color: #4E4D4A;
+}
+a {
+  color: #428bca;
+}
+.assistive-text { /*For accessibility to skip navigation*/
+  clip: rect(1px, 1px, 1px, 1px);
+  position: absolute !important;
+}
+
+.btn-label { /*To hide empty links on social media links*/
+    font-size: 0;
+    height: 1px;
+    overflow: hidden;
+}
+
+.responsive-object {
+  display: block;
+  padding: 0;
+  height: 0;
+  overflow: hidden;
+  position: relative;
+  padding-bottom: 56.25%;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  display: block;
+  line-height: 1.42857;
+  margin-bottom: 20px;
+  padding: 4px;
+  transition: border 0.2s ease-in-out 0s;
+}
+
+.responsive-object iframe,
+.responsive-object object,
+.responsive-object embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* ==========================================================================
+  HEADER
+   ========================================================================== */
+
+/* Navigation */
+.navbar {
+  background-color: #4e4d4a;
+  background-image: none;
+  border: none;
+  border-radius: 0;
+}
+.navbar a.navbar-brand {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 18px;
+  background-color: #2b4e72;
+  color: #fff;
+  text-shadow: none;
+  text-transform: uppercase;
+  height: 50px;
+}
+.navbar a.navbar-brand:hover {
+  background-color: #2b4e72;
+  color: #fff;
+}
+.navbar .nav li a {
+  text-transform: uppercase;
+  color: #fff !important;
+  float: none;
+  text-decoration: none;
+  display: block;
+}
+.nav li.active a, .nav li.active a:hover {
+  background-color: #b94a48 !important;
+  color: #fff !important;
+}
+.nav li a:hover {
+  background-color: #403F3C !important;
+  color: #fff !important;
+}
+.navbar-default .navbar-toggle {
+  border-color: #b94a48;
+}
+.navbar-default .navbar-toggle {
+  border-color: #b94a48;
+}
+
+
+/* ==========================================================================
+  CONTENT
+   ========================================================================== */
+/* Figure */
+figure img {
+  width: 100%;
+  height: auto;
+}
+figure figcaption p:before {
+  content: "Caption: ";
+  font-weight: bold;
+}
+figure figcaption p {
+  font-size: 12px;
+}
+
+
+/* Blog Listing */
+
+.blogListingH1 {
+  text-transform: uppercase;
+  font-size: 20px;
+}
+.flickr {
+  float: left;
+  margin: 12px;
+}
+
+/* ==========================================================================
+    FOOTER
+   ========================================================================== */
+
+footer {
+  padding: 12px 0 12px 0;
+  background-color: #403F3C;
+  display: block;
+  overflow: hidden;
+}
+footer .footerRight {
+  text-align: right;
+}
+footer ul {
+  margin: 10px 25px;
+  padding: 0;
+  list-style: none;
+}
+footer ul li i {
+  color: #fff;
+}
+footer ul li a {
+  color: #2790b0;
+}
+footer ul li a:hover {
+  color: #fff;
+}
+footer ul li.copyright {
+  color: #b94a48;
+}
+footer ul.footerLeft li {
+  float: left;
+  padding-right: 16px;
+  position: relative;
+  top: 20px;
+}
+footer ul.footerLeft li a:hover i {
+  text-decoration: none;
+  color: #2790B0;
+}
+footer ul.footerLeft li i {
+  font-size: 22px;
+}
+
+/* ==========================================================================
+   STYLEGUIDE
+   ========================================================================== */
+
+i.swatchFooterGrey {
+  font-size: 55px;
+  color: #403F3C;
+}
+i.swatchDarkGrey {
+  font-size: 55px;
+  color: #4E4D4A;
+}
+i.swatchDarkBlue {
+  font-size: 55px;
+  color: #2B4E72;
+}
+i.swatchBlue {
+  font-size: 55px;
+  color: #2790B0;
+}
+i.swatchRed {
+  font-size: 55px;
+  color: #B94A48;
+}
+i.swatchGrey {
+  font-size: 55px;
+  color: #999999;
+}
+i.swatchLightGrey {
+  font-size: 55px;
+  color: #E6E6E6;
+}
+
+code {
+  white-space: normal;
+}
+.codeColor code.swatchFooterGrey {
+  background-color: #403F3C;
+  color: #fff;
+}
+.codeColor code.swatchDarkGrey {
+  background-color: #4E4D4A;
+  color: #fff;
+}
+.codeColor code.swatchDarkBlue {
+  background-color: #2B4E72;
+  color: #fff;
+}
+.codeColor code.swatchBlue {
+  background-color: #2790B0;
+  color: #fff;
+}
+.codeColor code.swatchRed {
+  background-color: #B94A48;
+  color: #fff;
+}
+.codeColor code.swatchGrey {
+  background-color: #999999;
+  color: #fff;
+}
+.codeColor code.swatchLightGrey {
+  background-color: #E6E6E6;
+  color: #fff;
+}
+
+/* ==========================================================================
+   MEDIA QUERIES
+   ========================================================================== */
+
+/* Large desktop */
+@media (min-width: 1200px) {  }
+ 
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 768px) and (max-width: 979px) {  }
+ 
+/* Landscape phone to portrait tablet */
+@media (max-width: 767px) {
+  footer ul {
+    text-align: center;
+  }
+  footer, footer .footerRight {
+    text-align: left;
+  }
+  article .blogListing ul {
+    padding: 0;
+  }
+}
+
+/* Landscape phones and down */
+@media (max-width: 480px) {
+  h1 {
+    font-size: 29px;
+  }
+}
