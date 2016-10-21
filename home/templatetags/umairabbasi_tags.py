@@ -1,6 +1,8 @@
 from datetime import date
 from django import template
 from django.conf import settings
+import flickrapi
+import json
 
 from home.models import Page
 
@@ -53,6 +55,20 @@ def top_menu_children(context, parent):
         'parent': parent,
         'menuitems_children': menuitems_children,
         # required by the pageurl tag that we want to use within this template
+        'request': context['request'],
+    }
+
+# Flickr Tag
+@register.inclusion_tag('tags/flickr_api.html', takes_context=True)
+def flickr_photosets(context, photoset_id):
+    flickr_api_key = '9dcdc85a922e1ecf2c5b49f2b3e5c8dc'
+    flickr_api_secret = '66077d764164a60f'
+    flickr_user_id = '72586449@N07'
+    flickr = flickrapi.FlickrAPI(flickr_api_key, flickr_api_secret, format='json')
+    raw_flickr_json = flickr.photosets.getPhotos(photoset_id=photoset_id, user_id=flickr_user_id)
+    parsed_flickr_json = json.loads(raw_flickr_json.decode('utf-8'))
+    return {
+        'flickr_json': parsed_flickr_json,
         'request': context['request'],
     }
 

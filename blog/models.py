@@ -305,6 +305,8 @@ class BlogPage(Page):
     
     tags = ClusterTaggableManager(through=BlogPageTag, blank=True)
 
+    flickr_photoset_id = models.CharField(max_length=255, blank=True)
+
     search_fields = Page.search_fields + [
         index.SearchField('body'),
     ]
@@ -336,4 +338,5 @@ BlogPage.content_panels = [
         FieldPanel('tags'),
     	InlinePanel('categories', label=_("Categories")),
     ]),
+    FieldPanel('flickr_photoset_id'),
 ]
