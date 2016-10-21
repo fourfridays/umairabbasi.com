@@ -10,6 +10,7 @@ from wagtail.wagtailadmin.edit_handlers import FieldPanel, StreamFieldPanel
 
 from blog.models import PullQuoteBlock, ImageFormatChoiceBlock, HTMLAlignmentChoiceBlock, ImageBlock, AlignedHTMLBlock, BlogStreamBlock
 
+#Homepage
 class Home(Page):
     body = StreamField ([
         ('heading', blocks.CharBlock(classname="full title")),
