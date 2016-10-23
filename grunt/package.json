@@ -13,6 +13,4 @@
     "grunt-sass": "^1.1.0",
     "grunt-serve": "^0.1.6"
   }
-  "author": "Umair Abbasi",
-  "license": "ISC",
 }
