@@ -8,6 +8,7 @@ production.py
 dev.py
 ._*
 /node_modules/
+/ua-wagtailenv/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
