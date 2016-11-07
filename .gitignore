@@ -9,6 +9,7 @@ dev.py
 ._*
 node_modules
 ua-wagtailenv
+umairabbasi_tags.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
