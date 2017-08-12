@@ -17,16 +17,16 @@ module.exports = function(grunt) {
         },
         dist: {
             files: {
-                '/mnt/volume-nyc1-01-part1/static/js/umairabbasi.min.js': ['<%= concat.dist.dest %>'],
+               // '/mnt/volume-nyc1-01-part1/static/js/umairabbasi.min.js': ['<%= concat.dist.dest %>'],
+               '../static/js/umairabbasi.min.js': ['<%= concat.dist.dest %>'],
             }
         }
     },
     sass: {                              // Task
       dist: {                            // Target
         files: {                         // Dictionary of files
-          '/mnt/volume-nyc1-01-part1/static/css/umairabbasi.css': 'src/umairabbasi.scss'
-          //'//Volumes/autopub/iamahornet.com/global/css/main.css': 'src/main.scss',
-          //'//Volumes/autopub/www.emporia.edu/global/css/main.css': 'src/main.scss'      // 'destination': 'source'
+          //'/mnt/volume-nyc1-01-part1/static/css/umairabbasi.css': 'src/umairabbasi.scss'
+          '../static/css/umairabbasi.css': 'src/umairabbasi.scss'
         }
       }
     },
