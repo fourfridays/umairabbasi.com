@@ -5,17 +5,21 @@ h1, h2, h3, h4, h5, h6 {
     font-family: 'Droid Serif', serif;
     color: #403F3C;
 }
+
 h1 {
     text-transform: uppercase;
 }
+
 p {
     font-family: 'Droid Sans', sans-serif;
     font-size: 18px;
     color: #4E4D4A;
 }
+
 a {
     color: #428bca;
 }
+
 .assistive-text { /*For accessibility to skip navigation*/
     clip: rect(1px, 1px, 1px, 1px);
     position: absolute !important;
