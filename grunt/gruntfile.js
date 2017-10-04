@@ -17,7 +17,7 @@ module.exports = function(grunt) {
         },
         dist: {
             files: {
-                '/mnt/volume-nyc1-01-part1/static/js/umairabbasi.min.js': ['<%= concat.dist.dest %>'],
+                '/home/fourfridays/sites/umairabbasi/static/js/umairabbasi.min.js': ['<%= concat.dist.dest %>'],
                //'../static/js/umairabbasi.min.js': ['<%= concat.dist.dest %>'],
             }
         }
@@ -25,7 +25,7 @@ module.exports = function(grunt) {
     sass: {                              // Task
       dist: {                            // Target
         files: {                         // Dictionary of files
-          '/mnt/volume-nyc1-01-part1/static/css/umairabbasi.css': 'src/umairabbasi.scss'
+          '/home/fourfridays/sites/umairabbasi/static/css/umairabbasi.css': 'src/umairabbasi.scss'
           //'../static/css/umairabbasi.css': 'src/umairabbasi.scss'
         }
       }
