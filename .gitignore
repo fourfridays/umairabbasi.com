@@ -10,6 +10,7 @@ dev.py
 node_modules
 ua-wagtailenv
 umairabbasi_tags.py
+**/migrations/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -101,3 +102,4 @@ ENV/
 # Rope project settings
 .ropeproject
 /grunt/.sass-cache
+/gunicorn.conf.py
