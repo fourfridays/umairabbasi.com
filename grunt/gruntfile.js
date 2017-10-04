@@ -17,16 +17,16 @@ module.exports = function(grunt) {
         },
         dist: {
             files: {
-               // '/mnt/volume-nyc1-01-part1/static/js/umairabbasi.min.js': ['<%= concat.dist.dest %>'],
-               '../static/js/umairabbasi.min.js': ['<%= concat.dist.dest %>'],
+                '/mnt/volume-nyc1-01-part1/static/js/umairabbasi.min.js': ['<%= concat.dist.dest %>'],
+               //'../static/js/umairabbasi.min.js': ['<%= concat.dist.dest %>'],
             }
         }
     },
     sass: {                              // Task
       dist: {                            // Target
         files: {                         // Dictionary of files
-          //'/mnt/volume-nyc1-01-part1/static/css/umairabbasi.css': 'src/umairabbasi.scss'
-          '../static/css/umairabbasi.css': 'src/umairabbasi.scss'
+          '/mnt/volume-nyc1-01-part1/static/css/umairabbasi.css': 'src/umairabbasi.scss'
+          //'../static/css/umairabbasi.css': 'src/umairabbasi.scss'
         }
       }
     },
@@ -44,7 +44,8 @@ module.exports = function(grunt) {
     // Load the plugin that provides the "uglify" task.
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-sass');
+    grunt.
+loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
     // Default task(s).
