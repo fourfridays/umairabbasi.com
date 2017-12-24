@@ -222,6 +222,11 @@ code {
  
 /* Landscape phone to portrait tablet */
 @media (max-width: 767px) {
+    header {
+        .nav-link {
+            padding: 0.5rem 1rem !important;
+        }
+    }
     footer ul {
         text-align: center;
     }
