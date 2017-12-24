@@ -128,9 +128,20 @@ figure {
 footer {
     background-color: #403F3C;
     overflow: hidden;
+    div {
+        &.text-right {
+            ul {
+                list-style: none;
+                li {
+                    a {
+                        font-size: 14px;
+                    }
+                }
+            }
+        }
+    }
     ul {
         padding: 0;
-        list-style: none;
         li {
             i {
                 color: #fff;
@@ -146,6 +157,7 @@ footer {
             }
             &.copyright {
                 color: #b94a48;
+                font-size: 14px;
             }
         }
     }
