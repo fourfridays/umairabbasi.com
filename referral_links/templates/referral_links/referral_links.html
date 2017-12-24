@@ -10,14 +10,14 @@
             <div class="col-md-12">
                 <h1>{{ self.title }}</h1>
                 {% for block in page.body %}
-                    <div class="row">
+                    <div class="row my-3">
                         <div class="col-md-offset-1 col-md-3">
                             <figure>
                                 <a target="_blank" title="{{ block.value.title }}" href="{{ block.value.link }}">{% image block.value.image width-750 class="img-responsive" %}</a>
                             </figure>
                         </div>
                         <div class="col-md-8">
-                            <h4>{{ block.value.title }} <small><a target="_blank" title="{{ block.value.title }}" href="{{ block.value.link }}">{{ block.value.link }}</a></small></h4>
+                            <h5>{{ block.value.title }} <small><a target="_blank" title="{{ block.value.title }}" href="{{ block.value.link }}">{{ block.value.link }}</a></small></h5>
                             <p>{{ block.value.description }}</p>
                         </div>
                     </div>
