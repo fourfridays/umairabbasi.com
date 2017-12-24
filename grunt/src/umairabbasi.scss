@@ -1,4 +1,4 @@
-@import 'bootstrap-custom';
+@import '../node_modules/bootstrap/scss/bootstrap';
 @import '../node_modules/font-awesome/scss/font-awesome';
 
 h1, h2, h3, h4, h5, h6 {
@@ -61,41 +61,33 @@ a {
 
 /* Navigation */
 .navbar {
-    background-color: #4e4d4a;
-    background-image: none;
-    border: none;
-    border-radius: 0;
-    a.navbar-brand {
-        font-family: 'Montserrat', sans-serif;
-        font-size: 18px;
-        background-color: #2b4e72;
-        color: #fff;
-        text-shadow: none;
-        text-transform: uppercase;
-        height: 50px;
-        &:hover {
-            background-color: #2b4e72;
-            color: #fff;
+    padding: 0;
+    li {
+        &.active {
+            a {
+                color: #b94a48 !important;
+            }
         }
     }
-    .nav {
-        li {
-            a {
-                text-transform: uppercase;
-                color: #fff !important;
-                text-decoration: none;
-                display: block;
-                &:hover {
-                    background-color: #403F3C !important;
-                    color: #fff !important;
-                }
+    a {   
+        text-transform: uppercase;
+        color: #fff !important;
+        &.navbar-brand {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 18px;
+            background-color: #2b4e72;
+            color: #fff;
+            text-shadow: none;
+            text-transform: uppercase;
+            &:hover {
+                background-color: #2b4e72;
+                color: #fff;
             }
-            &.active a, &.active a:hover {
-                background-color: #b94a48 !important;
-                color: #fff !important;    
-            }                  
-        } 
-    } 
+        }
+        &:hover {
+            color: #b94a48 !important;  
+        }
+    }
 }
 .navbar-default .navbar-toggle {
   border-color: #b94a48;
@@ -134,20 +126,17 @@ figure {
     FOOTER
    ========================================================================== */
 footer {
-    padding: 12px 0 12px 0;
     background-color: #403F3C;
-    display: block;
     overflow: hidden;
-    .footerRight {
-        text-align: right;
-    }
     ul {
-        margin: 10px 25px;
         padding: 0;
         list-style: none;
         li {
             i {
                 color: #fff;
+                &:hover {
+                    color: #b94a48;
+                }
             }
             a {
                 color: #2790b0;
@@ -157,23 +146,6 @@ footer {
             }
             &.copyright {
                 color: #b94a48;
-            }
-        }
-        &.footerLeft li {
-            float: left;
-            padding-right: 16px;
-            position: relative;
-            top: 20px;
-            i {
-                font-size: 22px;
-            }
-            a {
-                &:hover {
-                    i {
-                        text-decoration: none;
-                        color: #2790B0;
-                    }
-                }
             }
         }
     }
@@ -240,9 +212,6 @@ code {
 @media (max-width: 767px) {
     footer ul {
         text-align: center;
-    }
-    footer, footer .footerRight {
-        text-align: left;
     }
     article .blogListing ul {
         padding: 0;

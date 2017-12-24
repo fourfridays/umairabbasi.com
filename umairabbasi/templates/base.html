@@ -1,4 +1,4 @@
-{% load umairabbasi_tags static wagtailuserbar %}
+{% load umairabbasi_tags static %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -9,7 +9,7 @@
     <head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>{% block title %}{% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %}{% endblock %}{% block title_suffix %}{% endblock %} | Umair Abbasi</title>
+        <title>{% block title %}{% if self.seo_title == 'Home' %}Umair Abbasi{% elif self.seo_title %}{{ self.seo_title }} | Umair Abbasi{% else %}{{ self.title }} | Umair Abbasi{% endif %}{% endblock %}</title>
         <meta name="description" content={% if self.search_description %}"{{ self.search_description }}"{% else %}" "{% endif %}/>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -22,18 +22,18 @@
         {% endblock %}
 
         <!-- Google Tag Manager -->
-            <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer','GTM-5D6PHTT');</script>
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-5D6PHTT');</script>
         <!-- End Google Tag Manager -->
     </head>
 
     <body class="{% block body_class %}{% endblock %}">
 
         <!-- Google Tag Manager (noscript) -->
-            <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5D6PHTT"
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5D6PHTT"
         height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <!-- End Google Tag Manager (noscript) -->
     
@@ -44,29 +44,31 @@
             {% endblock %}
         </header>
 
-        <main class="container" role="main">
+        <main class="container my-4" role="main">
             {% block content %}{% endblock %}
         </main>
 
         <footer>
-            <div class="col-md-6 hidden-xs">
-                <ul class="footerLeft">
-                    <li><a onclick="_gaq.push(['_trackEvent', 'footer links', 'facebook', 'clicked',, false]);" href="https://www.facebook.com/fourfridays/"><i class="fa fa-facebook"></i><span class="btn-label">Facebook</span></a></li>
-                    <li><a onclick="_gaq.push(['_trackEvent', 'footer links', 'twitter', 'clicked',, false]);" href="https://twitter.com/fourfridays"><i class="fa fa-twitter"></i><span class="btn-label">Twitter</span></a></li>
-                    <li><a onclick="_gaq.push(['_trackEvent', 'footer links', 'linkedin', 'clicked',, false]);" href="http://www.linkedin.com/pub/umair-abbasi/43/875/537/"><i class="fa fa-linkedin"></i><span class="btn-label">Linkedin</span></a></li>
-                    <li><a onclick="_gaq.push(['_trackEvent', 'footer links', 'flickr', 'clicked',, false]);" href="http://www.flickr.com/photos/fourfridays"><i class="fa fa-flickr"></i><span class="btn-label">Flickr</span></a></li>
-                </ul>
-            </div>
-            <div class="col-xs-12 col-sm-12 col-md-6 footerRight">
-                <ul>
-                    <li><a href="mailto:umair.abbasi@fourfridays.com">umair dot abbasi at fourfridays.com</a></li>
-                    <li class="copyright">Copyright {% now "Y" %} Umair Abbasi</li>
-                    <li class="links">
-                    <a class="text-muted" onclick="_gaq.push(['_trackEvent', 'footer links', 'styleguide', 'clicked',, false]);" href="/style-guide/"> Style Guide</a> 
-                    •
-                    <a class="text-muted" onclick="_gaq.push(['_trackEvent', 'footer links', 'privacy policy', 'clicked',, false]);" href="//www.iubenda.com/privacy-policy/191063" title="Privacy Policy">Privacy Policy</a><script src="//cdn.iubenda.com/iubenda.js"></script><script async="" src="//www.google-analytics.com/analytics.js"></script><script type="text/javascript">(function (w,d) {var loader = function () {var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src = "//cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s,tag);}; if(w.addEventListener){w.addEventListener("load", loader, false);}else if(w.attachEvent){w.attachEvent("onload", loader);}else{w.onload = loader;}})(window, document);</script>
-                    </li>
-                </ul>
+            <div class="row">
+                <div class="col-sm-12 col-md-6">
+                    <ul class="m-3 list-inline">
+                        <li class="mx-2 list-inline-item"><a onclick="_gaq.push(['_trackEvent', 'footer links', 'facebook', 'clicked',, false]);" href="https://www.facebook.com/fourfridays/"><i class="fa fa-lg fa-facebook"></i><span class="btn-label">Facebook</span></a></li>
+                        <li class="mx-2 list-inline-item"><a onclick="_gaq.push(['_trackEvent', 'footer links', 'twitter', 'clicked',, false]);" href="https://twitter.com/fourfridays"><i class="fa fa-lg fa-twitter"></i><span class="btn-label">Twitter</span></a></li>
+                        <li class="mx-2 list-inline-item"><a onclick="_gaq.push(['_trackEvent', 'footer links', 'linkedin', 'clicked',, false]);" href="http://www.linkedin.com/pub/umair-abbasi/43/875/537/"><i class="fa fa-lg fa-linkedin"></i><span class="btn-label">Linkedin</span></a></li>
+                        <li class="mx-2 list-inline-item"><a onclick="_gaq.push(['_trackEvent', 'footer links', 'flickr', 'clicked',, false]);" href="http://www.flickr.com/photos/fourfridays"><i class="fa fa-lg fa-flickr"></i><span class="btn-label">Flickr</span></a></li>
+                    </ul>
+                </div>
+                <div class="col-sm-12 col-md-6 text-right">
+                    <ul class="m-3">
+                        <li><a href="mailto:umair.abbasi@fourfridays.com">umair dot abbasi at fourfridays.com</a></li>
+                        <li class="copyright">Copyright {% now "Y" %} Umair Abbasi</li>
+                        <li class="links">
+                        <a class="text-muted" onclick="_gaq.push(['_trackEvent', 'footer links', 'styleguide', 'clicked',, false]);" href="/style-guide/"> Style Guide</a> 
+                        •
+                        <a class="text-muted" onclick="_gaq.push(['_trackEvent', 'footer links', 'privacy policy', 'clicked',, false]);" href="//www.iubenda.com/privacy-policy/191063" title="Privacy Policy">Privacy Policy</a><script src="//cdn.iubenda.com/iubenda.js"></script><script async="" src="//www.google-analytics.com/analytics.js"></script><script type="text/javascript">(function (w,d) {var loader = function () {var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src = "//cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s,tag);}; if(w.addEventListener){w.addEventListener("load", loader, false);}else if(w.attachEvent){w.attachEvent("onload", loader);}else{w.onload = loader;}})(window, document);</script>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </footer>
 

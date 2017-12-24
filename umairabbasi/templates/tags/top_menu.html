@@ -1,27 +1,21 @@
 {% load umairabbasi_tags wagtailcore_tags %}
 {% get_site_root as site_root %}
 
-<nav class="navbar navbar-default" role="navigation">
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse"
-                data-target="#bs-navbar-collapse-1" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark" role="navigation">
+    <a class="navbar-brand p-3" href="{% pageurl site_root %}" title="Umair Abbasi">Umair Abbasi</a>
+    <button class="mx-2 navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-        <a href="{% pageurl site_root %}" class="navbar-brand" title="Umair Abbasi">Umair Abbasi</a>
-    </div>
-    <div class="collapse navbar-collapse" id="bs-navbar-collapse-1">
-        <ul class="nav navbar-nav">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
             {% for menuitem in menuitems %}
-                <li {% if menuitem.active %} class="active" {% endif %}>
+                <li class="nav-item{% if menuitem.active %} active{% endif %}">
                     {% if menuitem.show_dropdown %}
-                        <a href="{{ menuitem.url }}">{{ menuitem.title }}</a>
+                        <a class="nav-link dropdown-toggle" href="{{ menuitem.url }}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ menuitem.title }}</a>
                         {% top_menu_children parent=menuitem %}
                     {% else %}
-                        <a href="{% pageurl menuitem %}">{{ menuitem.title }}</a>
+                        <a class="nav-link" href="{% pageurl menuitem %}">{{ menuitem.title }} <span class="sr-only">(current)</span></a>
                     {% endif %}
                 </li>
             {% endfor %}
