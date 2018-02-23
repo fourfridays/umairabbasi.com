@@ -31,6 +31,21 @@ a {
     overflow: hidden;
 }
 
+/*Extends images entered via rich text as fluid for mobile responsiveness*/
+.richtext-image {
+    @extend .img-fluid;
+}
+.richtext-image.left {
+    @extend .float-left;
+}
+.richtext-image.right {
+    @extend .float-right;
+}
+/* Extends images added via the image field for mobile responsiveness*/
+figure img {
+    @extend .img-fluid;
+}
+
 .responsive-object {
     display: block;
     padding: 0;
