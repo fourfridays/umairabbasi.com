@@ -1,11 +1,49 @@
 {% extends "base.html" %}
 
-{% load wagtailcore_tags %}
+{% load umairabbasi_tags wagtailcore_tags %}
 
 {% block content %}
-    <div class="row">
-        <div class="offset-1 col-10">
-	       {% include "blog/blog_post.html" with blog=self %}
-       </div>
-   </div>
+    {% for block in page.body %}
+        {% if block.block_type == 'hero_image' %}
+            {% include_block block %}
+        {% endif %}
+    {% endfor %}
+    <div class="container">
+        <div class="row">
+            <div class="offset-1 col-10">
+                <article>
+                    <h1>{{ self.title }}</h1>
+                    <p class="small text-muted">Posted by <a target="_blank" href="https://plus.google.com/108981224841144081190?rel=author">{{ self.author.first_name }} {{ self.author.last_name }}</a> on {{ self.date }}        
+                    {% if self.categories.all %}
+                        in 
+                        {% for cat in self.categories.all %}
+                            <span style="text-transform: lowercase;">{{ cat.category.name }}</span> {% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                    </p>
+                    <hr style="margin-top: 0;">
+
+                    {% for block in page.body %}
+                        {% if block.block_type != 'hero_image' %}
+                            {% include "blog/streamfield.html" with child=block %}
+                        {% endif %}
+                    {% endfor %}
+
+                </article>
+
+                {% flickr_photosets self.flickr_photoset_id %}
+
+                {% if self.tags.all %}
+                    <hr style="margin-top: 0; margin-bottom: 10px; clear: both;">
+
+                    <div class="small .text-muted">    
+                        <i class="fa fa-tags" aria-hidden="true"></i>
+                        {% for tag in self.tags.all %}
+                            {{ tag }}{% if not forloop.last %}, {% endif %}
+                        {% endfor %}        
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 {% endblock %}

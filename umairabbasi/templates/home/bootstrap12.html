@@ -3,11 +3,13 @@
 {% load wagtailcore_tags %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-md-12">
-            <div class="article">
-            	<h1>{{ self.title }}</h1>
-                {% include "includes/streamfield.html" with content=self.body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="article">
+                	<h1>{{ self.title }}</h1>
+                    {% include "includes/streamfield.html" with content=self.body %}
+                </div>
             </div>
         </div>
     </div>

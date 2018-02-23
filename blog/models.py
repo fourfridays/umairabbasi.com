@@ -20,7 +20,7 @@ from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailsnippets.models import register_snippet
 from wagtail.wagtailsearch import index
 
-from wagtail.wagtailcore.blocks import TextBlock, StructBlock, StreamBlock, FieldBlock, CharBlock, RichTextBlock, RawHTMLBlock
+from wagtail.wagtailcore.blocks import TextBlock, StructBlock, StreamBlock, FieldBlock, CharBlock, RichTextBlock, RawHTMLBlock, BooleanBlock
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 from wagtail.wagtaildocs.blocks import DocumentChooserBlock
 from wagtail.wagtailembeds.blocks import EmbedBlock
@@ -60,6 +60,18 @@ class ImageBlock(StructBlock):
     alignment = ImageFormatChoiceBlock()
 
 
+class HeroImageBlock(StructBlock):
+    image = ImageChooserBlock(required=True)
+    alternate_text = CharBlock(help_text='Text for screen readers')
+    caption = CharBlock(required=False, max_length=120, help_text='Caption will be shown below the image')
+    fine_print = CharBlock(required=False, max_length=120, help_text='Fine Print will be shown below caption')
+    overlay_text = BooleanBlock(required=False, help_text='If checked, caption is overlayed on image')
+    photo_credit = CharBlock(required=False, max_length=80, help_text='This will show bottom right on the image')
+
+    class Meta:
+        template = 'blog/hero_image_block.html'
+
+
 class AlignedHTMLBlock(StructBlock):
     html = RawHTMLBlock()
     alignment = HTMLAlignmentChoiceBlock()
@@ -93,6 +105,8 @@ class TwoColumnBlock(StructBlock):
         label = 'Two Columns'
 
 class BlogStreamBlock(StreamBlock):
+    hero_image = HeroImageBlock()
+    h1 = CharBlock(icon="title", classname="title")
     h2 = CharBlock(icon="title", classname="title")
     h3 = CharBlock(icon="title", classname="title")
     h4 = CharBlock(icon="title", classname="title")
@@ -289,15 +303,6 @@ class BlogPage(Page):
         related_name='author_pages',
     )
 
-    hero_image = models.ForeignKey(
-        'wagtailimages.Image',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-        verbose_name=_('Hero Image')
-    )
-
     body = StreamField(BlogStreamBlock())
 
     blog_categories = models.ManyToManyField(
@@ -332,7 +337,6 @@ BlogPage.content_panels = [
     FieldPanel('title', classname="full title"),
     FieldPanel('date'),
     FieldPanel('author'),
-    ImageChooserPanel('hero_image'),
     StreamFieldPanel('body'),
     MultiFieldPanel([
         FieldPanel('tags'),
