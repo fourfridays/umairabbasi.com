@@ -1,8 +1,9 @@
 {% load umairabbasi_tags wagtailcore_tags static %}
 
+
 <div>
 	{% for flicks in flickr_json.photoset.photo %}
-	    <a target="_blank" href="http://www.flickr.com/photos/72586449@N07/{{ flicks.id }}">
+	    <a target="_blank" href="https://www.flickr.com/photos/{% get_flickr_api_user %}/{{ flicks.id }}">
 	    	<img class="flickr thumbnail" alt="{{ flicks.title }}" src="https://farm{{ flicks.farm }}.staticflickr.com/{{ flicks.server }}/{{ flicks.id }}_{{ flicks.secret }}_q.jpg"/>
 		</a>
 	{% endfor %}
