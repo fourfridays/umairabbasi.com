@@ -4,17 +4,12 @@ from django.conf import settings
 import flickrapi
 import json
 
-from home.models import Page
+from wagtail.core.models import Page
 
 register = template.Library()
 
-# settings value
-@register.assignment_tag
-def get_google_maps_key():
-    return getattr(settings, 'GOOGLE_MAPS_KEY', "")
 
-
-@register.assignment_tag(takes_context=True)
+@register.simple_tag(takes_context=True)
 def get_site_root(context):
     # NB this returns a core.Page, not the implementation-specific model used
     # so object-comparison to self will return false as objects would differ
@@ -23,6 +18,14 @@ def get_site_root(context):
 
 def has_menu_children(page):
     return page.get_children().live().in_menu().exists()
+
+def has_children(page):
+    # Generically allow index pages to list their children
+    return page.get_children().live().exists()
+
+def is_active(page, current_page):
+    # To give us active state on main navigation
+    return (current_page.url.startswith(page.url) if current_page else False)
 
 
 # Retrieves the top menu items - the immediate children of the parent page
@@ -47,7 +50,7 @@ def top_menu(context, parent, calling_page=None):
 
 
 # Retrieves the children of the top menu items for the drop downs
-@register.inclusion_tag('tags/top_menu_children.html', takes_context=True)
+@register.inclusion_tag('demo/tags/top_menu_children.html', takes_context=True)
 def top_menu_children(context, parent):
     menuitems_children = parent.get_children()
     menuitems_children = menuitems_children.live().in_menu()
@@ -79,87 +82,5 @@ def flickr_photosets(context, photoset_id):
     parsed_flickr_json = json.loads(raw_flickr_json.decode('utf-8'))
     return {
         'flickr_json': parsed_flickr_json,
-        'request': context['request'],
-    }
-
-
-# Retrieves all live pages which are children of the calling page
-#for standard index listing
-@register.inclusion_tag(
-    'demo/tags/standard_index_listing.html',
-    takes_context=True
-)
-def standard_index_listing(context, calling_page):
-    pages = calling_page.get_children().live()
-    return {
-        'pages': pages,
-        # required by the pageurl tag that we want to use within this template
-        'request': context['request'],
-    }
-
-
-# Person feed for home page
-@register.inclusion_tag(
-    'demo/tags/person_listing_homepage.html',
-    takes_context=True
-)
-def person_listing_homepage(context, count=2):
-    people = PersonPage.objects.live().order_by('?')
-    return {
-        'people': people[:count].select_related('feed_image'),
-        # required by the pageurl tag that we want to use within this template
-        'request': context['request'],
-    }
-
-
-# Blog feed for home page
-@register.inclusion_tag(
-    'demo/tags/blog_listing_homepage.html',
-    takes_context=True
-)
-def blog_listing_homepage(context, count=2):
-    blogs = BlogPage.objects.live().order_by('-date')
-    return {
-        'blogs': blogs[:count].select_related('feed_image'),
-        # required by the pageurl tag that we want to use within this template
-        'request': context['request'],
-    }
-
-
-# Events feed for home page
-@register.inclusion_tag(
-    'demo/tags/event_listing_homepage.html',
-    takes_context=True
-)
-def event_listing_homepage(context, count=2):
-    events = EventPage.objects.live()
-    events = events.filter(date_from__gte=date.today()).order_by('date_from')
-    return {
-        'events': events[:count].select_related('feed_image'),
-        # required by the pageurl tag that we want to use within this template
-        'request': context['request'],
-    }
-
-
-# Advert snippets
-@register.inclusion_tag('demo/tags/adverts.html', takes_context=True)
-def adverts(context):
-    return {
-        'adverts': Advert.objects.select_related('page'),
-        'request': context['request'],
-    }
-
-
-@register.inclusion_tag('demo/tags/breadcrumbs.html', takes_context=True)
-def breadcrumbs(context):
-    self = context.get('self')
-    if self is None or self.depth <= 2:
-        # When on the home page, displaying breadcrumbs is irrelevant.
-        ancestors = ()
-    else:
-        ancestors = Page.objects.ancestor_of(
-            self, inclusive=True).filter(depth__gt=2)
-    return {
-        'ancestors': ancestors,
         'request': context['request'],
     }
