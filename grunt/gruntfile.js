@@ -18,8 +18,8 @@ module.exports = function(grunt) {
         },
         dist: {
             files: {
-                '/home/fourfridays/sites/umairabbasi/static/js/umairabbasi.min.js': ['<%= concat.dist.dest %>'],
-               //'../static/js/umairabbasi.min.js': ['<%= concat.dist.dest %>'],
+              '/home/fourfridays/sites/umairabbasi/static/js/umairabbasi.min.js': ['<%= concat.dist.dest %>'],
+              //'../static/js/umairabbasi.min.js': ['<%= concat.dist.dest %>'],
             }
         }
     },
@@ -57,10 +57,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-sass');
-<<<<<<< HEAD
-=======
     grunt.loadNpmTasks('grunt-contrib-cssmin');
->>>>>>> 446ab3f41c81ac98cb27d4549b0e4698bd46a84f
     grunt.loadNpmTasks('grunt-contrib-watch');
 
     // Default task(s).
