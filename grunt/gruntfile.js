@@ -31,10 +31,21 @@ module.exports = function(grunt) {
         }
       }
     },
+    cssmin: {
+      target: {
+        files: [{
+          expand: true,
+          cwd: '../static/css',
+          src: ['*.css', '!*.min.css'],
+          dest: '../static/css',
+          ext: '.min.css'
+        }]
+      }
+    },
     watch: {
       scripts: {
         files: 'src/*.*',
-        tasks: ['concat', 'uglify', 'sass'],
+        tasks: ['concat', 'uglify', 'sass', 'cssmin'],
         options: {
           livereload: true
         },
@@ -45,12 +56,12 @@ module.exports = function(grunt) {
     // Load the plugin that provides the "uglify" task.
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.
-loadNpmTasks('grunt-contrib-sass');
+    grunt.loadNpmTasks('grunt-contrib-sass');
+    grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
     // Default task(s).
 
-    grunt.registerTask('default', ['concat', 'uglify', 'sass', 'watch']);
+    grunt.registerTask('default', ['concat', 'uglify', 'sass', 'cssmin', 'watch']);
 
 };

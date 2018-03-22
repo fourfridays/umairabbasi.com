@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "bootstrap": "^4.0.0-beta.2",
+    "grunt-contrib-cssmin": "^2.2.1",
     "popper.js": "^1.12.9"
   }
 }
