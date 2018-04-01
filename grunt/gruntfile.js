@@ -18,8 +18,8 @@ module.exports = function(grunt) {
         },
         dist: {
             files: {
-                '/home/fourfridays/sites/umairabbasi/static/js/umairabbasi.min.js': ['<%= concat.dist.dest %>'],
-               //'../static/js/umairabbasi.min.js': ['<%= concat.dist.dest %>'],
+              '/home/fourfridays/sites/umairabbasi/static/js/umairabbasi.min.js': ['<%= concat.dist.dest %>'],
+              //'../static/js/umairabbasi.min.js': ['<%= concat.dist.dest %>'],
             }
         }
     },
