@@ -1,20 +1,19 @@
 @import '../node_modules/bootstrap/scss/bootstrap';
 @import '../node_modules/font-awesome/scss/font-awesome';
 
+body {
+    font-family: 'Frank Ruhl Libre', serif;
+    font-size: 18px;
+    color: #4E4D4A;
+}
+
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Droid Serif', serif;
-    font-weight: 600;
+    font-family: 'Oswald', sans-serif;
     color: #403F3C;
 }
 
 h1 {
     text-transform: uppercase;
-}
-
-p {
-    font-family: 'Droid Sans', sans-serif;
-    font-size: 18px;
-    color: #4E4D4A;
 }
 
 a {
