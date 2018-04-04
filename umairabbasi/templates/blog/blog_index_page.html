@@ -18,7 +18,7 @@
                             {% for block in article.body %}
                                 {% if block.block_type == 'hero_image' %}
                                     {% image block.value.image fill-540x229-c100 as heroimage %}
-                                    <a href="{{ article.slug }}/"><img class="mb-2 img-fluid" src="{{ heroimage.url }}" alt="{{ value.alternate_text }}"/></a>
+                                    <a href="{{ article.slug }}/"><img class="mb-2 img-fluid" src="{{ heroimage.url }}" alt="{{ block.value.alternate_text }}"/></a>
                                 {% endif %}
                             {% endfor %}
 
@@ -49,7 +49,7 @@
                             {% for block in article.body %}
                                 {% if block.block_type == 'hero_image' %}
                                     {% image block.value.image fill-540x229-c100 as heroimage %}
-                                    <a href="{{ article.slug }}/"><img class="mb-2 img-fluid" src="{{ heroimage.url }}" alt="{{ value.alternate_text }}"/></a>
+                                    <a href="{{ article.slug }}/"><img class="mb-2 img-fluid" src="{{ heroimage.url }}" alt="{{ block.value.alternate_text }}"/></a>
                                 {% endif %}
                             {% endfor %}
 
@@ -80,7 +80,7 @@
                             {% for block in article.body %}
                                 {% if block.block_type == 'hero_image' %}
                                     {% image block.value.image fill-540x229-c100 as heroimage %}
-                                    <a href="{{ article.slug }}/"><img class="mb-2 img-fluid" src="{{ heroimage.url }}" alt="{{ value.alternate_text }}"/></a>
+                                    <a href="{{ article.slug }}/"><img class="mb-2 img-fluid" src="{{ heroimage.url }}" alt="{{ block.value.alternate_text }}"/></a>
                                 {% endif %}
                             {% endfor %}
 
@@ -113,7 +113,7 @@
                             {% for block in article.body %}
                                 {% if block.block_type == 'hero_image' %}
                                     {% image block.value.image fill-540x229-c100 as heroimage %}
-                                    <a href="{{ article.slug }}/"><img class="mb-2 img-fluid" src="{{ heroimage.url }}" alt="{{ value.alternate_text }}"/></a>
+                                    <a href="{{ article.slug }}/"><img class="mb-2 img-fluid" src="{{ heroimage.url }}" alt="{{ block.value.alternate_text }}"/></a>
                                 {% endif %}
                             {% endfor %}
 
