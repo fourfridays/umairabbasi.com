@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% load wagtailcore_tags %}
+{% load wagtailcore_tags wagtailimages_tags %}
 
 {% block content %}
     <div class="container">
@@ -9,24 +9,26 @@
 
         <div class="row">
             {% for article in blogs %}
-                {% if forloop.counter <= 2 %}
-                        <div class="col-sm-6">
-                            {% for block in article.body %}
-                                {% if block.block_type == 'hero_image' %}
-                                    <a href="{{ article.slug }}/">{% include_block block %}</a>
-                                {% endif %}
-                            {% endfor %}
 
-                            <h2 class="mb-0 text-uppercase">{{ article.title }}</h2>
-                            <p class="small">
-                                {{ article.date }}        
-                                {% if article.categories.all %}
-                                    {% for cat in article.categories.all %}
-                                        - <span style="text-transform: uppercase;">{{ cat.category.name }}</span> {% if not forloop.last %}, {% endif %}
-                                    {% endfor %}
-                                {% endif %}
-                            </p>
-                        </div>
+                {% if forloop.counter <= 2 %}
+                    <div class="col-sm-6">
+                        {% for block in article.body %}
+                            {% if block.block_type == 'hero_image' %}
+                                {% image block.value.image fill-540x229-c100 as heroimage %}
+                                <img class="img-fluid" src="{{ heroimage.url }}" alt="{{ value.alternate_text }}"/>
+                            {% endif %}
+                        {% endfor %}
+
+                        <h2 class="mb-0 text-uppercase">{{ article.title }}</h2>
+                        <p class="small">
+                            {{ article.date }}        
+                            {% if article.categories.all %}
+                                {% for cat in article.categories.all %}
+                                    - <span style="text-transform: uppercase;">{{ cat.category.name }}</span> {% if not forloop.last %}, {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        </p>
+                    </div>
                 {% endif %}
 
                 {% if forloop.counter == 2 %}
@@ -41,9 +43,8 @@
                     <div class="col-sm-6">
                         {% for block in article.body %}
                             {% if block.block_type == 'hero_image' %}
-                                <a href="{{ article.slug }}/">
-                                    {% include_block block %}
-                                </a>
+                                {% image block.value.image fill-540x229-c100 as heroimage %}
+                                <img class="img-fluid" src="{{ heroimage.url }}" alt="{{ value.alternate_text }}"/>
                             {% endif %}
                         {% endfor %}
 
@@ -71,9 +72,8 @@
                     <div class="col-sm-6">
                         {% for block in article.body %}
                             {% if block.block_type == 'hero_image' %}
-                                <a href="{{ article.slug }}/">
-                                    {% include_block block %}
-                                </a>
+                                {% image block.value.image fill-540x229-c100 as heroimage %}
+                                <img class="img-fluid" src="{{ heroimage.url }}" alt="{{ value.alternate_text }}"/>
                             {% endif %}
                         {% endfor %}
 
@@ -103,9 +103,8 @@
                     <div class="col-sm-6">
                         {% for block in article.body %}
                             {% if block.block_type == 'hero_image' %}
-                                <a href="{{ article.slug }}/">
-                                    {% include_block block %}
-                                </a>
+                                {% image block.value.image fill-540x229-c100 as heroimage %}
+                                <img class="img-fluid" src="{{ heroimage.url }}" alt="{{ value.alternate_text }}"/>
                             {% endif %}
                         {% endfor %}
 
