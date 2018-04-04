@@ -2,6 +2,8 @@
 
 {% load wagtailcore_tags wagtailimages_tags %}
 
+{% block body_class %}blog-index{% endblock %}
+
 {% block content %}
     <div class="container">
         
@@ -11,126 +13,133 @@
             {% for article in blogs %}
 
                 {% if forloop.counter <= 2 %}
-                    <div class="col-sm-6">
-                        {% for block in article.body %}
-                            {% if block.block_type == 'hero_image' %}
-                                {% image block.value.image fill-540x229-c100 as heroimage %}
-                                <a href="{{ article.slug }}/"><img class="mb-2 img-fluid" src="{{ heroimage.url }}" alt="{{ value.alternate_text }}"/></a>
-                            {% endif %}
-                        {% endfor %}
+                    <div class="col-md-6">
+                        <article>
+                            {% for block in article.body %}
+                                {% if block.block_type == 'hero_image' %}
+                                    {% image block.value.image fill-540x229-c100 as heroimage %}
+                                    <a href="{{ article.slug }}/"><img class="mb-2 img-fluid" src="{{ heroimage.url }}" alt="{{ value.alternate_text }}"/></a>
+                                {% endif %}
+                            {% endfor %}
 
-                        <h2 class="mb-0 text-uppercase">{{ article.title }}</h2>
-                        <p class="small">
-                            {{ article.date }}        
-                            {% if article.categories.all %}
-                                {% for cat in article.categories.all %}
-                                    - <span style="text-transform: uppercase;">{{ cat.category.name }}</span> {% if not forloop.last %}, {% endif %}
-                                {% endfor %}
-                            {% endif %}
-                        </p>
+                            <h2 class="mb-0 text-uppercase">{{ article.title }}</h2>
+                            <p class="small">
+                                {{ article.date }}        
+                                {% if article.categories.all %}
+                                    {% for cat in article.categories.all %}
+                                        - <span style="text-transform: uppercase;">{{ cat.category.name }}</span> {% if not forloop.last %}, {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            </p>
+                        </article>
                     </div>
                 {% endif %}
 
                 {% if forloop.counter == 2 %}
                     </div>
                     <div class="row">
-                        <div class="col"><hr></div>
+                        <div class="col d-none d-md-block"><hr></div>
                     </div>
                     <div class="row">
                 {% endif %}
 
                 {% if forloop.counter >= 3 and forloop.counter <= 4 %}
-                    <div class="col-sm-6">
-                        {% for block in article.body %}
-                            {% if block.block_type == 'hero_image' %}
-                                {% image block.value.image fill-540x229-c100 as heroimage %}
-                                <a href="{{ article.slug }}/"><img class="mb-2 img-fluid" src="{{ heroimage.url }}" alt="{{ value.alternate_text }}"/></a>
-                            {% endif %}
-                        {% endfor %}
+                    <div class="col-md-6">
+                            <article>
+                            {% for block in article.body %}
+                                {% if block.block_type == 'hero_image' %}
+                                    {% image block.value.image fill-540x229-c100 as heroimage %}
+                                    <a href="{{ article.slug }}/"><img class="mb-2 img-fluid" src="{{ heroimage.url }}" alt="{{ value.alternate_text }}"/></a>
+                                {% endif %}
+                            {% endfor %}
 
-                        <h2 class="text-uppercase">{{ article.title }}</h2>
-                        <p class="small">
-                            {{ article.date }}        
-                            {% if article.categories.all %}
-                                {% for cat in article.categories.all %}
-                                    - <span style="text-transform: uppercase;">{{ cat.category.name }}</span> {% if not forloop.last %}, {% endif %}
-                                {% endfor %}
-                            {% endif %}
-                        </p>
+                            <h2 class="text-uppercase">{{ article.title }}</h2>
+                            <p class="small">
+                                {{ article.date }}        
+                                {% if article.categories.all %}
+                                    {% for cat in article.categories.all %}
+                                        - <span style="text-transform: uppercase;">{{ cat.category.name }}</span> {% if not forloop.last %}, {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            </p>
+                        </article>
                     </div>
                 {% endif %}
 
                 {% if forloop.counter == 4 %}
                     </div>
                     <div class="row">
-                        <div class="col"><hr></div>
+                        <div class="col d-none d-md-block"><hr></div>
                     </div>
                     <div class="row">
                 {% endif %}
 
                 {% if forloop.counter >= 5 and forloop.counter <= 6 %}
-                    <div class="col-sm-6">
-                        {% for block in article.body %}
-                            {% if block.block_type == 'hero_image' %}
-                                {% image block.value.image fill-540x229-c100 as heroimage %}
-                                <a href="{{ article.slug }}/"><img class="mb-2 img-fluid" src="{{ heroimage.url }}" alt="{{ value.alternate_text }}"/></a>
-                            {% endif %}
-                        {% endfor %}
+                    <div class="col-md-6">
+                        <article>
+                            {% for block in article.body %}
+                                {% if block.block_type == 'hero_image' %}
+                                    {% image block.value.image fill-540x229-c100 as heroimage %}
+                                    <a href="{{ article.slug }}/"><img class="mb-2 img-fluid" src="{{ heroimage.url }}" alt="{{ value.alternate_text }}"/></a>
+                                {% endif %}
+                            {% endfor %}
 
-                        <h2 class="text-uppercase">
-                            {{ article.title }}
-                        </h2>
-                        <p class="small">
-                            {{ article.date }}
-                            {% if article.categories.all %}
-                                {% for cat in article.categories.all %}
-                                    - <span style="text-transform: uppercase;">{{ cat.category.name }}</span> {% if not forloop.last %}, {% endif %}
-                                {% endfor %}
-                            {% endif %}
-                        </p>
+                            <h2 class="text-uppercase">
+                                {{ article.title }}
+                            </h2>
+                            <p class="small">
+                                {{ article.date }}
+                                {% if article.categories.all %}
+                                    {% for cat in article.categories.all %}
+                                        - <span style="text-transform: uppercase;">{{ cat.category.name }}</span> {% if not forloop.last %}, {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            </p>
+                        </article>
                     </div>
                 {% endif %}
 
                 {% if forloop.counter == 6 %}
                     </div>
                     <div class="row">
-                        <div class="col"><hr></div>
+                        <div class="col d-none d-md-block"><hr></div>
                     </div>
                     <div class="row">
                 {% endif %}
 
                 {% if forloop.counter >= 7 and forloop.counter <= 8 %}
-                    <div class="col-sm-6">
-                        {% for block in article.body %}
-                            {% if block.block_type == 'hero_image' %}
-                                {% image block.value.image fill-540x229-c100 as heroimage %}
-                                <a href="{{ article.slug }}/"><img class="mb-2 img-fluid" src="{{ heroimage.url }}" alt="{{ value.alternate_text }}"/></a>
-                            {% endif %}
-                        {% endfor %}
+                    <div class="col-md-6">
+                        <article>
+                            {% for block in article.body %}
+                                {% if block.block_type == 'hero_image' %}
+                                    {% image block.value.image fill-540x229-c100 as heroimage %}
+                                    <a href="{{ article.slug }}/"><img class="mb-2 img-fluid" src="{{ heroimage.url }}" alt="{{ value.alternate_text }}"/></a>
+                                {% endif %}
+                            {% endfor %}
 
-                        <h2 class="text-uppercase">
-                            {{ article.title }}
-                        </h2>
-                        <p class="small">
-                            {{ article.date }}
-                            {% if article.categories.all %}
-                                {% for cat in article.categories.all %}
-                                    - <span style="text-transform: uppercase;">{{ cat.category.name }}</span> {% if not forloop.last %}, {% endif %}
-                                {% endfor %}
-                            {% endif %}
-                        </p>
+                            <h2 class="text-uppercase">
+                                {{ article.title }}
+                            </h2>
+                            <p class="small">
+                                {{ article.date }}
+                                {% if article.categories.all %}
+                                    {% for cat in article.categories.all %}
+                                        - <span style="text-transform: uppercase;">{{ cat.category.name }}</span> {% if not forloop.last %}, {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            </p>
+                        </article>
                     </div>
                 {% endif %}
 
                 {% if forloop.counter == 8 %}
                     </div>
-                    <div class="row"><h2 class="mt-4 text-uppercase">Older Blogs</h2></div>
+                    <div class="row"><h2 class="my-4 text-uppercase">Older Blogs</h2></div>
                     <div class="row">
                 {% endif %}
 
                 {% if forloop.counter >= 9 %}
-                    <div class="col-sm-4">
-                        <hr>
+                    <div class="col-md-4">
                         <h3 class="text-uppercase"><a href="{{ article.slug }}/">{{ article.title }}</a></h3>
                         <p class="small">
                             {{ article.date }}        
@@ -140,6 +149,7 @@
                                 {% endfor %}
                             {% endif %}
                         </p>
+                        <hr class="d-block d-sm-none">
                     </div>
                 {% endif %}
             {% endfor %}

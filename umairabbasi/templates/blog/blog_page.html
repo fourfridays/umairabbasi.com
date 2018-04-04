@@ -2,6 +2,8 @@
 
 {% load umairabbasi_tags wagtailcore_tags %}
 
+{% block body_class %}blog-post{% endblock %}
+
 {% block content %}
     {% for block in page.body %}
         {% if block.block_type == 'hero_image' %}
