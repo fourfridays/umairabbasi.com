@@ -325,9 +325,15 @@ class BlogPage(Page):
     def get_absolute_url(self):
         return self.url
 
+    def recent_posts(self):
+        recent_posts = BlogPage.objects.live()
+        recent_posts = recent_posts.order_by('-first_published_at')[:4] 
+        return recent_posts
+
     def get_context(self, request, *args, **kwargs):
         context = super(BlogPage, self).get_context(request, *args, **kwargs)
         context = get_blog_context(context)
+        context['recent_posts'] = self.recent_posts()
         return context
 
     class Meta:
