@@ -5,11 +5,13 @@
 {% block body_class %}template-home{% endblock %}
 
 {% block content %}
-    <div class="row">
-        <div class="offset-1 col-10">
-            <article>
-                {% include "includes/streamfield.html" with content=self.body %}
-            </article>
+    <div class="container">
+        <div class="row">
+            <div class="offset-1 col-md-10">
+                <article>
+                    {% include "includes/streamfield.html" with content=self.body %}
+                </article>
+            </div>
         </div>
     </div>
 {% endblock %}
