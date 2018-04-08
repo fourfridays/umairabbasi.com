@@ -12,7 +12,7 @@
     {% endfor %}
     <div class="container">
         <div class="row">
-            <div class="offset-1 col-10">
+            <div class="offset-md-1 col-md-10">
                 <article>
                     <h1>{{ self.title }}</h1>
                     <p class="small text-muted">Posted by <a target="_blank" href="https://plus.google.com/108981224841144081190?rel=author">{{ self.author.first_name }} {{ self.author.last_name }}</a> on {{ self.date }}        
@@ -48,7 +48,7 @@
         </div>
 
         <div class="row">
-            <div class="col-12 mt-4">
+            <div class="col-md-12 mt-4">
                 <h3 class="text-uppercase">Other Good Reads</h3>
             </div>
             {% for post in recent_posts %}
