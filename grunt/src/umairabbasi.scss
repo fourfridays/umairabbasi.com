@@ -1,5 +1,5 @@
 @import '../node_modules/bootstrap/scss/bootstrap';
-@import '../node_modules/font-awesome/scss/font-awesome';
+
 
 body {
     font-family: 'Frank Ruhl Libre', serif;
@@ -154,7 +154,7 @@ footer {
     ul {
         padding: 0;
         li {
-            i {
+            svg {
                 color: #fff;
                 &:hover {
                     color: #b94a48;
