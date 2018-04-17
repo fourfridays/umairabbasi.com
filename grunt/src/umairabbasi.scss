@@ -20,6 +20,13 @@ a {
     color: #428bca;
 }
 
+.bg-dark {
+    background-color: #4e4d4a !important;
+}
+.text-muted {
+    color: #999 !important;
+}
+
 .assistive-text { /*For accessibility to skip navigation*/
     clip: rect(1px, 1px, 1px, 1px);
     position: absolute !important;
@@ -80,7 +87,7 @@ figure img {
     li {
         &.active {
             a {
-                color: #b94a48 !important;
+                background-color: #b94a48 !important;
             }
         }
     }
@@ -90,17 +97,17 @@ figure img {
         &.navbar-brand {
             font-family: 'Montserrat', sans-serif;
             font-size: 18px;
-            background-color: #2b4e72;
-            color: #fff;
+            background-color: #235789;
+            color: #fdfffc;
             text-shadow: none;
             text-transform: uppercase;
-            &:hover {
-                background-color: #2b4e72;
-                color: #fff;
-            }
+            padding: 0.5rem 0.9rem;
+        }
+        &.nav-link {
+            padding: 0.5rem 0.9rem !important;
         }
         &:hover {
-            color: #b94a48 !important;  
+            background-color: #b94a48;
         }
     }
 }
