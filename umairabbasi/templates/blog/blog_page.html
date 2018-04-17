@@ -31,9 +31,17 @@
                         {% endif %}
                     {% endfor %}
                 </article>
+            </div>
+        </div>
 
+        <div class="row text-center">
+            <div class="col-12 offset-md-1 col-md-10">
                 {% flickr_photosets self.flickr_photoset_id %}
+            </div>
+        </div>
 
+        <div class="row">
+            <div class="col-12">
                 {% if self.tags.all %}
                     <hr style="margin-top: 0; margin-bottom: 10px; clear: both;">
 
