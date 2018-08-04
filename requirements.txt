@@ -19,6 +19,7 @@ gunicorn==19.7.1
 html5lib==0.999999999
 idna==2.6
 jmespath==0.9.3
+l18n==2016.6.4
 oauthlib==2.0.2
 olefile==0.45.1
 packaging==16.8
@@ -35,6 +36,6 @@ s3transfer==0.1.11
 six==1.11.0
 Unidecode==0.4.21
 urllib3==1.22
-wagtail==2.0.1
+wagtail==2.1.1
 webencodings==0.5.1
 Willow==1.1
