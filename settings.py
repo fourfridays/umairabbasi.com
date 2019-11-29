@@ -44,7 +44,12 @@ aldryn_addons.settings.load(locals())
 # for guidance on managing these settings.
 
 INSTALLED_APPS.extend([
-    # Extend the INSTALLED_APPS setting by listing additional applications here
+    'pages',
+
+    'django.contrib.sitemaps',
+
+    'wagtail.contrib.styleguide',
+    'wagtail.contrib.table_block',
 ])
 
 # To see the settings that have been applied, use the Django diffsettings 
