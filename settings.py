@@ -44,10 +44,11 @@ aldryn_addons.settings.load(locals())
 # for guidance on managing these settings.
 
 INSTALLED_APPS.extend([
+    'blog',
     'pages',
+    'taxonomy',
 
     'django.contrib.sitemaps',
-
     'wagtail.contrib.styleguide',
     'wagtail.contrib.table_block',
 ])
