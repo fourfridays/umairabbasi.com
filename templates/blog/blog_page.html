@@ -22,11 +22,7 @@
                     </p>
                     <hr style="margin-top: 0;">
 
-                    {% for block in page.body %}
-                        {% if block.block_type != 'hero_image' %}
-                            {% include "includes/streamfield.html" with child=block %}
-                        {% endif %}
-                    {% endfor %}
+                    {{ page.body }}
                 </article>
             </div>
         </div>
@@ -39,12 +35,12 @@
 
         <div class="row">
             <div class="col-12">
-                {% if self.tags.all %}
+                {% if page.tags.all %}
                     <hr style="margin-top: 0; margin-bottom: 10px; clear: both;">
 
                     <div class="small .text-muted">    
                         <i class="fa fa-tags" aria-hidden="true"></i>
-                        {% for tag in self.tags.all %}
+                        {% for tag in page.tags.all %}
                             {{ tag }}{% if not forloop.last %}, {% endif %}
                         {% endfor %}        
                     </div>
