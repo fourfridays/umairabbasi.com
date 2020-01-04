@@ -109,6 +109,9 @@ figure img {
             background-color: #b94a48;
         }
     }
+    .dropdown-menu {
+        @extend .bg-dark;
+    }
 }
 .navbar-default .navbar-toggle {
   border-color: #b94a48;
