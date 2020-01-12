@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load wagtailcore_tags wagtailimages_tags %}
+{% load flickr_tags wagtailcore_tags wagtailimages_tags %}
 {% block body_class %}blog-post{% endblock %}
 
 {% block content %}
@@ -29,7 +29,7 @@
 
         <div class="row text-center">
             <div class="col-12 offset-md-1 col-md-10">
-
+                {% flickr_photosets page.flickr_photoset_id %}
             </div>
         </div>
 

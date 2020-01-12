@@ -77,6 +77,7 @@ class BlogPage(Page):
     subtitle = models.CharField(blank=True, max_length=255)
     tags = ClusterTaggableManager(through=BlogPageTag, blank=True)
     category = models.ForeignKey('taxonomy.Node', null=True, blank=True, on_delete=models.PROTECT, limit_choices_to=Node.get_blog_categories, default='')
+    flickr_photoset_id = models.CharField(max_length=25, blank=True)
 
     content_panels = Page.content_panels + [
         FieldPanel('subtitle', classname="full"),
@@ -89,6 +90,7 @@ class BlogPage(Page):
             panels=None, min_num=1),
         FieldPanel('tags'),
         FieldPanel('category'),
+        FieldPanel('flickr_photoset_id'),
     ]
 
     search_fields = Page.search_fields + [

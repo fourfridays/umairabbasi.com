@@ -34,6 +34,7 @@ INSTALLED_ADDONS = [
 
 import aldryn_addons.settings
 aldryn_addons.settings.load(locals())
+import os
 
 # Your own Django settings can be applied from here on. Key settings like
 # INSTALLED_APPS, MIDDLEWARE and TEMPLATES are provided in the Aldryn Django
@@ -52,6 +53,10 @@ INSTALLED_APPS.extend([
     'wagtail.contrib.styleguide',
     'wagtail.contrib.table_block',
 ])
+
+FLICKR_API_KEY = os.getenv('FLICKR_API_KEY', default='')
+FLICKR_API_SECRET = os.getenv('FLICKR_API_SECRET', default='')
+FLICKR_API_USER = os.getenv('FLICKR_API_USER', default='')
 
 # To see the settings that have been applied, use the Django diffsettings 
 # management command. 
