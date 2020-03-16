@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+{% block body_class %}movie{% endblock %}
+
+
+{% block content %}
+    <div class="container text-light">
+        <div class="row p-4">
+            <div class="col-4">
+                <img alt="{{ movie.title }}" class="img-fluid rounded" src="{{ movie.poster }}"/>
+            </div>
+            <div class="col-8">
+                <h1 class="mb-1"><small>{{ movie.title }}</small></h1>
+                <p><small><i class="fas fa-star"></i> <strong>{{ movie.rating }}</strong>/10</small></p>
+                <p>{{ movie.overview }}</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

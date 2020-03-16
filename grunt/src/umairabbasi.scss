@@ -103,7 +103,8 @@ figure img {
             padding: 0.5rem 0.9rem;
         }
         &.nav-link {
-            padding: 0.5rem 0.9rem !important;
+            padding: 0.59rem 0.9rem !important;
+            font-size: 1rem;
         }
         &:hover {
             background-color: #b94a48;
@@ -139,6 +140,26 @@ figure {
 .flickr {
     margin: 12px;
 }
+
+
+/*==============================
+=            MOVIES            =
+==============================*/
+.movies {
+    background: linear-gradient(#b94a48, #235789);
+    p {
+        line-height: 1;
+    }
+    .poster-bg {
+        background: rgba(0,0,0, 0.38);
+    }
+}
+.movie {
+    main {
+        background: linear-gradient(#b94a48, #235789);
+    }
+}
+
 
 
 /* ==========================================================================

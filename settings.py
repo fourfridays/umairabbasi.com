@@ -46,6 +46,7 @@ import os
 
 INSTALLED_APPS.extend([
     'blog',
+    'movie',
     'pages',
     'taxonomy',
 
