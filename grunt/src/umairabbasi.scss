@@ -158,7 +158,9 @@ figure {
     main {
         background: linear-gradient(#b94a48, #235789);
         .container {
-            background: rgba(0, 0, 0, 0.39);
+            .poster-bg {
+                background: rgba(0,0,0, 0.38);
+            }
         }
     }
 }
