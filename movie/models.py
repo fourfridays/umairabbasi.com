@@ -30,7 +30,7 @@ class MoviesIndexPage(RoutablePageMixin, Page):
     def get_movies(self, request):
         context = super().get_context(request)
         context['movies'] = Movie.objects.all().order_by('title')
-        context['count'] = context['movies'].count
+        context['count'] = context['movies'].count()
         return render(request, 'movie/movies_index_page.html', context)
 
     @route(r'^movie/(?P<slug>[-\w]+)/$')  
