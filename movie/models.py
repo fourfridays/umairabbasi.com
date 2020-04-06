@@ -26,15 +26,26 @@ class Movie(models.Model):
 
 
 class MoviesIndexPage(RoutablePageMixin, Page):
+    def get_movies(self):
+        movies = Movie.objects.all()
+        return movies
+
     @route("^$")
-    def get_movies(self, request):
+    def get_all_movies(self, request):
         context = super().get_context(request)
-        context['movies'] = Movie.objects.all().order_by('title')
+        context['movies'] = self.get_movies().order_by('title')
         context['count'] = context['movies'].count()
         return render(request, 'movie/movies_index_page.html', context)
+
+    @route(r'^top-rated/$')
+    def get_top_rated_movies(self, request):
+        context = super().get_context(request)
+        context['top_rated'] = self.get_movies().filter(rating__gte = 8).order_by('-rating')
+        context['count'] = context['top_rated'].count()
+        return render(request, 'movie/top_rated.html', context)
 
     @route(r'^movie/(?P<slug>[-\w]+)/$')  
     def get_movie(self, request, slug):
         context = super().get_context(request)
-        context['movie'] = Movie.objects.all().get(slug=slug)
+        context['movie'] = self.get_movies().get(slug=slug)
         return render(request, 'movie/movie.html', context)
