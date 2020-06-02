@@ -33,7 +33,7 @@ class MoviesIndexPage(RoutablePageMixin, Page):
     @route("^$")
     def get_all_movies(self, request):
         context = super().get_context(request)
-        context['movies'] = self.get_movies().order_by('title')
+        context['movies'] = self.get_movies()
         context['count'] = context['movies'].count()
         return render(request, 'movie/movies_index_page.html', context)
 
