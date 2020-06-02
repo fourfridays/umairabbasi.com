@@ -20,7 +20,9 @@ class Command(BaseCommand):
                 m = Movie.objects.get(title = movie['title'])
                 m.save()
             except:
-                pass
+                Movie.objects.filter(title = movie['title']).update(overview = movie['overview'], release_date = movie['release_date'], rating = movie['rating'], poster = 'https://image.tmdb.org/t/p/w300' + movie['poster_path'], language = movie['original_language'])
+                m = Movie.objects.get(title = movie['title'])
+                m.save()
 
         page = 2
 
@@ -34,6 +36,8 @@ class Command(BaseCommand):
                     m = Movie.objects.get(title = movie['title'])
                     m.save()
                 except:
-                    pass
+                    Movie.objects.filter(title = movie['title']).update(overview = movie['overview'], release_date = movie['release_date'], rating = movie['rating'], poster = 'https://image.tmdb.org/t/p/w300' + movie['poster_path'], language = movie['original_language'])
+                    m = Movie.objects.get(title = movie['title'])
+                    m.save()
 
             page = page + 1
