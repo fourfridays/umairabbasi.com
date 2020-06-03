@@ -1,6 +1,5 @@
 from wagtail.contrib.modeladmin.options import (
     ModelAdmin, ModelAdminGroup, modeladmin_register)
-
 from movie.models import *
 
 
