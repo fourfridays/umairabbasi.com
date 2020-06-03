@@ -1,8 +1,7 @@
 from django.db import models
 from django.shortcuts import redirect, render
-from django.template.defaultfilters import slugify
-
 from wagtail.core.models import Page
+from django.template.defaultfilters import slugify
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 from wagtail.search import index
 
@@ -15,7 +14,6 @@ class Movie(models.Model):
     rating = models.IntegerField(blank=True)
     poster = models.URLField(blank=True)
     language = models.CharField(max_length=2, blank=True)
-    creation_date = models.DateField(null=True, blank=True) 
 
     def save(self, *args, **kwargs):
         if not self.slug:

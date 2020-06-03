@@ -1,9 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
 from django.db.utils import IntegrityError
-
 from movie.models import *
-from datetime import datetime
-
 import requests
 import os
 
@@ -19,7 +16,7 @@ class Command(BaseCommand):
 
         for movie in json_content['results']:
             try:
-                Movie.objects.update_or_create(title = movie['title'], overview = movie['overview'], release_date = movie['release_date'], rating = movie['rating'], poster = 'https://image.tmdb.org/t/p/w300' + movie['poster_path'], language = movie['original_language'], creation_date = datetime.now())
+                Movie.objects.update_or_create(title = movie['title'], overview = movie['overview'], release_date = movie['release_date'], rating = movie['rating'], poster = 'https://image.tmdb.org/t/p/w300' + movie['poster_path'], language = movie['original_language'])
                 m = Movie.objects.get(title = movie['title'])
                 m.save()
             except:
@@ -35,7 +32,7 @@ class Command(BaseCommand):
 
             for movie in json_content['results']:
                 try:
-                    Movie.objects.update_or_create(title = movie['title'], overview = movie['overview'], release_date = movie['release_date'], rating = movie['rating'], poster = 'https://image.tmdb.org/t/p/w300' + movie['poster_path'], language = movie['original_language'], creation_date = datetime.now())
+                    Movie.objects.update_or_create(title = movie['title'], overview = movie['overview'], release_date = movie['release_date'], rating = movie['rating'], poster = 'https://image.tmdb.org/t/p/w300' + movie['poster_path'], language = movie['original_language'])
                     m = Movie.objects.get(title = movie['title'])
                     m.save()
                 except:
