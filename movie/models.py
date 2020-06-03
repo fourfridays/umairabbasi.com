@@ -15,6 +15,7 @@ class Movie(models.Model):
     rating = models.IntegerField(blank=True)
     poster = models.URLField(blank=True)
     language = models.CharField(max_length=2, blank=True)
+    creation_date = models.DateField(null=True, blank=True) 
 
     def save(self, *args, **kwargs):
         if not self.slug:
