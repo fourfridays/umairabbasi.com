@@ -22,7 +22,8 @@ Thumbs.db
 /node_modules
 # </DEFAULT>
 
-/grunt/.sass-cache
+node_modules
+.sass-cache
 /gunicorn.conf.py
 /grunt/package-lock.json
 /grunt/src/fa-solid.min.js
