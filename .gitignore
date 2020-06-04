@@ -29,3 +29,6 @@ node_modules
 /grunt/src/fa-solid.min.js
 /grunt/src/fontawesome.min.js
 /grunt/src/fa-brands.min.js
+/grunt/dist/umairabbasi.css.map
+/grunt/dist/umairabbasi.js
+/grunt/dist/umairabbasi.css
