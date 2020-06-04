@@ -21,3 +21,10 @@ Thumbs.db
 /static_collected
 /node_modules
 # </DEFAULT>
+
+/grunt/.sass-cache
+/gunicorn.conf.py
+/grunt/package-lock.json
+/grunt/src/fa-solid.min.js
+/grunt/src/fontawesome.min.js
+/grunt/src/fa-brands.min.js
