@@ -32,3 +32,4 @@ node_modules
 /grunt/dist/umairabbasi.css.map
 /grunt/dist/umairabbasi.js
 /grunt/dist/umairabbasi.css
+/.env-local
