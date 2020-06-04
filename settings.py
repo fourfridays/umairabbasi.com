@@ -46,6 +46,7 @@ import os
 
 INSTALLED_APPS.extend([
     # Extend the INSTALLED_APPS setting by listing additional applications here
+    'wagtail.contrib.table_block',
 ])
 
 FLICKR_API_KEY = os.getenv('FLICKR_API_KEY', default='')
