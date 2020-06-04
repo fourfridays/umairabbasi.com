@@ -34,6 +34,7 @@ INSTALLED_ADDONS = [
 
 import aldryn_addons.settings
 aldryn_addons.settings.load(locals())
+import os
 
 # Your own Django settings can be applied from here on. Key settings like
 # INSTALLED_APPS, MIDDLEWARE and TEMPLATES are provided in the Aldryn Django
@@ -47,6 +48,6 @@ INSTALLED_APPS.extend([
     # Extend the INSTALLED_APPS setting by listing additional applications here
 ])
 
-# To see the settings that have been applied, use the Django diffsettings 
-# management command. 
-# See https://docs.divio.com/en/latest/how-to/configure-settings.html#list
+FLICKR_API_KEY = os.getenv('FLICKR_API_KEY', default='')
+FLICKR_API_SECRET = os.getenv('FLICKR_API_SECRET', default='')
+FLICKR_API_USER = os.getenv('FLICKR_API_USER', default='')
