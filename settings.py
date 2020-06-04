@@ -46,6 +46,7 @@ import os
 
 INSTALLED_APPS.extend([
     'page',
+    'taxonomy',
 
     'wagtail.contrib.table_block',
 ])
