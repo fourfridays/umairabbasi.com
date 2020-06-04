@@ -45,6 +45,7 @@ import os
 # for guidance on managing these settings.
 
 INSTALLED_APPS.extend([
+    'blog',
     'page',
     'taxonomy',
 
