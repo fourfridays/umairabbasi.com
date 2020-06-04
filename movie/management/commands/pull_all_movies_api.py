@@ -10,9 +10,9 @@ import os
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        account_id = os.getenv('account_id').strip('""').strip('\'\'')
-        api_key = os.getenv('api_key').strip('""').strip('\'\'')
-        session_id = os.getenv('session_id').strip('""').strip('\'\'')
+        account_id = os.getenv('tmdb_account_id').strip('""').strip('\'\'')
+        api_key = os.getenv('tmdb_api_key').strip('""').strip('\'\'')
+        session_id = os.getenv('tmdb_session_id').strip('""').strip('\'\'')
         r = requests.get('https://api.themoviedb.org/3/account/%s/rated/movies?api_key=%s&language=en-US&session_id=%s&sort_by=created_at.desc&page=1' % (account_id, api_key, session_id))
         json_content = r.json()
         pages = json_content['total_pages']
