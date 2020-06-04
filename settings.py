@@ -45,7 +45,8 @@ import os
 # for guidance on managing these settings.
 
 INSTALLED_APPS.extend([
-    # Extend the INSTALLED_APPS setting by listing additional applications here
+    'page',
+
     'wagtail.contrib.table_block',
 ])
 
