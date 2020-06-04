@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+{% block body_class %}{{ self.slug }}{% endblock %}
+
+
+{% block content %}
+    <div class="container text-light">
+        <div class="row mt-4">
+            <div class="col-12">
+                <p><small><i class="fas fa-star"></i> <strong>{{ count }}</strong> top-rated movies</small></p>
+            </div>
+        </div>
+        <div class="row mb-4 rounded justify-content-center">
+            {% for movie in top_rated %}
+                <div class="col-5 col-md-3 col-lg-2 rounded poster-bg p-2 m-2">
+                    <a href="/movies/movie/{{ movie.slug }}/"><img alt="{{ movie.title }}" class="img-fluid pb-1" src="{{ movie.poster }}"/></a>
+                    <p class="mb-1"><small>{{ movie.title }}</small></p>
+                    <p class="mb-0"><small><i class="fas fa-star"></i> <strong>{{ movie.rating }}</strong>/10</small></p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
