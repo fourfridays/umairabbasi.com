@@ -11,7 +11,7 @@
                             <a class="text-black" href="{% pageurl child.value.link %}">
                         {% endif %}
                         <h4 class="bg-lian-gold p-2 mb-0"><small>{{ child.value.caption|upper }}</small></h4>
-                        {% image child.value.image fill-800x450-c100 as grid_image %}
+                        {% image child.value.image fill-400x300-c100 as grid_image %}
                         <figure class="overlay">
                             <img class="card-img img-fluid" src="{{ grid_image.url }}" alt="{{ child.value.image.title }}"/>
                         </figure>
