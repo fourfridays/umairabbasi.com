@@ -28,7 +28,7 @@ class Movie(models.Model):
 
 class MoviesIndexPage(RoutablePageMixin, Page):
     def get_movies(self):
-        movies = Movie.objects.all()
+        movies = Movie.objects.all().order_by('-creation_date')
         return movies
 
     @route("^$")
