@@ -6,13 +6,18 @@
 
 {% block content %}
     <div class="container text-light p-4">
+        <div class="row">
+            <div class="offset-6 col-6 text-right mb-2">
+                <a class="btn btn-sm btn-secondary" href="/movies/">View All Movies</a>
+            </div>
+        </div>
         <div class="row poster-bg p-4 rounded">
             <div class="col-5 col-md-4">
                 <img alt="{{ movie.title }}" class="img-fluid" src="{{ movie.poster }}"/>
             </div>
             <div class="col-7 col-md-8">
                 <h1 class="text-white mb-1"><small>{{ movie.title }}</small></h1>
-                <p><small><i class="fas fa-star"></i> <strong>{{ movie.rating }}</strong>/10 | Language: <strong>{{ movie.language }}</strong></small></p>
+                <p><small><i class="las {% if movie.rating >= 8 %}la-star{% else %}la-star-half-alt{% endif %}"></i> <strong>{{ movie.rating }}</strong>/10 | Language: <strong>{{ movie.language }}</strong></small></p>
                 <p>{{ movie.overview }}</p>
             </div>
         </div>
