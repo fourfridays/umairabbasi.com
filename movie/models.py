@@ -14,7 +14,7 @@ class Movie(models.Model):
     rating = models.IntegerField(blank=True)
     poster = models.URLField(blank=True)
     language = models.CharField(max_length=2, blank=True)
-    creation_date = models.DateField(null=True, blank=True) 
+    creation_date = models.DateField(null=True, blank=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -24,6 +24,19 @@ class Movie(models.Model):
                 slug = '{}-{}'.format(slug, count)
             self.slug = slug
         return super(Movie, self).save(*args, **kwargs)
+
+    def __str__(self):
+        """String for representing the object in Admin site otherwise it just shows object in program requisite group id"""
+        return self.title
+
+    class Meta:
+        ordering = ["title"]
+
+
+class MovieViewDate(models.Model):
+    title = models.ForeignKey(Movie, on_delete=models.CASCADE, blank=True,
+        null=True)
+    date = models.DateField()
 
 
 class MoviesIndexPage(RoutablePageMixin, Page):

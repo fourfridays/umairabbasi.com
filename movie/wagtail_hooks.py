@@ -15,4 +15,21 @@ class MovieModelAdmin(ModelAdmin):
     #list_filter = ('offering_id', 'offering_code')
     search_fields = ('title')
 
-modeladmin_register(MovieModelAdmin)
+class MovieViewDateAdmin(ModelAdmin):
+    model = MovieViewDate
+    menu_icon = 'date'  # change as required
+    add_to_settings_menu = False  # or True to add your model to the Settings sub-menu
+    exclude_from_explorer = False # or True to exclude pages of this type from Wagtail's explorer view
+    list_per_page = 50
+    list_display = ('title', 'date')
+    #ordering = ['title']
+    #list_filter = ('offering_id', 'offering_code')
+    #search_fields = ('title')
+
+class MovieAdminGroup(ModelAdminGroup):
+    menu_label = 'Movie API'
+    menu_icon = 'folder-open-inverse'  # change as required
+    menu_order = 400  # will put in 3rd place (000 being 1st, 100 2nd)
+    items = (MovieModelAdmin, MovieViewDateAdmin)
+
+modeladmin_register(MovieAdminGroup)
