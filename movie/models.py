@@ -28,7 +28,7 @@ class Movie(models.Model):
 
 class MoviesIndexPage(RoutablePageMixin, Page):
     def get_movies(self):
-        movies = Movie.objects.all().order_by('-creation_date')
+        movies = Movie.objects.all().order_by('title')
         return movies
 
     @route("^$")
@@ -41,7 +41,7 @@ class MoviesIndexPage(RoutablePageMixin, Page):
     @route(r'^top-rated/$')
     def get_top_rated_movies(self, request):
         context = super().get_context(request)
-        context['top_rated'] = self.get_movies().filter(rating__gte = 8).order_by('-rating')
+        context['top_rated'] = self.get_movies().filter(rating__gte = 8).order_by('title')
         context['count'] = context['top_rated'].count()
         
         return render(request, 'movie/top_rated.html', context)
