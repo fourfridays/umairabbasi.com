@@ -50,6 +50,8 @@ INSTALLED_APPS.extend([
     'page',
     'taxonomy',
 
+    'django.contrib.sitemaps',
+
     'wagtail.contrib.table_block',
 ])
 
