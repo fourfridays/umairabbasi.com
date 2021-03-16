@@ -32,12 +32,6 @@ class Movie(models.Model):
         ordering = ["title"]
 
 
-class MovieViewDate(models.Model):
-    title = models.ForeignKey(Movie, on_delete=models.CASCADE, blank=True,
-        null=True)
-    date = models.DateTimeField()
-
-
 class MoviesIndexPage(RoutablePageMixin, Page):
     def get_movies(self):
         movies = Movie.objects.all().order_by('title')
