@@ -14,7 +14,6 @@ class Movie(models.Model):
     rating = models.IntegerField(blank=True)
     poster = models.URLField(blank=True)
     language = models.CharField(max_length=2, blank=True)
-    creation_date = models.DateTimeField(null=True, blank=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -31,12 +30,6 @@ class Movie(models.Model):
 
     class Meta:
         ordering = ["title"]
-
-
-class MovieViewDate(models.Model):
-    title = models.ForeignKey(Movie, on_delete=models.CASCADE, blank=True,
-        null=True)
-    date = models.DateTimeField()
 
 
 class MoviesIndexPage(RoutablePageMixin, Page):
@@ -72,7 +65,6 @@ class MoviesIndexPage(RoutablePageMixin, Page):
         for movie in movies:
             data = {
                 'location': self.full_url + movie.slug + '/',
-                'lastmod': movie.creation_date,
                 'changefreq': 'daily',
             }
             sitemap.append(data)
