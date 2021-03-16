@@ -51,7 +51,38 @@ INSTALLED_APPS.extend([
     'django.contrib.sitemaps',
 
     'wagtail.contrib.table_block',
+
+    'wagtail.contrib.forms',
+    'wagtail.contrib.redirects',
+    'wagtail.contrib.modeladmin',
+    'wagtail.embeds',
+    'wagtail.sites',
+    'wagtail.users',
+    'wagtail.snippets',
+    'wagtail.documents',
+    'wagtail.images',
+    'wagtail.search',
+    'wagtail.admin',
+    'wagtail.core',
+
+    'modelcluster',
+    'taggit',
 ])
+
+
+MIDDLEWARE.extend([
+    # add your own middlewares here
+    'wagtail.contrib.legacy.sitemiddleware.SiteMiddleware',
+    'wagtail.contrib.redirects.middleware.RedirectMiddleware',
+])
+
+
+TIME_ZONE = 'America/Los_Angeles'
+LANGUAGE_CODE = 'en-us'
+USE_I18N = True
+USE_TZ = True
+USE_L10N = True
+WAGTAIL_SITE_NAME = 'Umair Abbasi'
 
 FLICKR_API_KEY = os.getenv('FLICKR_API_KEY', default='')
 FLICKR_API_SECRET = os.getenv('FLICKR_API_SECRET', default='')
