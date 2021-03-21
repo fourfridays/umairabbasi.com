@@ -1,14 +1,17 @@
 from django.db import models
 from django.shortcuts import redirect, render
 from wagtail.core.models import Page
+from wagtail.core.fields import StreamField
+from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
 from django.template.defaultfilters import slugify
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 from wagtail.search import index
-
+from page.blocks import ViewDateBlock
 
 class Movie(models.Model):
     title = models.TextField(unique=True)
     slug = models.SlugField(max_length=120, unique=True, null=True, blank=True)
+    view_date = StreamField(ViewDateBlock(required=False), default='', blank=True)
     overview = models.TextField()
     release_date = models.CharField(max_length=10, blank=True)
     rating = models.IntegerField(blank=True)
@@ -30,6 +33,12 @@ class Movie(models.Model):
 
     class Meta:
         ordering = ["title"]
+
+    panels = [
+        FieldPanel('title'),
+        FieldPanel('slug'),
+        StreamFieldPanel('view_date'),
+    ]
 
 
 class MoviesIndexPage(RoutablePageMixin, Page):
