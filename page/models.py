@@ -33,9 +33,22 @@ class People(index.Indexed, ClusterableModel):
     to the database.
     https://github.com/wagtail/django-modelcluster
     """
+    RELATIONSHIP_CHOICES = [
+        ('Aunt', 'Aunt'),
+        ('Brother', 'Brother'),
+        ('Cousin', 'Cousin'),
+        ('Friend', 'Friend'),
+        ('Mom', 'Mom'),
+        ('Sister', 'Sister'),
+        ('Unlce', 'Uncle'),
+        ('Wife', 'Wife'),
+        ('Self', 'Self'),
+    ]
     first_name = models.CharField("First name", max_length=254)
     last_name = models.CharField("Last name", max_length=254)
-    job_title = models.CharField("Job title", max_length=254)
+    email = models.EmailField(blank=True)
+    relationship = models.CharField(max_length=10, choices=RELATIONSHIP_CHOICES, default='Friend')
+    job_title = models.CharField("Job title", max_length=254, blank=True)
 
     image = models.ForeignKey(
         'wagtailimages.Image',
@@ -52,8 +65,10 @@ class People(index.Indexed, ClusterableModel):
                 FieldPanel('last_name', classname="col6"),
             ])
         ], "Name"),
+        FieldPanel('email'),
+        FieldPanel('relationship'),
+        ImageChooserPanel('image'),
         FieldPanel('job_title'),
-        ImageChooserPanel('image')
     ]
 
     search_fields = [

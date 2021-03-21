@@ -3,7 +3,7 @@ from django import forms
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.embeds.blocks import EmbedBlock
 from wagtail.core.blocks import (
-    BooleanBlock, CharBlock, ChoiceBlock, FieldBlock, PageChooserBlock, RawHTMLBlock, RichTextBlock, StreamBlock, StructBlock, TextBlock, URLBlock
+    BooleanBlock, CharBlock, ChoiceBlock, DateTimeBlock, FieldBlock, PageChooserBlock, RawHTMLBlock, RichTextBlock, StreamBlock, StructBlock, TextBlock, URLBlock
 )
 from wagtail.contrib.table_block.blocks import TableBlock
 
@@ -56,6 +56,13 @@ class ButtonBlock(StructBlock):
     class Meta:
         icon = 'pick'
         template = 'blocks/button_block.html'
+
+
+class ViewDateBlock(StreamBlock):
+    view_date = StructBlock([
+        ('date', DateTimeBlock(required=False))
+    ])
+
 
 class IconBlock(StructBlock):
     icon = ChoiceBlock([
