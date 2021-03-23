@@ -60,7 +60,7 @@ class ButtonBlock(StructBlock):
 
 class ViewDateBlock(StreamBlock):
     view_date = StructBlock([
-        ('date', DateTimeBlock(required=False))
+        ('date', DateTimeBlock(required=True))
     ])
 
 
