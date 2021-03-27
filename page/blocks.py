@@ -58,12 +58,6 @@ class ButtonBlock(StructBlock):
         template = 'blocks/button_block.html'
 
 
-class ViewDateBlock(StreamBlock):
-    view_date = StructBlock([
-        ('date', DateTimeBlock(required=True))
-    ])
-
-
 class IconBlock(StructBlock):
     icon = ChoiceBlock([
         ('font-awesome', 'Font Awesome'),
