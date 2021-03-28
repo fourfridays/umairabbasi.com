@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+{% block body_class %}{{ self.slug }}{% endblock %}
+
+
+{% block content %}
+    <div class="container text-light">
+        <div class="row mt-4">
+            <div class="col-6">
+                <h3 class="text-white"  ><small><i class="las la-star-half-alt"></i> <strong>{{ count }}</strong> Umair's Rated Movies</small></h3>
+            </div>
+            <div class="col-6 text-right">
+            </div>
+        </div>
+        <hr/>
+        <div class="row mb-4 rounded justify-content-center">
+            {% for movie in movie_pages %}
+                <div class="col-5 col-md-3 col-lg-2 rounded poster-bg p-2 m-2">
+                    <a href="{{ movie.url }}"><img alt="{{ movie.title }}" class="img-fluid pb-1" src="{{ movie.specific.poster }}"/></a>
+                    <p class="mb-1"><small>{{ movie.title }}</small></p>
+                    <p class="mb-0"><small><i class="las {% if movie.specific.rating >= 8 %}la-star{% else %}la-star-half-alt{% endif %} swatch-red"></i> <strong>{{ movie.specific.rating }}</strong>/10</small></p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

@@ -45,6 +45,7 @@ import os
 INSTALLED_APPS.extend([
     'blog',
     'page',
+    'ratings',
     'taxonomy',
 
     'django.contrib.sitemaps',

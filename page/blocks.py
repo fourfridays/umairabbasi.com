@@ -3,8 +3,10 @@ from django import forms
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.embeds.blocks import EmbedBlock
 from wagtail.core.blocks import (
-    BooleanBlock, CharBlock, ChoiceBlock, DateTimeBlock, FieldBlock, PageChooserBlock, RawHTMLBlock, RichTextBlock, StreamBlock, StructBlock, TextBlock, URLBlock
+    BooleanBlock, CharBlock, ChoiceBlock, DateBlock, FieldBlock, IntegerBlock, PageChooserBlock, RawHTMLBlock, RichTextBlock, StreamBlock, StructBlock, TextBlock, URLBlock
 )
+from wagtail.snippets.blocks import SnippetChooserBlock
+from wagtail.snippets.edit_handlers import SnippetChooserPanel
 from wagtail.contrib.table_block.blocks import TableBlock
 
 
@@ -56,6 +58,18 @@ class ButtonBlock(StructBlock):
     class Meta:
         icon = 'pick'
         template = 'blocks/button_block.html'
+
+
+class PersonDateBlock(StructBlock):
+    date = DateBlock(required=False)
+    people = StreamBlock([
+        ('person', SnippetChooserBlock('page.People')),
+    ])
+
+    panels = [
+        # Use a SnippetChooserPanel because blog.BlogAuthor is registered as a snippet
+        SnippetChooserPanel("people"),
+    ]
 
 
 class IconBlock(StructBlock):
