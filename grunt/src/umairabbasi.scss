@@ -4,28 +4,27 @@
 body {
     font-family: 'Frank Ruhl Libre', serif;
     font-size: 18px;
-    color: #4E4D4A;
+    color: #adbac7;
+    background-color: #22272e;
 }
 
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Oswald', sans-serif;
-    color: #403F3C;
+    color: #adbac7;
 }
 
-h1 {
-    text-transform: uppercase;
-}
+h1 { text-transform: uppercase; }
 
-a {
-    color: #428bca;
-}
+a { color: #428bca; }
+
+.small { color: #768390 }
+
+.jumbotron { background-color: #161b22; }
 
 .bg-dark {
     background-color: #4e4d4a !important;
 }
-.text-muted {
-    color: #999 !important;
-}
+.text-muted { color: #999 !important; }
 
 .assistive-text { /*For accessibility to skip navigation*/
     clip: rect(1px, 1px, 1px, 1px);
