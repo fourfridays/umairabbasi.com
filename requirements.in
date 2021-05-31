@@ -4,3 +4,4 @@ https://divio-addons.s3-eu-central-1.amazonaws.com/aldryn-django/3.1.11.0/b2af43
 # </INSTALLED_ADDONS>
 wagtail==2.12.3
 flickrapi==2.4
+furl==2.1.2
