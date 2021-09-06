@@ -87,3 +87,5 @@ WAGTAIL_SITE_NAME = 'Umair Abbasi'
 FLICKR_API_KEY = os.getenv('FLICKR_API_KEY', default='')
 FLICKR_API_SECRET = os.getenv('FLICKR_API_SECRET', default='')
 FLICKR_API_USER = os.getenv('FLICKR_API_USER', default='')
+
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', default='')
