@@ -6,13 +6,12 @@
 {% block content %}
     <div class="container text-light">
         <div class="row mt-4">
-            <div class="col-6">
-                <h3 class="text-white"  ><small><i class="las la-star-half-alt"></i> <strong>{{ count }}</strong> Umair's Rated Movies</small></h3>
-            </div>
-            <div class="col-6 text-right">
+            <div class="col-12">
+                <h3 class="text-white"  ><small>Umair's Top Rated Movies</small></h3>
+                <p><small>Showing {{ count }} movies ordered by release date</small></p>
             </div>
         </div>
-        <hr/>
+        <hr class="mt-0"/>
         <div class="row mb-4 rounded justify-content-center">
             {% for movie in movie_pages %}
                 <div class="col-5 col-md-3 col-lg-2 rounded poster-bg p-2 m-2">

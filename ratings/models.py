@@ -35,7 +35,8 @@ class MoviesIndexPage(Page):
 
     def get_context(self, request):
         context = super(MoviesIndexPage, self).get_context(request)
-        context['movie_pages'] = self.get_children().type(MoviePage).live()
+        context['movie_pages'] = MoviePage.objects.live().filter(rating__gte=7).order_by('-rating', '-release_date')
+        context['count'] = context['movie_pages'].count()
         return context
 
 
