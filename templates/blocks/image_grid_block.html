@@ -6,11 +6,11 @@
             <hr>
             <div class="card-group">
                 {% for child in self %} 
-                    <div class="card {% if child.value.description %}border{% else %}border-0{% endif %} mr-2">
+                    <div class="card border mr-2 p-2" style="background-color: #22272e;">
                         {% if child.value.link %}
                             <a class="text-black" href="{% pageurl child.value.link %}">
                         {% endif %}
-                        <h4 class="bg-lian-gold p-2 mb-0"><small>{{ child.value.caption|upper }}</small></h4>
+                        <h4 class="bg-lian-gold p-2 mb-0"><small>{{ child.value.caption }}</small></h4>
                         {% image child.value.image fill-400x300-c100 as grid_image %}
                         <figure class="overlay">
                             <img class="card-img img-fluid" src="{{ grid_image.url }}" alt="{{ child.value.image.title }}"/>
