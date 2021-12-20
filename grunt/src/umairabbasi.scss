@@ -175,6 +175,16 @@ figure {
         background: rgba(0,0,0, 0.38);
     }
 }
+.tv-show {
+    main {
+        background: linear-gradient(#22272e, #235789);
+        .container {
+            .poster-bg {
+                background: rgba(0,0,0, 0.38);
+            }
+        }
+    }
+}
 
 
 /* ==========================================================================
