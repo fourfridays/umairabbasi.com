@@ -40,6 +40,39 @@ class MoviesIndexPage(Page):
         return context
 
 
+class TvPage(Page):
+    parent_page_types = ['TvIndexPage']
+    description = models.TextField()
+    release_date = models.CharField(max_length=10, blank=True)
+    rating = models.IntegerField(blank=True)
+    poster = models.URLField(blank=True)
+    language = models.CharField(max_length=2, blank=True)
+    tmdb_id = models.IntegerField(unique=True, default=None)
+    watch_party = StreamField([
+        ('view_block', PersonDateBlock()),
+    ], default='', blank=True)
+
+    content_panels = Page.content_panels + [
+        FieldPanel('description'),
+        FieldPanel('release_date'),
+        FieldPanel('rating'),
+        FieldPanel('poster'),
+        FieldPanel('language'),
+        FieldPanel('tmdb_id'),
+        StreamFieldPanel('watch_party'),
+    ]
+
+
+class TvIndexPage(Page):
+    subpage_types = ['TvPage']
+
+    def get_context(self, request):
+        context = super(TvIndexPage, self).get_context(request)
+        context['tv_pages'] = TvPage.objects.live().filter(rating__gte=7).order_by('-rating', '-release_date')
+        context['count'] = context['tv_pages'].count()
+        return context
+
+
 class RatingsIndexPage(Page):
 
     def get_context(self, request):
