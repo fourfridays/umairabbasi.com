@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
 from django.db.utils import IntegrityError
+from django.core.exceptions import ValidationError
 
 from wagtail.core.models import Page
 from ratings.models import MoviePage, TvPage
@@ -27,7 +28,13 @@ class Command(BaseCommand):
                 movie_page = MoviePage(tmdb_id=movie['id'], title = movie['title'], description = movie['overview'], release_date = movie['release_date'], rating = movie['rating'], poster = 'https://image.tmdb.org/t/p/w300' + movie['poster_path'], language = movie['original_language'])
                 parent_page.add_child(instance=movie_page)
                 movie_page.save()
-            except: pass
+            except ValidationError:
+                m = MoviePage.objects.get(tmdb_id = movie['id'])
+                if m.rating != movie['rating']:
+                    m.rating = movie['rating']
+                    m.save_revision().publish()
+                else:
+                    pass
 
         page = 2
 
@@ -40,7 +47,13 @@ class Command(BaseCommand):
                     movie_page = MoviePage(tmdb_id=movie['id'], title = movie['title'], description = movie['overview'], release_date = movie['release_date'], rating = movie['rating'], poster = 'https://image.tmdb.org/t/p/w300' + movie['poster_path'], language = movie['original_language'])
                     parent_page.add_child(instance=movie_page)
                     movie_page.save()
-                except: pass
+                except ValidationError:
+                    m = MoviePage.objects.get(tmdb_id = movie['id'])
+                    if m.rating != movie['rating']:
+                        m.rating = movie['rating']
+                        m.save_revision().publish()
+                    else:
+                        pass
 
             page = page + 1
 
@@ -57,7 +70,13 @@ class Command(BaseCommand):
                 tv_page = TvPage(tmdb_id=tv['id'], title = tv['name'], description = tv['overview'], release_date = tv['first_air_date'], rating = tv['rating'], poster = 'https://image.tmdb.org/t/p/w300' + tv['poster_path'], language = tv['original_language'])
                 parent_page.add_child(instance=tv_page)
                 tv_page.save()
-            except: pass
+            except ValidationError:
+                t = TvPage.objects.get(tmdb_id = tv['id'])
+                if t.rating != tv['rating']:
+                    t.rating = tv['rating']
+                    t.save_revision().publish()
+                else:
+                    pass
 
         page = 2
 
@@ -70,6 +89,12 @@ class Command(BaseCommand):
                     tv_page = TvPage(tmdb_id=tv['id'], title = tv['name'], description = tv['overview'], release_date = tv['first_air_date'], rating = tv['rating'], poster = 'https://image.tmdb.org/t/p/w300' + tv['poster_path'], language = tv['original_language'])
                     parent_page.add_child(instance=tv_page)
                     tv_page.save()
-                except: pass
+                except ValidationError:
+                    t = TvPage.objects.get(tmdb_id = tv['id'])
+                    if t.rating != tv['rating']:
+                        t.rating = tv['rating']
+                        t.save_revision().publish()
+                    else:
+                        pass
 
             page = page + 1
