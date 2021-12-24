@@ -1,8 +1,10 @@
 from django.db import models
+from django.shortcuts import render
 
 from wagtail.core.models import Page
 from wagtail.core.fields import StreamField
 from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
+from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 
 from page.blocks import PersonDateBlock
 
@@ -30,7 +32,7 @@ class MoviePage(Page):
     ]
 
 
-class MoviesIndexPage(Page):
+class MoviesIndexPage(RoutablePageMixin, Page):
     subpage_types = ['MoviePage']
 
     def get_context(self, request):
@@ -38,6 +40,13 @@ class MoviesIndexPage(Page):
         context['movie_pages'] = MoviePage.objects.live().filter(rating__gte=7).order_by('-rating', '-release_date')
         context['count'] = context['movie_pages'].count()
         return context
+
+    @route(r'^all/$')
+    def get_all_movies(self, request):
+        context = super(MoviesIndexPage, self).get_context(request)
+        context['movies'] = MoviePage.objects.live().order_by('title')
+        context['count'] = context['movies'].count()
+        return render(request, 'ratings/get_all_movies.html', context)
 
 
 class TvPage(Page):
@@ -63,7 +72,7 @@ class TvPage(Page):
     ]
 
 
-class TvIndexPage(Page):
+class TvIndexPage(RoutablePageMixin, Page):
     subpage_types = ['TvPage']
 
     def get_context(self, request):
@@ -71,6 +80,13 @@ class TvIndexPage(Page):
         context['tv_pages'] = TvPage.objects.live().filter(rating__gte=7).order_by('-rating', '-release_date')
         context['count'] = context['tv_pages'].count()
         return context
+
+    @route(r'^all/$')
+    def get_all_tv_shows(self, request):
+        context = super(TvIndexPage, self).get_context(request)
+        context['tv_shows'] = TvPage.objects.live().order_by('title')
+        context['count'] = context['tv_shows'].count()
+        return render(request, 'ratings/get_all_tv_shows.html', context)
 
 
 class RatingsIndexPage(Page):

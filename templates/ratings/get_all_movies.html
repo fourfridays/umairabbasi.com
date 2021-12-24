@@ -7,13 +7,13 @@
     <div class="container text-light">
         <div class="row mt-4">
             <div class="col-12">
-                <h3 class="text-white"  ><small>Umair's Top Rated Movies</small></h3>
-                <p><small>Showing {{ count }} movies ordered by release date</small></p>
+                <h3 class="text-white"  ><small>Umair's Rated Movies</small></h3>
+                <p><small>Showing {{ count }} movies</small></p>
             </div>
         </div>
         <hr class="mt-0"/>
         <div class="row mb-4 rounded justify-content-center">
-            {% for movie in movie_pages %}
+            {% for movie in movies %}
                 <div class="col-5 col-md-3 col-lg-2 rounded poster-bg p-2 m-2">
                     <a href="{{ movie.url }}"><img alt="{{ movie.title }}" class="img-fluid pb-1" src="{{ movie.specific.poster }}"/></a>
                     <p class="mb-1"><small>{{ movie.title }}</small></p>
@@ -23,7 +23,7 @@
         </div>
         <hr>
         <div class="row mb-4 justify-content-center">
-            <p><a class="text-light" href="all/">View complete ratings</a></p>
+            <p><a class="text-light" href="https://www.themoviedb.org/u/fourfridays/ratings">View complete ratings</a></p>
         </div>
     </div>
 {% endblock %}

@@ -7,13 +7,13 @@
     <div class="container text-light">
         <div class="row mt-4">
             <div class="col-12">
-                <h3 class="text-white"  ><small>Umair's Top Rated TV Shows</small></h3>
-                <p><small>Showing {{ count }} tv shows ordered by release date</small></p>
+                <h3 class="text-white"  ><small>Umair's Rated TV Shows</small></h3>
+                <p><small>Showing {{ count }} TV shows</small></p>
             </div>
         </div>
         <hr class="mt-0"/>
         <div class="row mb-4 rounded justify-content-center">
-            {% for tv in tv_pages %}
+            {% for tv in tv_shows %}
                 <div class="col-5 col-md-3 col-lg-2 rounded poster-bg p-2 m-2">
                     <a href="{{ tv.url }}"><img alt="{{ tv.title }}" class="img-fluid pb-1" src="{{ tv.specific.poster }}"/></a>
                     <p class="mb-1"><small>{{ tv.title }}</small></p>
@@ -23,7 +23,7 @@
         </div>
         <hr>
         <div class="row mb-4 justify-content-center">
-            <p><a class="text-light" href="all/">View complete ratings</a></p>
+            <p><a class="text-light" href="https://www.themoviedb.org/u/fourfridays/ratings">View complete ratings</a></p>
         </div>
     </div>
 {% endblock %}
