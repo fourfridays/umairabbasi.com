@@ -12,15 +12,15 @@ from wagtail.contrib.table_block.blocks import TableBlock
 
 class AlignmentBlock(ChoiceBlock):
     choices = [
-        ('left', 'Left'),
+        ('start', 'Left'),
         ('center', 'Center'),
-        ('right', 'Right')
+        ('end', 'Right')
     ]
 
 
 class AlignedRAWHTMLBlock(StructBlock):
     html = RawHTMLBlock()
-    alignment = AlignmentBlock(default='left')
+    alignment = AlignmentBlock(default='start')
 
     class Meta:
         template = 'blocks/aligned_raw_html_block.html'

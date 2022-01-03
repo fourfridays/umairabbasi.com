@@ -17,7 +17,7 @@
 
         <!-- RAW HTML -->   
         {% elif child.block_type == 'raw_html' %}
-            <div class="raw-html {{ child.value.alignment }}">
+            <div class="raw-html text-{{ child.value.alignment }}">
                 {{ child.value.html }}
             </div>
 
