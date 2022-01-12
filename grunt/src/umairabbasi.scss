@@ -122,19 +122,29 @@ figure img {
 /* ==========================================================================
   CONTENT
    ========================================================================== */
-/* Figure */
-figure {
-    img {
-        width: 100%;
-        height: auto;
-    }
-    figcaption p {
-        font-size: 12px;
-        &:before {
-            content: "Caption: ";
-            font-weight: bold;
+/* Hero Images */
+.hero-image figure {
+    figcaption {
+        background-color: rgba(43, 78, 114, 0.88);
+        h1 {
+            color: #f0f0f0;
+            font-size: 2.4rem;
+            letter-spacing: -0.03rem;
         }
-    }  
+        small {
+            color: #d2d2d2;
+        }
+    }
+    .photo-credit {
+        position: absolute; /* absolute position (so we can position it where we want)*/
+        bottom: 0; /* position will be on bottom */
+        width: auto;
+        right: 0;
+        background-color: #000;
+        color: #fff;
+        opacity: 0.5; /* transparency */
+        filter: alpha(opacity=50); /* IE transparency */
+    }
 }
 
 .flickr {
@@ -290,6 +300,13 @@ code {
             padding: 0.5rem 1rem !important;
         }
     }
+    .hero-image figure {
+        figcaption {
+            h1 {
+                font-size: 1.4rem;
+            }
+        }
+    }
     footer ul {
         text-align: center;
     }
@@ -300,6 +317,16 @@ code {
 
 /* Landscape phones and down */
 @media (max-width: 480px) {
+    .hero-image figure {
+        figcaption {
+            h1 {
+                font-size: 1.1rem;
+            }
+            small {
+                font-size: 0.88rem;
+            }
+        }
+    }
 /* ==========================================================================
   BLOG
    ========================================================================== */

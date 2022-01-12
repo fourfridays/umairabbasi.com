@@ -110,8 +110,8 @@
                 {% endif %}
 
                 {% if forloop.counter >= 9 %}
-                    <div class="col-md-4">
-                        <h3 class="text-uppercase"><a href="{{ article.slug }}/">{{ article.title }}</a></h3>
+                    <div class="col-md-3">
+                        <h5 class="text-uppercase"><a href="{{ article.slug }}/">{{ article.title }}</a></h5>
                         <p class="small">
                             {{ article.date }}        
                             {% if article.categories.all %}

@@ -4,24 +4,31 @@
 
 {% block content %}
     {% if page.hero_image %}
-        {% image page.hero_image fill-2400x800-c100 format-jpeg jpegquality-80 as heroimage %}
-        <img class="mb-2 img-fluid" {{ heroimage.attrs }}/>
+        {% image page.hero_image fill-2400x658-c100 format-jpeg jpegquality-80 as heroimage %}
+        <div class="hero-image card border-0">
+            <figure class="mb-0">
+                <img class="card-img rounded-0" {{ heroimage.attrs }}/>
+                <div class="card-img-overlay d-flex flex-column justify-content-center">
+                    <figcaption class="text-center p-lg-3 p-2">
+                        <h1 class="text-uppercase card-title">{{ page.title }}</h1>
+                        <hr class="m-0">
+                        <p class="small hidden-sm"> 
+                            {% for person in page.authors %}
+                                {{ person.first_name }} {{ person.last_name }} | {{ page.date_published }}        
+                            {% endfor %}
+                            {% if page.category %}
+                                | {{ page.category.name }}
+                            {% endif %}
+                        </p>
+                    </figcaption>
+                </div>
+            </figure>
+        </div>
     {% endif %}
     <div class="container">
         <div class="row">
-            <div class="offset-md-1 col-md-10">
-                <article>
-                    <h1>{{ page.title }}</h1>
-                    <p class="small text-muted">Posted by 
-                    {% for person in page.authors %}
-                        {{ person.first_name }} {{ person.last_name }} on {{ page.date_published }}        
-                    {% endfor %}
-                    {% if page.category %}
-                        in {{ page.category.name }}</span>
-                    {% endif %}
-                    </p>
-                    <hr style="margin-top: 0;">
-
+            <div class="offset-md-2 col-md-8">
+                <article class="mt-3">
                     {{ page.body }}
                 </article>
             </div>
@@ -39,9 +46,11 @@
                     <hr style="margin-top: 0; margin-bottom: 10px; clear: both;">
 
                     <div class="small .text-muted">    
-                        <i class="la la-tags swatch-red" aria-hidden="true"></i>
                         {% for tag in page.tags.all %}
-                            {{ tag }}{% if not forloop.last %}, {% endif %}
+                            <small>
+                                <i class="fas fa-tag swatch-red" aria-hidden="true"></i>
+                                {{ tag }}{% if not forloop.last %} {% endif %}
+                            </small>
                         {% endfor %}        
                     </div>
                 {% endif %}
