@@ -154,6 +154,7 @@ class BaseStreamBlock(StreamBlock):
     """
     heading_block = HeadingBlock()
     paragraph_block = RichTextBlock(
+        features=['h2', 'h3', 'bold', 'italic', 'link', 'code'],
         icon='pilcrow',
         template='blocks/paragraph_block.html'
     )
