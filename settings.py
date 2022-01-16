@@ -183,3 +183,5 @@ FLICKR_API_SECRET = os.getenv('FLICKR_API_SECRET', default='')
 FLICKR_API_USER = os.getenv('FLICKR_API_USER', default='')
 
 DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', default='')
+
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
