@@ -1,5 +1,6 @@
 from django import forms
 
+from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.embeds.blocks import EmbedBlock
 from wagtail.core.blocks import (
@@ -58,6 +59,14 @@ class ButtonBlock(StructBlock):
     class Meta:
         icon = 'pick'
         template = 'blocks/button_block.html'
+
+
+class DocumentBlock(StructBlock):
+    document = DocumentChooserBlock(required=False)
+
+    class Meta:
+        icon = 'doc-full'
+        template = 'blocks/document_block.html'
 
 
 class PersonDateBlock(StructBlock):
@@ -161,6 +170,7 @@ class BaseStreamBlock(StreamBlock):
     image_block = ImageBlock()
     button_block = ButtonBlock()
     image_grid_block = ImageGridBlock()
+    document_block = DocumentBlock()
     embed_block = EmbedBlock(
         help_text='Insert an embed URL e.g https://www.youtube.com/embed/SGJFWirQ3ks',
         icon='code',
