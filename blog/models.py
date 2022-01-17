@@ -126,6 +126,12 @@ class BlogPage(Page):
             ])
         return tags
 
+    def get_context(self, request):
+        context = super(BlogPage, self).get_context(request)
+        context['recent_posts'] = BlogPage.objects.live().exclude(id=self.id).order_by(
+            '-date_published')[:3]
+        return context
+
     # Specifies parent to BlogPage as being BlogIndexPages
     parent_page_types = ['BlogIndexPage']
 
