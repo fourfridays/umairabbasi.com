@@ -12,12 +12,28 @@
         </div>
         <hr/>
         <div class="row mb-4 rounded justify-content-center">
-            <div class="card" style="width: 18rem;">
-                <img src="{{ movie_page.poster }}" class="card-img-top" alt="{{ movie_page.title }}">
-                <div class="card-body">
-                <h5 class="card-title">Movie Ratings</h5>
-                <p class="text-secondary"><small>The only movie ratings that matter.</small></p>
-                <a href="/ratings/movies/" class="btn btn-primary">View Movie Ratings</a>
+            <div class="col-6 col-md-3">
+                <div class="card bg-dark">
+                    <picture>
+                        <img src="{{ movie_page.poster }}" class="card-img-top" alt="{{ movie_page.title }}">
+                    </picture>
+                    <div class="card-body">
+                    <h5 class="card-title">Movie Ratings</h5>
+                    <p class="text-secondary"><small>The only movie ratings that matter.</small></p>
+                    <a href="/ratings/movies/" class="btn btn-primary">View Movie Ratings</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="card bg-dark">
+                    <picture>
+                        <img src="{{ tv_page.poster }}" class="card-img-top" alt="{{ tv_page.title }}">
+                    </picture>
+                    <div class="card-body">
+                    <h5 class="card-title">TV Ratings</h5>
+                    <p class="text-secondary"><small>The only TV ratings that matter.</small></p>
+                    <a href="/ratings/tv/" class="btn btn-primary">View TV Ratings</a>
+                    </div>
                 </div>
             </div>
         </div>

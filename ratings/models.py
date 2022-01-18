@@ -94,4 +94,5 @@ class RatingsIndexPage(Page):
     def get_context(self, request):
         context = super(RatingsIndexPage, self).get_context(request)
         context['movie_page'] = MoviePage.objects.get(title='Layer Cake')
+        context['tv_page'] = TvPage.objects.get(title='Foundation')
         return context
