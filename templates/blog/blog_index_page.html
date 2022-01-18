@@ -12,7 +12,13 @@
                         <article>
                             {% if article.hero_image %}
                                 {% image article.hero_image fill-540x229-c100 as heroimage %}
-                                <a href="{{ article.slug }}/"><img class="mb-2 img-fluid" src="{{ heroimage.url }}" alt="{{ block.value.alternate_text }}"/></a>
+                                {% image article.hero_image fill-540x229-c100 format-webp as webp_heroimage %}
+                                <a href="{{ article.slug }}/">
+                                    <picture>
+                                        <source srcset="{{ webp_heroimage.url }}" type="image/webp">
+                                        <img class="mb-2 img-fluid" {{ heroimage.attrs }}/>
+                                    </picture>
+                                </a>
                             {% endif %}
                             <h2 class="mb-0 text-uppercase">{{ article.title }}</h2>
                             <p class="small">
@@ -38,7 +44,13 @@
                         <article>
                             {% if article.hero_image %}
                                 {% image article.hero_image fill-540x229-c100 as heroimage %}
-                                <a href="{{ article.slug }}/"><img class="mb-2 img-fluid" src="{{ heroimage.url }}" alt="{{ block.value.alternate_text }}"/></a>
+                                {% image article.hero_image fill-540x229-c100 format-webp as webp_heroimage %}
+                                <a href="{{ article.slug }}/">
+                                    <picture>
+                                        <source srcset="{{ webp_heroimage.url }}" type="image/webp">
+                                        <img class="mb-2 img-fluid" {{ heroimage.attrs }}/>
+                                    </picture>
+                                </a>
                             {% endif %}
                             <h2 class="mb-0 text-uppercase">{{ article.title }}</h2>
                             <p class="small">
@@ -64,7 +76,13 @@
                         <article>
                             {% if article.hero_image %}
                                 {% image article.hero_image fill-540x229-c100 as heroimage %}
-                                <a href="{{ article.slug }}/"><img class="mb-2 img-fluid" src="{{ heroimage.url }}" alt="{{ block.value.alternate_text }}"/></a>
+                                {% image article.hero_image fill-540x229-c100 format-webp as webp_heroimage %}
+                                <a href="{{ article.slug }}/">
+                                    <picture>
+                                        <source srcset="{{ webp_heroimage.url }}" type="image/webp">
+                                        <img class="mb-2 img-fluid" {{ heroimage.attrs }}/>
+                                    </picture>
+                                </a>
                             {% endif %}
                             <h2 class="mb-0 text-uppercase">{{ article.title }}</h2>
                             <p class="small">
@@ -90,7 +108,13 @@
                         <article>
                             {% if article.hero_image %}
                                 {% image article.hero_image fill-540x229-c100 as heroimage %}
-                                <a href="{{ article.slug }}/"><img class="mb-2 img-fluid" src="{{ heroimage.url }}" alt="{{ block.value.alternate_text }}"/></a>
+                                {% image article.hero_image fill-540x229-c100 format-webp as webp_heroimage %}
+                                <a href="{{ article.slug }}/">
+                                    <picture>
+                                        <source srcset="{{ webp_heroimage.url }}" type="image/webp">
+                                        <img class="mb-2 img-fluid" {{ heroimage.attrs }}/>
+                                    </picture>
+                                </a>
                             {% endif %}
                             <h2 class="mb-0 text-uppercase">{{ article.title }}</h2>
                             <p class="small">

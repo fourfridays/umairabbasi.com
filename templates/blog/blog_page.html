@@ -6,9 +6,13 @@
     <!-- HERO IMAGE -->
     {% if page.hero_image %}
         {% image page.hero_image fill-2400x658-c100 jpegquality-60 as heroimage %}
+        {% image page.hero_image fill-2400x658-c100 format-webp as webp_heroimage %}
         <div class="hero-image card border-0">
             <figure class="mb-0">
-                <img class="card-img rounded-0" {{ heroimage.attrs }}/>
+                <picture>
+                    <source srcset="{{ webp_heroimage.url }}" type="image/webp">
+                    <img class="card-img rounded-0" {{ heroimage.attrs }}/>
+                </picture>
                 <div class="card-img-overlay d-flex flex-column justify-content-center">
                     <figcaption class="text-center p-lg-3 p-2">
                         <h1 class="text-uppercase card-title">{{ page.title }}</h1>
@@ -69,8 +73,14 @@
                 </div>
                 {% for post in recent_posts %}
                     <div class="col-md-4">
-                        {% image post.hero_image fill-540x229-c100 as heroimage %}
-                        <a href="{{ post.url }}"><img class="mb-2 img-fluid" src="{{ heroimage.url }}" alt="{{ post.hero_image.title }}"/></a>
+                        {% image post.hero_image fill-540x229-c100 as recentheroimage %}
+                        {% image post.hero_image fill-540x229-c100 format-webp as webp_recent_heroimage %}
+                        <a href="{{ post.url }}">
+                            <picture>
+                                <source srcset="{{ webp_recent_heroimage.url }}" type="image/webp">
+                                <img class="mb-2 img-fluid" {{ heroimage.attrs }}/>
+                            </picture>
+                        </a>
                         <h5 class="mb-0 text-uppercase">{{ post.title }}</h5>
                         <p><small>{{ post.date_published }}</small></p>
                     </div>
