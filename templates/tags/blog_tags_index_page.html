@@ -12,7 +12,7 @@
                 <ul class="list-inline">
                     {% regroup tags by tag as tag_list %}
                     {% for tag in tag_list %}
-                        <li class="list-inline-item"><i class="fas fa-tag swatch-red" aria-hidden="true"></i> <a href="/blog/tag/{{ tag.grouper.slug }}">{{ tag.grouper }}</a></li>
+                        <li class="list-inline-item"><i class="fas fa-tag swatch-red" aria-hidden="true"></i> <a href="/blog/tag/{{ tag.grouper.slug }}/">{{ tag.grouper }}</a></li>
                     {% endfor %}
                 </ul>
             </div>
