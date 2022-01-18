@@ -3,6 +3,7 @@
 {% block body_class %}blog-post{% endblock %}
 
 {% block content %}
+    <!-- HERO IMAGE -->
     {% if page.hero_image %}
         {% image page.hero_image fill-2400x658-c100 jpegquality-60 as heroimage %}
         <div class="hero-image card border-0">
@@ -25,6 +26,8 @@
             </figure>
         </div>
     {% endif %}
+
+    <!-- BODY -->
     <div class="container">
         <div class="row">
             <div class="my-3 offset-md-2 col-md-8">
@@ -34,29 +37,31 @@
             </div>
         </div>
 
+        <!-- FLICKR -->
         <div class="row text-center">
             <div class="col-12 offset-md-1 col-md-10">
                 {% flickr_photosets page.flickr_photoset_id %}
             </div>
         </div>
 
+        <!-- TAGS -->
         <div class="row">
             <div class="col-12">
-                {% if page.tags.all %}
+                {% if tags %}
                     <hr style="margin-top: 0; margin-bottom: 10px; clear: both;">
 
-                    <div class="small .text-muted">    
-                        {% for tag in page.tags.all %}
+                    <div class="small .text-muted">
+                        {% for tag in tags %}
                             <small>
-                                <i class="fas fa-tag swatch-red" aria-hidden="true"></i>
-                                {{ tag }}{% if not forloop.last %} {% endif %}
+                                <i class="fas fa-tag swatch-red mx-1" aria-hidden="true"></i><a href="{{ page.get_parent.url }}tag/{{ tag }}">{{ tag }}</a>{% if not forloop.last %}{% endif %}
                             </small>
-                        {% endfor %}        
+                        {% endfor %}
                     </div>
                 {% endif %}
             </div>
         </div>
 
+        <!-- RECENT POSTS -->
         {% if recent_posts %}
             <div class="row">
                 <div class="col-md-12 text-center my-4">

@@ -110,26 +110,10 @@ class BlogPage(Page):
         ]
         return authors
 
-    @property
-    def get_tags(self):
-        """
-        Similar to the authors function above we're returning all the tags that
-        are related to the blog post into a list we can access on the template.
-        We're additionally adding a URL to access BlogPage objects with that tag
-        """
-        tags = self.tags.all()
-        for tag in tags:
-            tag.url = '/' + '/'.join(s.strip('/') for s in [
-                self.get_parent().url,
-                'tags',
-                tag.slug
-            ])
-        return tags
-
     def get_context(self, request):
         context = super(BlogPage, self).get_context(request)
-        context['recent_posts'] = BlogPage.objects.live().exclude(id=self.id).order_by(
-            '-date_published')[:3]
+        context['recent_posts'] = BlogPage.objects.live().exclude(id=self.id).order_by('-date_published')[:3]
+        context['tags'] = self.tags.all().order_by('name')
         return context
 
     # Specifies parent to BlogPage as being BlogIndexPages
@@ -179,24 +163,26 @@ class BlogIndexPage(RoutablePageMixin, Page):
     # http://docs.wagtail.io/en/latest/getting_started/tutorial.html#overriding-context
     def get_context(self, request):
         context = super(BlogIndexPage, self).get_context(request)
-        context['posts'] = BlogPage.objects.descendant_of(
-            self).live().order_by(
-            '-date_published')
+        context['posts'] = BlogPage.objects.descendant_of(self).live().order_by('-date_published')
         return context
 
     # This defines a Custom view that utilizes Tags. This view will return all
     # related BlogPages for a given Tag or redirect back to the BlogIndexPage.
     # More information on RoutablePages is at
     # http://docs.wagtail.io/en/latest/reference/contrib/routablepage.html
-    @route(r'^tags/$', name='tag_archive')
-    @route(r'^tags/([\w-]+)/$', name='tag_archive')
-    def tag_archive(self, request, tag=None):
+    @route(r'^tag/$')
+    def all_blog_tags(self, request):
+        tags = BlogPageTag.objects.all().order_by('tag__name')
+        context = { 'tags': tags}
+        return render(request, 'tags/blog_tags_index_page.html', context)
 
+    @route(r'^tag/([\w-]+)/$')
+    def tag_archive(self, request, tag=None):
         try:
             tag = Tag.objects.get(slug=tag)
         except Tag.DoesNotExist:
             if tag:
-                msg = 'There are no blog posts tagged with "{}"'.format(tag)
+                msg = 'There are no articles tagged with "{}"'.format(tag)
                 messages.add_message(request, messages.INFO, msg)
             return redirect(self.url)
 
@@ -205,7 +191,7 @@ class BlogIndexPage(RoutablePageMixin, Page):
             'tag': tag,
             'posts': posts
         }
-        return render(request, 'blog/blog_index_page.html', context)
+        return render(request, 'tags/blog_tag_index_page.html', context)
 
     def serve_preview(self, request, mode_name):
         # Needed for previews to work
