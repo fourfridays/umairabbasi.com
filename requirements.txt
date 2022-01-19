@@ -24,6 +24,8 @@ charset-normalizer==2.0.3
     # via requests
 dj-database-url==0.5.0
     # via -r requirements.in
+django-anymail[mailgun]==8.4
+    # via -r requirements.in
 django-filter==2.4.0
     # via wagtail
 django-modelcluster==5.2
@@ -39,6 +41,7 @@ django-treebeard==4.5.1
 django==3.2.10
     # via
     #   -r requirements.in
+    #   django-anymail
     #   django-filter
     #   django-storage-url
     #   django-storages
@@ -91,6 +94,7 @@ requests-toolbelt==0.9.1
     # via flickrapi
 requests==2.26.0
     # via
+    #   django-anymail
     #   flickrapi
     #   requests-oauthlib
     #   requests-toolbelt

@@ -15,6 +15,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # for guidance on managing these settings.
 
 INSTALLED_APPS = [
+    'anymail',
     'blog',
     'page',
     'ratings',
@@ -182,6 +183,14 @@ FLICKR_API_KEY = os.getenv('FLICKR_API_KEY', default='')
 FLICKR_API_SECRET = os.getenv('FLICKR_API_SECRET', default='')
 FLICKR_API_USER = os.getenv('FLICKR_API_USER', default='')
 
+# DJANGO ANYMAIL
+ANYMAIL = {
+    "MAILGUN_API_KEY": os.getenv('MAILGUN_API_KEY', default=''),
+    "MAILGUN_SENDER_DOMAIN": os.getenv('MAILGUN_SENDER_DOMAIN', default=''),
+}
+EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
 DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', default='')
+SERVER_EMAIL = os.getenv('SERVER_EMAIL', default='')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+PREPEND_WWW = os.getenv('PREPEND_WWW', default=False)
