@@ -210,6 +210,23 @@ DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 PREPEND_WWW = os.getenv('PREPEND_WWW', default=False)
 SITE_ID = 1
 
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'APP': {
+            'client_id': os.getenv('GOOGLE_CLIENT_ID', default=''),
+            'secret': os.getenv('GOOGLE_CLIENT_SECRET', default=''),
+            'key': ''
+        }
+    },
+    'twitter': {
+        'APP': {
+            'client_id': os.getenv('TWITTER_CLIENT_ID', default=''),
+            'secret': os.getenv('TWITTER_CLIENT_SECRET', default=''),
+            'key': ''
+        }
+    },
+}
+
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
 #ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = False
