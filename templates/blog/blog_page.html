@@ -82,7 +82,7 @@
                 {% else %}
                     {% get_providers as socialaccount_providers %}
 
-                    <p>Please sign in to comment</p>
+                    <h4>Please sign in to comment</h4>
 
                     {% include "socialaccount/snippets/provider_list.html" with process="login" %}
                 {% endif %}
