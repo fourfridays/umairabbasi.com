@@ -9,9 +9,13 @@ from wagtail.core import urls as wagtail_urls
 from wagtail.documents import urls as wagtaildocs_urls
 from wagtail.contrib.sitemaps.views import sitemap
 
+from blog import views as blog_views
+
 
 urlpatterns = [
     path('django-admin/', admin.site.urls),
+    url(r'', include('allauth.urls')),
+    url(r'^comment/', blog_views.article_comment),
 
     url(r'^robots\.txt', TemplateView.as_view(template_name='robots.txt', content_type='text/plain')),
     url(r'^sitemap\.xml$', sitemap),

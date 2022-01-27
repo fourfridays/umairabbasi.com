@@ -47,7 +47,14 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.sites',
     'django.contrib.staticfiles',
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.twitter',
 ]
 
 MIDDLEWARE = [
@@ -116,6 +123,12 @@ TEMPLATES = [
         },
     },
 ]
+
+# Authentication Backends
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
 
 WSGI_APPLICATION = 'wsgi.application'
 
@@ -191,6 +204,26 @@ ANYMAIL = {
 EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
 DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', default='')
 SERVER_EMAIL = os.getenv('SERVER_EMAIL', default='')
+COMMENT_ADMIN_EMAIL = os.getenv('COMMENT_ADMIN_EMAIL', default='')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 PREPEND_WWW = os.getenv('PREPEND_WWW', default=False)
+SITE_ID = 1
+
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/'
+#ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = False
+ACCOUNT_AUTHENTICATION_METHOD = "username_email"
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+#ACCOUNT_LOGOUT_ON_GET = True
+ACCOUNT_LOGIN_ON_PASSWORD_RESET = True
+#ACCOUNT_LOGOUT_REDIRECT_URL = '/login/'
+ACCOUNT_PRESERVE_USERNAME_CASING = False
+ACCOUNT_SESSION_REMEMBER = True
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
+ACCOUNT_USERNAME_BLACKLIST = ["admin", "god"]
+ACCOUNT_USERNAME_MIN_LENGTH = 2
+SOCIALACCOUNT_LOGIN_ON_GET=True
