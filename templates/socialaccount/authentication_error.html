@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load wagtailcore_tags %}
+{% block title %}Authentication Error {{ provider.name }} | Umair Abbasi{% endblock %}
+{% block head_title %}Social Network Login Failure{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="offset-md-1 col-md-10">
+                <h1>Social Network Login Failure</h1>
+
+                <p>An error occurred while attempting to login via your social network account.</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
