@@ -1,7 +1,7 @@
 {
-  "name": "www.umairabbasi.com",
+  "name": "Umair Abbasi",
   "version": "1.0.0",
-  "description": "Package file for www.umairabbasi.com website.",
+  "description": "Package file for fourfridays websites.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

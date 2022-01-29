@@ -5,8 +5,8 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON('package.json'),
         concat: {
             dist: {
-                src: ['node_modules/bootstrap/dist/js/bootstrap.bundle.js', 'src/umairabbasi.js'],
-                dest: 'dist/umairabbasi.js'
+                src: ['node_modules/bootstrap/dist/js/bootstrap.bundle.js', 'src/base.js'],
+                dest: 'dist/base.js'
             }
         },
         uglify: {
@@ -18,8 +18,7 @@ module.exports = function(grunt) {
         },
         dist: {
             files: {
-                //'/home/umairabbasi/sites/umairabbasi/static/js/umairabbasi.min.js': ['<%= concat.dist.dest %>'],
-                '../static/js/umairabbasi.min.js': ['<%= concat.dist.dest %>'],
+                '../static/js/base.min.js': ['<%= concat.dist.dest %>'],
                 '../static/js/fontawesome-free.min.js': ['node_modules/@fortawesome/fontawesome-free/js/all.js'],
             }
         }
@@ -27,8 +26,7 @@ module.exports = function(grunt) {
     sass: {                              // Task
       dist: {                            // Target
         files: {                         // Dictionary of files
-          //'/home/umairabbasi/sites/umairabbasi/static/css/umairabbasi.css': 'src/umairabbasi.scss'
-          'dist/umairabbasi.css': 'src/umairabbasi.scss'
+          'dist/base.css': 'src/base.scss'
         }
       }
     },
