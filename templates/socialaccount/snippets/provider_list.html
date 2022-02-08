@@ -17,11 +17,11 @@
 
         {% if provider.name == 'Google' %}
             <div class="col-lg-3 my-lg-0 my-1">
-                <a title="{{provider.name}}" class="socialaccount_provider {{provider.id}}" href="/google/login/?process=login"><img alt="Sign in with Google" width="154px" src="{% static 'images/btn_google_signin_dark_normal_web@2x.png' %}"/></a>
+                <a title="{{provider.name}}" class="socialaccount_provider {{ provider.id }}" href="{% provider_login_url provider.id process=process next=request.path %}"><img alt="Sign in with Google" width="154px" src="{% static 'images/btn_google_signin_dark_normal_web@2x.png' %}"/></a>
             </div>
         {% elif provider.name == 'Twitter' %}
             <div class="col-lg-3 my-lg-0 my-1" style="position:relative; top:3px;">
-                <a title="{{provider.name}}" class="socialaccount_provider {{provider.id}}" href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}"><img alt="Sign in with {{ provider.name }}" width="158px" src="{% static 'images/sign-in-with-twitter-gray.png.twimg.1920.png' %}"/></a>
+                <a title="{{provider.name}}" class="socialaccount_provider {{provider.id}}" href="{% provider_login_url provider.id process=process next=request.path %}"><img alt="Sign in with {{ provider.name }}" width="158px" src="{% static 'images/sign-in-with-twitter-gray.png.twimg.1920.png' %}"/></a>
             </div>
         {% else %}
             <div class="col-lg-3">
