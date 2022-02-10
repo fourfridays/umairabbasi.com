@@ -1,7 +1,7 @@
 """Node model and Node admin interaction."""
 
 from django import forms
-from django.conf.urls import url
+from django.urls import include, re_path
 from django.contrib.admin.utils import quote, unquote
 from django.core.exceptions import PermissionDenied
 from django.core.validators import MinLengthValidator, RegexValidator
@@ -259,7 +259,7 @@ class NodeAdmin(ModelAdmin):
     def get_admin_urls_for_registration(self):
         """Add the new url for add child page to the registered URLs."""
         urls = super().get_admin_urls_for_registration()
-        add_child_url = url(
+        add_child_url = re_path(
             self.url_helper.get_action_url_pattern('add_child'),
             self.add_child_view,
             name=self.url_helper.get_action_url_name('add_child')

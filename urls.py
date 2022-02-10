@@ -1,6 +1,5 @@
 from django.conf import settings
-from django.urls import path
-from django.conf.urls import url, include, re_path
+from django.urls import path, include, re_path
 from django.contrib import admin
 from django.views.generic import TemplateView
 
@@ -14,13 +13,13 @@ from blog import views as blog_views
 
 urlpatterns = [
     path('django-admin/', admin.site.urls),
-    url(r'', include('allauth.urls')),
-    url(r'^comment/', blog_views.article_comment),
+    re_path(r'', include('allauth.urls')),
+    re_path(r'^comment/', blog_views.article_comment),
 
-    url(r'^robots\.txt', TemplateView.as_view(template_name='robots.txt', content_type='text/plain')),
-    url(r'^sitemap\.xml$', sitemap),
-    url(r'^admin/', include(wagtailadmin_urls)),
-    url(r'^documents/', include(wagtaildocs_urls)),
+    re_path(r'^robots\.txt', TemplateView.as_view(template_name='robots.txt', content_type='text/plain')),
+    re_path(r'^sitemap\.xml$', sitemap),
+    re_path(r'^admin/', include(wagtailadmin_urls)),
+    re_path(r'^documents/', include(wagtaildocs_urls)),
     re_path(r'', include(wagtail_urls)),
 ]
 
