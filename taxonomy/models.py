@@ -113,7 +113,7 @@ class NodeForm(WagtailAdminModelForm):
         super().__init__(*args, **kwargs)
         instance = kwargs['instance']
 
-        if instance.is_root() or Node.objects.count() is 0:
+        if instance.is_root() or Node.objects.count() == 0:
             # hide and disable the parent field
             self.fields['parent'].disabled = True
             self.fields['parent'].required = False
@@ -134,7 +134,7 @@ class NodeForm(WagtailAdminModelForm):
             return instance
 
         if instance.id is None:  # creating a new node
-            if Node.objects.all().count() is 0:  # no nodes, creating root
+            if Node.objects.all().count() == 0:  # no nodes, creating root
                 Node.add_root(instance=instance)  # add a NEW root node
             else:  # nodes exist, must be adding node under a parent
                 instance = parent.add_child(instance=instance)
