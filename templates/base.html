@@ -30,10 +30,10 @@
         <link rel="stylesheet" type="text/css" href="{% static 'css/base.min.css' %}">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
           rel="stylesheet">
+        {% if self.seo_title == 'Home' %}<link rel="canonical" href="{{ page.full_url }}" />{% endif %}
         <script defer src="{% static 'js/fontawesome-free.min.js' %}"></script>
         
-        {% block head-extra %}
-        {% endblock head-extra %}
+        {% block head-extra %}{% endblock head-extra %}
     </head>
 
     <body class="{% block body_class %}template-{{ self.get_verbose_name|slugify }}{% endblock %}">
