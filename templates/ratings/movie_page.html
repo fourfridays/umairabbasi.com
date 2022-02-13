@@ -2,6 +2,7 @@
 {% load wagtailcore_tags %}
 {% block body_class %}movie{% endblock %}
 {% block title %}{{ page.title }} | Umair Abbasi's Movie Rating{% endblock %}
+{% block head-extra %}<link rel="canonical" href="{{ page.full_url }}" />{% endblock head-extra %}
 
 
 {% block content %}
