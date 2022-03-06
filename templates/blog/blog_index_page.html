@@ -129,12 +129,13 @@
 
                 {% if forloop.counter == 8 %}
                     </div>
+                    <hr/>
                     <div class="row"><h2 class="my-4 text-uppercase text-center">Older Blogs</h2></div>
                     <div class="row">
                 {% endif %}
 
                 {% if forloop.counter >= 9 %}
-                    <div class="col-md-3">
+                    <div class="col-md-3 mb-2">
                         <h5 class="text-uppercase"><a href="{{ article.slug }}/">{{ article.title }}</a></h5>
                         <p class="small">
                             {{ article.date }}        
