@@ -1,9 +1,9 @@
 from django.db import models
 from django.shortcuts import render
 
-from wagtail.core.models import Page
-from wagtail.core.fields import StreamField
-from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
+from wagtail.models import Page
+from wagtail.fields import StreamField
+from wagtail.admin.panels import FieldPanel
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 
 from page.blocks import PersonDateBlock
@@ -19,7 +19,7 @@ class MoviePage(Page):
     tmdb_id = models.IntegerField(unique=True, default=None)
     watch_party = StreamField([
         ('view_block', PersonDateBlock()),
-    ], default='', blank=True)
+    ], use_json_field=True, default='', blank=True)
 
     content_panels = Page.content_panels + [
         FieldPanel('description'),
@@ -28,7 +28,7 @@ class MoviePage(Page):
         FieldPanel('poster'),
         FieldPanel('language'),
         FieldPanel('tmdb_id'),
-        StreamFieldPanel('watch_party'),
+        FieldPanel('watch_party'),
     ]
 
 
@@ -59,7 +59,7 @@ class TvPage(Page):
     tmdb_id = models.IntegerField(unique=True, default=None)
     watch_party = StreamField([
         ('view_block', PersonDateBlock()),
-    ], default='', blank=True)
+    ], use_json_field=True, default='', blank=True)
 
     content_panels = Page.content_panels + [
         FieldPanel('description'),
@@ -68,7 +68,7 @@ class TvPage(Page):
         FieldPanel('poster'),
         FieldPanel('language'),
         FieldPanel('tmdb_id'),
-        StreamFieldPanel('watch_party'),
+        FieldPanel('watch_party'),
     ]
 
 

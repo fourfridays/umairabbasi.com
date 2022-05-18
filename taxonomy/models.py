@@ -11,7 +11,7 @@ from django.template.loader import render_to_string
 
 from treebeard.mp_tree import MP_Node
 
-from wagtail.admin.edit_handlers import FieldPanel
+from wagtail.admin.panels import FieldPanel
 from wagtail.admin.forms import WagtailAdminModelForm
 from wagtail.contrib.modeladmin.helpers import ButtonHelper
 from wagtail.contrib.modeladmin.options import ModelAdmin
