@@ -14,12 +14,10 @@ from modelcluster.fields import ParentalKey
 from taggit.models import Tag, TaggedItemBase
 
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
-from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, StreamFieldPanel
-from wagtail.core.fields import StreamField
-from wagtail.core.models import Page, Orderable
-from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.admin.panels import FieldPanel, InlinePanel
+from wagtail.fields import StreamField
+from wagtail.models import Page, Orderable
 from wagtail.search import index
-from wagtail.snippets.edit_handlers import SnippetChooserPanel
 
 from page.blocks import BaseStreamBlock
 from taxonomy.models import Node
@@ -40,7 +38,7 @@ class BlogPeopleRelationship(Orderable, models.Model):
         'page.People', related_name='person_blog_relationship', on_delete=models.CASCADE
     )
     panels = [
-        SnippetChooserPanel('people')
+        FieldPanel('people')
     ]
 
 
@@ -74,7 +72,7 @@ class BlogPage(Page):
         help_text='Landscape mode only; horizontal width between 1000px and 3000px.'
     )
     body = StreamField(
-        BaseStreamBlock(), verbose_name="Page body", blank=True
+        BaseStreamBlock(), verbose_name="Page body", blank=True, use_json_field=True
     )
     subtitle = models.CharField(blank=True, max_length=255)
     tags = ClusterTaggableManager(through=BlogPageTag, blank=True)
@@ -84,8 +82,8 @@ class BlogPage(Page):
     content_panels = Page.content_panels + [
         FieldPanel('subtitle', classname="full"),
         FieldPanel('introduction', classname="full"),
-        ImageChooserPanel('hero_image'),
-        StreamFieldPanel('body'),
+        FieldPanel('hero_image'),
+        FieldPanel('body'),
         FieldPanel('date_published'),
         InlinePanel(
             'blog_person_relationship', label="Author(s)",
@@ -151,7 +149,7 @@ class BlogIndexPage(RoutablePageMixin, Page):
 
     content_panels = Page.content_panels + [
         FieldPanel('introduction', classname="full"),
-        ImageChooserPanel('hero_image'),
+        FieldPanel('hero_image'),
     ]
 
     # Speficies that only BlogPage objects can live under this index page

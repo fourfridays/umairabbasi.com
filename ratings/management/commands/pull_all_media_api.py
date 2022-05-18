@@ -2,7 +2,7 @@ from django.core.management.base import BaseCommand, CommandError
 from django.db.utils import IntegrityError
 from django.core.exceptions import ValidationError
 
-from wagtail.core.models import Page
+from wagtail.models import Page
 from ratings.models import MoviePage, TvPage
 from datetime import datetime
 

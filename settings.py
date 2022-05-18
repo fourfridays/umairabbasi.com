@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'wagtail.images',
     'wagtail.search',
     'wagtail.admin',
-    'wagtail.core',
+    'wagtail',
 
     'modelcluster',
     'taggit',
@@ -197,6 +197,7 @@ MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join('/data/media/')
 
 WAGTAIL_SITE_NAME = 'Umair Abbasi'
+WAGTAILADMIN_BASE_URL = 'https://www.umairabbasi.com/'
 
 FLICKR_API_KEY = os.getenv('FLICKR_API_KEY', default='')
 FLICKR_API_SECRET = os.getenv('FLICKR_API_SECRET', default='')

@@ -2,8 +2,8 @@
 
 from django.db import migrations, models
 import django.db.models.deletion
-import wagtail.core.blocks
-import wagtail.core.fields
+import wagtail.blocks
+import wagtail.fields
 import wagtail.snippets.blocks
 
 
@@ -35,7 +35,7 @@ class Migration(migrations.Migration):
                 ('poster', models.URLField(blank=True)),
                 ('language', models.CharField(blank=True, max_length=2)),
                 ('tmdb_id', models.IntegerField(default=None, unique=True)),
-                ('watch_party', wagtail.core.fields.StreamField([('view_block', wagtail.core.blocks.StructBlock([('date', wagtail.core.blocks.DateBlock(required=False)), ('people', wagtail.core.blocks.StreamBlock([('person', wagtail.snippets.blocks.SnippetChooserBlock('page.People'))]))]))], blank=True, default='')),
+                ('watch_party', wagtail.fields.StreamField([('view_block', wagtail.blocks.StructBlock([('date', wagtail.blocks.DateBlock(required=False)), ('people', wagtail.blocks.StreamBlock([('person', wagtail.snippets.blocks.SnippetChooserBlock('page.People'))]))]))], blank=True, default='')),
             ],
             options={
                 'abstract': False,
