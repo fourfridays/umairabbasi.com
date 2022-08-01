@@ -48,7 +48,7 @@ django-taggit==2.1.0
     # via wagtail
 django-treebeard==4.5.1
     # via wagtail
-django==4.0.4
+django==4.0.6
     # via
     #   -r requirements.in
     #   django-allauth
