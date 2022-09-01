@@ -7,8 +7,8 @@ from wagtail.blocks import (
     BooleanBlock, CharBlock, ChoiceBlock, DateBlock, FieldBlock, IntegerBlock, PageChooserBlock, RawHTMLBlock, RichTextBlock, StreamBlock, StructBlock, TextBlock, URLBlock
 )
 from wagtail.snippets.blocks import SnippetChooserBlock
-from wagtail.snippets.edit_handlers import SnippetChooserPanel
 from wagtail.contrib.table_block.blocks import TableBlock
+from wagtail.admin.panels import FieldPanel
 
 
 class AlignmentBlock(ChoiceBlock):
@@ -77,7 +77,7 @@ class PersonDateBlock(StructBlock):
 
     panels = [
         # Use a SnippetChooserPanel because blog.BlogAuthor is registered as a snippet
-        SnippetChooserPanel("people"),
+        FieldPanel("people"),
     ]
 
 
