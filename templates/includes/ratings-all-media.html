@@ -1,0 +1,19 @@
+{% load wagtailimages_tags %}
+        <div class="row mb-4 rounded justify-content-center">
+            {% for item in media %}
+                {% image item.image original as media_poster %}
+                {% image item.image original format-webp as webp_media_poster %}
+                <div class="col-5 col-md-3 col-lg-2 rounded poster-bg p-2 m-2">
+                    <a href="{{ item.url }}">
+                        <figure class="mb-0">
+                            <picture>
+                                <source srcset="{{ webp_media_poster.url }}" type="image/webp">
+                                <img class="img-fluid mb-1 rounded" {{ media_poster.attrs }}/>
+                            </picture>
+                        </figure>
+                    </a>
+                    <p class="mb-1"><small>{{ item.title }}</small></p>
+                    <p class="mb-0"><small><i class="las {% if item.specific.rating >= 8 %}la-star{% else %}la-star-half-alt{% endif %} swatch-red"></i> <strong>{{ item.specific.rating }}</strong>/10</small></p>
+                </div>
+            {% endfor %}
+        </div>
