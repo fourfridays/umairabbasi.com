@@ -1,0 +1,16 @@
+{% load wagtailimages_tags %}
+        <div class="row poster-bg p-4 rounded">
+            <div class="col-5 col-md-4">
+                {% image page.image original as media_poster %}
+                {% image page.image original format-webp as webp_media_poster %}
+                <picture>
+                    <source srcset="{{ webp_media_poster.url }}" type="image/webp">
+                    <img class="img-fluid pb-1 rounded" {{ media_poster.attrs }}/>
+                </picture>
+            </div>
+            <div class="col-7 col-md-8">
+                <h1 class="text-white mb-1"><small>{{ page.title }}</small></h1>
+                <p><small><i class="las {% if page.rating >= 8 %}la-star{% else %}la-star-half-alt{% endif %} swatch-red"></i> <strong>{{ page.rating }}</strong>/10 | Language: <strong>{{ page.language }}</strong></small></p>
+                <p>{{ page.description }}</p>
+            </div>
+        </div>

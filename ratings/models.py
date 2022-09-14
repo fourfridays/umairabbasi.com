@@ -15,6 +15,14 @@ class MoviePage(Page):
     release_date = models.CharField(max_length=10, blank=True)
     rating = models.IntegerField(blank=True)
     poster = models.URLField(blank=True)
+    image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        help_text='Testing image pull from poster URLField'
+    )
     language = models.CharField(max_length=2, blank=True)
     tmdb_id = models.IntegerField(unique=True, default=None)
     watch_party = StreamField([
@@ -26,6 +34,7 @@ class MoviePage(Page):
         FieldPanel('release_date'),
         FieldPanel('rating'),
         FieldPanel('poster'),
+        FieldPanel('image'),
         FieldPanel('language'),
         FieldPanel('tmdb_id'),
         FieldPanel('watch_party'),
@@ -37,15 +46,15 @@ class MoviesIndexPage(RoutablePageMixin, Page):
 
     def get_context(self, request):
         context = super(MoviesIndexPage, self).get_context(request)
-        context['movie_pages'] = MoviePage.objects.live().filter(rating__gte=7).order_by('-rating', '-release_date')
-        context['count'] = context['movie_pages'].count()
+        context['media'] = MoviePage.objects.live().filter(rating__gte=7).order_by('-rating', '-release_date')
+        context['count'] = context['media'].count()
         return context
 
     @route(r'^all/$')
     def get_all_movies(self, request):
         context = super(MoviesIndexPage, self).get_context(request)
-        context['movies'] = MoviePage.objects.live().order_by('title')
-        context['count'] = context['movies'].count()
+        context['media'] = MoviePage.objects.live().order_by('title')
+        context['count'] = context['media'].count()
         return render(request, 'ratings/get_all_movies.html', context)
 
 
@@ -55,6 +64,14 @@ class TvPage(Page):
     release_date = models.CharField(max_length=10, blank=True)
     rating = models.IntegerField(blank=True)
     poster = models.URLField(blank=True)
+    image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        help_text='Testing image pull from poster URLField'
+    )
     language = models.CharField(max_length=2, blank=True)
     tmdb_id = models.IntegerField(unique=True, default=None)
     watch_party = StreamField([
@@ -66,6 +83,7 @@ class TvPage(Page):
         FieldPanel('release_date'),
         FieldPanel('rating'),
         FieldPanel('poster'),
+        FieldPanel('image'),
         FieldPanel('language'),
         FieldPanel('tmdb_id'),
         FieldPanel('watch_party'),
@@ -77,15 +95,15 @@ class TvIndexPage(RoutablePageMixin, Page):
 
     def get_context(self, request):
         context = super(TvIndexPage, self).get_context(request)
-        context['tv_pages'] = TvPage.objects.live().filter(rating__gte=7).order_by('-rating', '-release_date')
-        context['count'] = context['tv_pages'].count()
+        context['media'] = TvPage.objects.live().filter(rating__gte=7).order_by('-rating', '-release_date')
+        context['count'] = context['media'].count()
         return context
 
     @route(r'^all/$')
     def get_all_tv_shows(self, request):
         context = super(TvIndexPage, self).get_context(request)
-        context['tv_shows'] = TvPage.objects.live().order_by('title')
-        context['count'] = context['tv_shows'].count()
+        context['media'] = TvPage.objects.live().order_by('title')
+        context['count'] = context['media'].count()
         return render(request, 'ratings/get_all_tv_shows.html', context)
 
 
