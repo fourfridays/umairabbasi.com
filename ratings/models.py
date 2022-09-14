@@ -15,6 +15,14 @@ class MoviePage(Page):
     release_date = models.CharField(max_length=10, blank=True)
     rating = models.IntegerField(blank=True)
     poster = models.URLField(blank=True)
+    image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        help_text='Testing image pull from poster URLField'
+    )
     language = models.CharField(max_length=2, blank=True)
     tmdb_id = models.IntegerField(unique=True, default=None)
     watch_party = StreamField([
@@ -26,6 +34,7 @@ class MoviePage(Page):
         FieldPanel('release_date'),
         FieldPanel('rating'),
         FieldPanel('poster'),
+        FieldPanel('image'),
         FieldPanel('language'),
         FieldPanel('tmdb_id'),
         FieldPanel('watch_party'),
@@ -55,6 +64,14 @@ class TvPage(Page):
     release_date = models.CharField(max_length=10, blank=True)
     rating = models.IntegerField(blank=True)
     poster = models.URLField(blank=True)
+    image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        help_text='Testing image pull from poster URLField'
+    )
     language = models.CharField(max_length=2, blank=True)
     tmdb_id = models.IntegerField(unique=True, default=None)
     watch_party = StreamField([
@@ -66,6 +83,7 @@ class TvPage(Page):
         FieldPanel('release_date'),
         FieldPanel('rating'),
         FieldPanel('poster'),
+        FieldPanel('image'),
         FieldPanel('language'),
         FieldPanel('tmdb_id'),
         FieldPanel('watch_party'),
