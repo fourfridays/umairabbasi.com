@@ -136,6 +136,13 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
+# Search Backends
+WAGTAILSEARCH_BACKENDS = {
+    'default': {
+        'BACKEND': 'wagtail.search.backends.database',
+    }
+}
+
 WSGI_APPLICATION = 'wsgi.application'
 
 DATABASE_URL = os.environ.get('DATABASE_URL', 'sqlite://:memory:')
