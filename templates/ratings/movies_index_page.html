@@ -14,7 +14,7 @@
                 <form class="form-inline" method="get">
                     <label class="mr-sm-2" for="inlineFormCustomSelect">Filter Ratings</label>
                     <select class="form-control form-control-sm custom-select mr-sm-2" onchange="javascript:location.href=this.value;">
-                        <option value="/ratings/movies/">Select...</option>
+                        <option value="/ratings/movies/">All Movies</option>
                         <option {% if rating == "top-rated" %}selected{%endif %} value="/ratings/movies/top-rated/">Top-Rated</option>
                         <option {% if rating == "recommended" %}selected{%endif %} value="/ratings/movies/recommended/">Recommended</option>
                         <option {% if rating == "not-recommended" %}selected{%endif %} value="/ratings/movies/not-recommended/">Not-Recommended</option>
