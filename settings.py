@@ -111,7 +111,7 @@ DIVIO_DOMAIN_REDIRECTS = [
 
 ALLOWED_HOSTS = [DIVIO_DOMAIN] + DIVIO_DOMAIN_ALIASES + DIVIO_DOMAIN_REDIRECTS
 
-CSRF_TRUSTED_ORIGINS = [os.environ.get('CSRF_TRUSTED_ORIGINS', default='https://www.umairabbasi.com')]
+CSRF_TRUSTED_ORIGINS = [os.environ.get('CSRF_TRUSTED_ORIGINS', default='https://umairabbasi.com')]
 
 # Redirect to HTTPS by default, unless explicitly disabled
 SECURE_SSL_REDIRECT = os.environ.get('SECURE_SSL_REDIRECT') != "False"
@@ -206,7 +206,7 @@ MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join('/data/media/')
 
 WAGTAIL_SITE_NAME = 'Umair Abbasi'
-WAGTAILADMIN_BASE_URL = 'https://www.umairabbasi.com/'
+WAGTAILADMIN_BASE_URL = 'https://umairabbasi.com/'
 
 FLICKR_API_KEY = os.getenv('FLICKR_API_KEY', default='')
 FLICKR_API_SECRET = os.getenv('FLICKR_API_SECRET', default='')
