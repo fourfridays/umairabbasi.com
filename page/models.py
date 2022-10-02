@@ -17,7 +17,7 @@ from .blocks import ImageGridBlock, BaseStreamBlock, SingleColumnBlock, TwoColum
 
 
 @register_snippet
-class People(index.Indexed, ClusterableModel):
+class People(ClusterableModel):
     """
     A Django model to store People objects.
     It uses the `@register_snippet` decorator to allow it to be accessible
@@ -66,11 +66,6 @@ class People(index.Indexed, ClusterableModel):
         FieldPanel('relationship'),
         FieldPanel('image'),
         FieldPanel('job_title'),
-    ]
-
-    search_fields = [
-        index.SearchField('first_name'),
-        index.SearchField('last_name'),
     ]
 
     @property
