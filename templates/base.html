@@ -36,7 +36,7 @@
         {% block head-extra %}{% endblock head-extra %}
     </head>
 
-    <body class="{% block body_class %}template-{{ self.get_verbose_name|slugify }}{% endblock %}">
+    <body class="{% block body_class %}template-{{ self.get_verbose_name|slugify }}{% endblock %} d-flex flex-column min-vh-100">
          <!-- Google Tag Manager (noscript) -->
         <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5D6PHTT"
         height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -51,13 +51,13 @@
             {% endblock header %}
         </header>
 
-        <main class="my-4" role="main">
+        <main class="my-lg-2" role="main">
             {% block content %}
             {% endblock content %}
         </main>
 
         <!-- Footer -->
-        <footer class="py-2 mt-4">
+        <footer class="py-2 mt-auto">
             {% include "includes/footer.html" %}
         </footer>
 
