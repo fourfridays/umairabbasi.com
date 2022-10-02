@@ -11,7 +11,7 @@ from wagtail.images.models import Image
 from ratings.models import MoviePage, TvPage
 from datetime import datetime
 
-import os, requests, pathlib
+import datetime, os, pathlib, requests
 
 
 class Command(BaseCommand):
@@ -32,7 +32,7 @@ class Command(BaseCommand):
 
         for movie in json_content['results']:
             try:
-                movie_page = MoviePage(tmdb_id=movie['id'], title=movie['title'], description=movie['overview'], release_date=movie['release_date'], rating=movie['rating'], poster='https://image.tmdb.org/t/p/'+poster_size+movie['poster_path'], language=movie['original_language'])
+                movie_page = MoviePage(tmdb_id=movie['id'], title=movie['title'], description=movie['overview'], release_date=datetime.datetime.strptime(movie['release_date'], '%Y-%m-%d').date(), rating=movie['rating'], poster='https://image.tmdb.org/t/p/'+poster_size+movie['poster_path'], language=movie['original_language'])
                 parent_page.add_child(instance=movie_page)
                 movie_page.save()
             except ValidationError:
@@ -55,7 +55,7 @@ class Command(BaseCommand):
 
             for movie in json_content['results']:
                 try:
-                    movie_page = MoviePage(tmdb_id=movie['id'], title=movie['title'], description=movie['overview'], release_date=movie['release_date'], rating=movie['rating'], poster='https://image.tmdb.org/t/p/'+poster_size+movie['poster_path'], language=movie['original_language'])
+                    movie_page = MoviePage(tmdb_id=movie['id'], title=movie['title'], description=movie['overview'], release_date=datetime.datetime.strptime(movie['release_date'], '%Y-%m-%d').date(), rating=movie['rating'], poster='https://image.tmdb.org/t/p/'+poster_size+movie['poster_path'], language=movie['original_language'])
                     parent_page.add_child(instance=movie_page)
                     movie_page.save()
                 except ValidationError:
@@ -83,7 +83,7 @@ class Command(BaseCommand):
 
         for tv in json_content['results']:
             try:
-                tv_page = TvPage(tmdb_id=tv['id'], title = tv['name'], description = tv['overview'], release_date = tv['first_air_date'], rating = tv['rating'], poster = 'https://image.tmdb.org/t/p/'+poster_size+tv['poster_path'], language = tv['original_language'])
+                tv_page = TvPage(tmdb_id=tv['id'], title = tv['name'], description = tv['overview'], release_date = datetime.datetime.strptime(tv['first_air_date'], '%Y-%m-%d').date(), rating = tv['rating'], poster = 'https://image.tmdb.org/t/p/'+poster_size+tv['poster_path'], language = tv['original_language'])
                 parent_page.add_child(instance=tv_page)
                 tv_page.save()
             except ValidationError:
@@ -105,7 +105,7 @@ class Command(BaseCommand):
 
             for tv in json_content['results']:
                 try:
-                    tv_page = TvPage(tmdb_id=tv['id'], title = tv['name'], description = tv['overview'], release_date = tv['first_air_date'], rating = tv['rating'], poster = 'https://image.tmdb.org/t/p/'+poster_size+tv['poster_path'], language = tv['original_language'])
+                    tv_page = TvPage(tmdb_id=tv['id'], title = tv['name'], description = tv['overview'], release_date = datetime.datetime.strptime(tv['first_air_date'], '%Y-%m-%d').date(), rating = tv['rating'], poster = 'https://image.tmdb.org/t/p/'+poster_size+tv['poster_path'], language = tv['original_language'])
                     parent_page.add_child(instance=tv_page)
                     tv_page.save()
                 except ValidationError:

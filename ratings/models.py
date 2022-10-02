@@ -13,7 +13,7 @@ from page.blocks import PersonDateBlock
 class MoviePage(Page):
     parent_page_types = ['MoviesIndexPage']
     description = models.TextField()
-    release_date = models.CharField(max_length=10, blank=True)
+    release_date = models.DateField()
     rating = models.IntegerField(blank=True)
     poster = models.URLField(blank=True)
     image = models.ForeignKey(
@@ -115,7 +115,7 @@ class MoviesIndexPage(RoutablePageMixin, Page):
 class TvPage(Page):
     parent_page_types = ['TvIndexPage']
     description = models.TextField()
-    release_date = models.CharField(max_length=10, blank=True)
+    release_date = models.DateField()
     rating = models.IntegerField(blank=True)
     poster = models.URLField(blank=True)
     image = models.ForeignKey(

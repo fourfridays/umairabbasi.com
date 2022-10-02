@@ -10,7 +10,7 @@
             </div>
             <div class="col-7 col-md-8">
                 <h1 class="text-white mb-1"><small>{{ page.title }}</small></h1>
-                <p><small>{{ page.rating }}/10 | Language: {{ page.language }}</small></p>
+                <p><small>{{ page.rating }}/10 | {{ page.release_date|date:'Y' }} | Language: {{ page.language }}</small></p>
                 <p>{{ page.description }}</p>
             </div>
         </div>
