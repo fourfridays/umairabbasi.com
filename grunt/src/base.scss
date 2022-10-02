@@ -19,9 +19,16 @@ a { color: #428bca; }
 
 .small { color: #acc1d5 }
 
-.bg-dark {
-    background-color: #4e4d4a !important;
+.bg-dark { background-color: #4e4d4a !important; }
+$dark-gray: #403F3C;
+.bg-dark-gray { 
+    background-color: $dark-gray; 
+    color: #E6E6E6; 
+    &:hover {
+        background-color: #4E4D4A !important;
+    }
 }
+
 .text-muted { color: #999 !important; }
 
 .assistive-text { /*For accessibility to skip navigation*/
