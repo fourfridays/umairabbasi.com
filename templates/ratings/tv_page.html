@@ -1,17 +1,37 @@
 {% extends "base.html" %}
 {% load wagtailcore_tags %}
-{% block body_class %}tv-show{% endblock %}
+{% block body_class %}tv{% endblock %}
 {% block title %}{{ page.title }}, TV show rating by Umair Abbasi{% endblock %}
 {% block head-extra %}<link rel="canonical" href="{{ page.full_url }}" />{% endblock head-extra %}
 
 
 {% block content %}
     <div class="container text-light p-4">
-        <div class="row">
-            <div class="offset-6 col-6 text-end mb-2">
-                <a class="btn btn-sm btn-secondary" href="/ratings/tv/">View All TV Shows</a>
+        <div class="row mt-lg-1 mb-2">
+            <div class="col-12 col-md-5 col-lg-5 col-xl-4 text-center text-md-start">
+                <h3 class="text-white"><small>Umair's {% if rating %} {{ rating|title }}{% endif %} TV Show Ratings</small></h3>
+            </div>
+            <div class="col-7 col-sm-7 col-md-4 col-lg-4 col-xl-6 text-center text-md-end">
+                <form action="{% url 'tv_search' %}" method="get">
+                    <label class="form-label visually-hidden" for="inlineMediaSearch">TV Show Search</label>
+                    <input id="inlineMediaSearch" type="text" name="query" value="{{ search_query }}" placeholder="TV Show Search">
+                    <input class="visually-hidden" type="submit" value="search">
+                </form>
+            </div>
+            <div class="col-5 col-sm-5 col-md-3 col-lg-3 col-xl-2 text-center text-md-end">
+                <form class="form-inline" method="get">
+                    <label class="visually-hidden" for="inlineFormCustomSelect">Filter</label>
+                    <select id="inlineFormCustomSelect" class="form-control form-control-sm custom-select mr-sm-2" onchange="javascript:location.href=this.value;">
+                        <option value="/ratings/tv/">Filter</option>
+                        <option {% if rating == "top-rated" %}selected{%endif %} value="/ratings/tv/top-rated/">Top-Rated</option>
+                        <option {% if rating == "recommended" %}selected{%endif %} value="/ratings/tv/recommended/">Recommended</option>
+                        <option {% if rating == "not-recommended" %}selected{%endif %} value="/ratings/tv/not-recommended/">Not-Recommended</option>
+                        <option value="/ratings/tv/">View All</option>
+                    </select> 
+                </form>
             </div>
         </div>
-        {% include "includes/ratings-specific-media.html" %}
+        <hr class="mt-0"/>
+        {% include "includes/ratings/ratings-specific-media.html" %}
     </div>
 {% endblock %}

@@ -31,8 +31,8 @@ class MoviePage(Page):
     ], use_json_field=True, default='', blank=True)
 
     search_fields = Page.search_fields + [ # Inherit search_fields from Page
-        index.SearchField('title'),
-        index.FilterField('rating'),
+        index.SearchField('title', partial_match=True),
+        index.FilterField('rating', partial_match=True),
     ]
 
     content_panels = Page.content_panels + [
@@ -132,6 +132,11 @@ class TvPage(Page):
         ('view_block', PersonDateBlock()),
     ], use_json_field=True, default='', blank=True)
 
+    search_fields = Page.search_fields + [ # Inherit search_fields from Page
+        index.SearchField('title', partial_match=True),
+        index.FilterField('rating', partial_match=True),
+    ]
+
     content_panels = Page.content_panels + [
         FieldPanel('description'),
         FieldPanel('release_date'),
@@ -153,7 +158,7 @@ class TvIndexPage(RoutablePageMixin, Page):
 
     def get_context(self, request):
         context = super(TvIndexPage, self).get_context(request)
-        context['media'] = TvPage.objects.live().filter(rating__gte=7).order_by('-rating', '-release_date')
+        context['media'] = TvPage.objects.live().filter(rating__gte=7).order_by('title')
         context['tv_count'] = context['media'].count()
         return context
 

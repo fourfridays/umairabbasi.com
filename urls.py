@@ -9,6 +9,7 @@ from wagtail.documents import urls as wagtaildocs_urls
 from wagtail.contrib.sitemaps.views import sitemap
 
 from blog import views as blog_views
+from ratings import views as ratings_search_views
 
 
 urlpatterns = [
@@ -17,6 +18,8 @@ urlpatterns = [
     re_path(r'^comment/', blog_views.article_comment),
 
     re_path(r'^robots\.txt', TemplateView.as_view(template_name='robots.txt', content_type='text/plain')),
+    re_path("ratings/movies/search/", ratings_search_views.movie_search, name="movie_search"),
+    re_path("ratings/tv/search/", ratings_search_views.tv_search, name="tv_search"),
     re_path(r'^sitemap\.xml$', sitemap),
     re_path(r'^admin/', include(wagtailadmin_urls)),
     re_path(r'^documents/', include(wagtaildocs_urls)),

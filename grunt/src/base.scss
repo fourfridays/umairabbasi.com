@@ -170,43 +170,24 @@ code {
 
 
 /*==============================
-=            MOVIES            =
+=       MOVIES & TV Shows      =
 ==============================*/
-.movies {
-    background: linear-gradient(#b94a48, #235789);
-    p {
-        line-height: 1;
-    }
+.movies { background: linear-gradient(#b94a48, #235789); }
+.tv { background: linear-gradient(#22272e, #235789); }
+
+.movies, .tv {
     .poster-bg {
         background: rgba(0,0,0, 0.38);
     }
-}
-.movie {
-    main {
-        background: linear-gradient(#b94a48, #235789);
-        .container {
-            .poster-bg {
-                background: rgba(0,0,0, 0.38);
-            }
+    form {
+        input#inlineMediaSearch {
+            font-size: 14px;
+            width: 199.33px;
+            height: 27px;
+            padding: 8px;
         }
-    }
-}
-.tv {
-    background: linear-gradient(#22272e, #235789);
-    p {
-        line-height: 1;
-    }
-    .poster-bg {
-        background: rgba(0,0,0, 0.38);
-    }
-}
-.tv-show {
-    main {
-        background: linear-gradient(#22272e, #235789);
-        .container {
-            .poster-bg {
-                background: rgba(0,0,0, 0.38);
-            }
+        select#inlineFormCustomSelect {
+            font-size: 12px;
         }
     }
 }

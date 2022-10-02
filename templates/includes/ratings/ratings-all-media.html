@@ -12,8 +12,8 @@
                             </picture>
                         </figure>
                     </a>
-                    <p class="mb-1"><small>{{ item.title }}</small></p>
-                    <p class="mb-0"><small><i class="las {% if item.specific.rating >= 8 %}la-star{% else %}la-star-half-alt{% endif %} swatch-red"></i> <strong>{{ item.specific.rating }}</strong>/10</small></p>
+                    <p class="lh-1 mb-1">{{ item.title }}</p>
+                    <p class="lh-1 mb-0"><small>{{ item.specific.rating }}/10</small></p>
                 </div>
             {% endfor %}
         </div>

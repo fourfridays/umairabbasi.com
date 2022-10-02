@@ -2,29 +2,37 @@
 {% load wagtailcore_tags %}
 {% wagtail_site as current_site %}
 {% block title %}TV Show Ratings by {{ current_site.site_name }}{% endblock %}
-{% block body_class %}{{ self.slug }}{% endblock %}
+{% block body_class %}tv{% endblock %}
 
 
 {% block content %}
     <div class="container text-light">
         <div class="row mt-4 mb-2">
-            <div class="col-7 col-sm-8 col-xl-10">
-                <h3 class="text-white"  ><small>Umair's {% if rating %} {{ rating|title }}{% endif %} TV Show Ratings</small></h3>
-                <p><small>Showing {{ tv_count }} TV Shows sorted alphabetically</small></p>
+            <div class="col-12 col-md-5 col-lg-5 col-xl-4 text-center text-md-start">
+                <h3 class="text-white"><small>Umair's {% if rating %} {{ rating|title }}{% endif %} TV Show Ratings</small></h3>
+                <p><small>{{ tv_count }} TV shows{% if search_query %} | Showing search results for: {{ search_query }}{% endif %}</small></p>
             </div>
-            <div class="col-5 col-sm-4 col-xl-2">
+            <div class="col-7 col-sm-7 col-md-4 col-lg-4 col-xl-6 text-center text-md-end">
+                <form action="{% url 'tv_search' %}" method="get">
+                    <label class="form-label visually-hidden" for="inlineMediaSearch">TV Search</label>
+                    <input id="inlineMediaSearch" type="text" name="query" value="{{ search_query }}" placeholder="TV Search">
+                    <input class="visually-hidden" type="submit" value="search">
+                </form>
+            </div>
+            <div class="col-5 col-sm-5 col-md-3 col-lg-3 col-xl-2 text-center text-md-end">
                 <form class="form-inline" method="get">
-                    <label for="inlineFormCustomSelect">Filter</label>
-                    <select class="form-control form-control-sm custom-select mr-sm-2" onchange="javascript:location.href=this.value;">
-                        <option value="/ratings/tv/">All TV Shows</option>
+                    <label class="visually-hidden" for="inlineFormCustomSelect">Filter</label>
+                    <select id="inlineFormCustomSelect" class="form-control form-control-sm custom-select mr-sm-2" onchange="javascript:location.href=this.value;">
+                        <option value="/ratings/tv/">Filter</option>
                         <option {% if rating == "top-rated" %}selected{%endif %} value="/ratings/tv/top-rated/">Top-Rated</option>
                         <option {% if rating == "recommended" %}selected{%endif %} value="/ratings/tv/recommended/">Recommended</option>
                         <option {% if rating == "not-recommended" %}selected{%endif %} value="/ratings/tv/not-recommended/">Not-Recommended</option>
+                        <option value="/ratings/tv/">View All</option>
                     </select> 
                 </form>
             </div>
         </div>
         <hr class="mt-0"/>
-        {% include "includes/ratings-all-media.html" %}
+        {% include "includes/ratings/ratings-all-media.html" %}
     </div>
 {% endblock %}
