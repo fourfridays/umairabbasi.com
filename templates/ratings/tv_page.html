@@ -20,9 +20,9 @@
             </div>
             <div class="col-5 col-sm-5 col-md-3 col-lg-3 col-xl-2 text-center text-md-end">
                 <form class="form-inline" method="get">
-                    <label class="visually-hidden" for="inlineFormCustomSelect">Filter</label>
-                    <select id="inlineFormCustomSelect" class="form-control form-control-sm custom-select mr-sm-2" onchange="javascript:location.href=this.value;">
-                        <option value="/ratings/tv/">Filter</option>
+                    <label class="visually-hidden" for="inlineFormRatingSelect">Rating Filter</label>
+                    <select id="inlineFormRatingSelect" class="form-control form-control-sm custom-select mr-sm-2" onchange="javascript:location.href=this.value;">
+                        <option value="/ratings/tv/">Rating Filter</option>
                         <option {% if rating == "top-rated" %}selected{%endif %} value="/ratings/tv/top-rated/">Top-Rated</option>
                         <option {% if rating == "recommended" %}selected{%endif %} value="/ratings/tv/recommended/">Recommended</option>
                         <option {% if rating == "not-recommended" %}selected{%endif %} value="/ratings/tv/not-recommended/">Not-Recommended</option>

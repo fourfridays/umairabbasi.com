@@ -11963,7 +11963,7 @@ code {
   height: 27px;
   padding: 8px;
 }
-.movies form select#inlineFormCustomSelect, .tv form select#inlineFormCustomSelect {
+.movies form select#inlineFormRatingSelect, .tv form select#inlineFormRatingSelect {
   font-size: 12px;
 }
 
