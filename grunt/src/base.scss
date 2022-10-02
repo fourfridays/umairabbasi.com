@@ -127,6 +127,9 @@ code {
     .dropdown-menu {
         @extend .bg-dark;
     }
+    .navbar-toggler {
+        font-size: 0.575em;
+    }
 }
 .navbar-default .navbar-toggle {
   border-color: #b94a48;
