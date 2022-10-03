@@ -31,7 +31,7 @@ defusedxml==0.7.1
     # via python3-openid
 dj-database-url==1.0.0
     # via -r requirements.in
-django==4.0.7
+django==4.1.1
     # via
     #   -r requirements.in
     #   dj-database-url
@@ -60,8 +60,10 @@ django-storage-url==0.9.0
     # via -r requirements.in
 django-storages==1.11.1
     # via django-storage-url
-django-taggit==2.1.0
-    # via wagtail
+django-taggit==3.0.0
+    # via
+    #   -r requirements.in
+    #   wagtail
 django-treebeard==4.5.1
     # via wagtail
 djangorestframework==3.12.4
