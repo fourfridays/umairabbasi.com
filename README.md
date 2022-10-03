@@ -1,5 +1,5 @@
 # Architecture
-This is my personal website viewable at https://umairabbasi.com. The website is built using [Wagtail](https://wagtail.org/) and hosted on [Divio](https://www.divio.com/). [Elasticsearch](https://www.elastic.co/) via [Bonsai](https://bonsai.io/) is used for search.
+This is my personal website viewable at https://umairabbasi.com. The website is built using [Wagtail](https://wagtail.org/) and hosted on [Divio](https://www.divio.com/). Search implemntation is via [Elasticsearch](https://www.elastic.co/) and [Bonsai](https://bonsai.io/).
 
 # Ratings App
 The idea behind naming it a ratings app is to keep it open to rating other products outside Movies and TV Shows.
