@@ -28,8 +28,9 @@
         {# Global stylesheets #}
         <link href='//fonts.googleapis.com/css?family=Frank+Ruhl+Libre|Oswald:500|Montserrat' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" type="text/css" href="{% static 'css/base.min.css' %}">
+        <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
         {% if self.seo_title == 'Home' %}<link rel="canonical" href="{{ page.full_url }}" />{% endif %}
-        <script defer src="{% static 'js/fontawesome-free.min.js' %}"></script>
+
         
         {% block head-extra %}{% endblock head-extra %}
     </head>
