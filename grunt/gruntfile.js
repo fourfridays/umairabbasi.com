@@ -19,7 +19,6 @@ module.exports = function(grunt) {
         dist: {
             files: {
                 '../static/js/base.min.js': ['<%= concat.dist.dest %>'],
-                '../static/js/fontawesome-free.min.js': ['node_modules/@fortawesome/fontawesome-free/js/all.js'],
             }
         }
     },
@@ -64,5 +63,4 @@ module.exports = function(grunt) {
 
     grunt.registerTask('default', ['concat', 'uglify', 'sass', 'cssmin', 'watch']);
     // grunt.registerTask('default', ['sass', 'watch']);
-
 };
