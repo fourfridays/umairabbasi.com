@@ -1,7 +1,7 @@
 """Node model and Node admin interaction."""
 
 from django import forms
-from django.urls import include, re_path
+from django.urls import re_path
 from django.contrib.admin.utils import quote, unquote
 from django.core.exceptions import PermissionDenied
 from django.core.validators import MinLengthValidator, RegexValidator
@@ -19,7 +19,7 @@ from wagtail.contrib.modeladmin.views import CreateView
 
 
 node_name_validator = RegexValidator(
-    regex='^[\w][a-zA-Z &]+$',
+    regex="^[\w][a-zA-Z &]+$",
     message="Letters, numbers and '&' only plus must start with a letter.",
 )
 
@@ -31,14 +31,14 @@ class Node(MP_Node):
     name = models.CharField(
         max_length=80,
         unique=True,
-        help_text='Keep the name short, ideally one word.',
-        validators=[node_name_validator, MinLengthValidator(4)]
+        help_text="Keep the name short, ideally one word.",
+        validators=[node_name_validator, MinLengthValidator(4)],
     )
     aliases = models.TextField(
-        'Also known as',
+        "Also known as",
         max_length=255,
         blank=True,
-        help_text="What else is this known as or referred to as?"
+        help_text="What else is this known as or referred to as?",
     )
 
     # node tree specific fields and attributes
@@ -47,57 +47,63 @@ class Node(MP_Node):
         default=0,
         editable=False
     )
-    node_child_verbose_name = 'child'
-    node_order_by = ['node_order_index', 'name']
+    node_child_verbose_name = "child"
+    node_order_by = ["node_order_index", "name"]
 
     panels = [
         # FieldPanel('parent'),  # virtual field - see TaxonomyForm
-        FieldPanel('name'),
-        FieldPanel('aliases', widget=forms.Textarea(attrs={'rows': '5'})),
+        FieldPanel("name"),
+        FieldPanel("aliases", widget=forms.Textarea(attrs={"rows": "5"})),
     ]
 
     def get_as_listing_header(self):
         """Build HTML representation of node with title & depth indication."""
         depth = self.get_depth()
         rendered = render_to_string(
-            'includes/node_list_header.html',
+            "includes/node_list_header.html",
             {
-                'depth': depth,
-                'depth_minus_1': depth - 1,
-                'is_root': self.is_root(),
-                'name': self.name,
-            }
+                "depth": depth,
+                "depth_minus_1": depth - 1,
+                "is_root": self.is_root(),
+                "name": self.name,
+            },
         )
         return rendered
-    get_as_listing_header.short_description = 'Name'
-    get_as_listing_header.admin_order_field = 'name'
+
+    get_as_listing_header.short_description = "Name"
+    get_as_listing_header.admin_order_field = "name"
 
     def get_parent(self, *args, **kwargs):
         """Duplicate of get_parent from treebeard API."""
         return super().get_parent(*args, **kwargs)
-    get_parent.short_description = 'Parent'
+
+    get_parent.short_description = "Parent"
 
     def delete(self):
         """Prevent users from deleting the root node."""
         if self.is_root():
-            raise PermissionDenied('Cannot delete root Taxonomy.')
+            raise PermissionDenied("Cannot delete root Taxonomy.")
         else:
             super().delete()
 
     def get_blog_categories():
-        return {'pk__in': Node.objects.get(name='Blog').get_children().values_list('id', flat=True)}
+        return {
+            "pk__in": Node.objects.get(name="Blog")
+            .get_children()
+            .values_list("id", flat=True)
+        }
 
     def __str__(self):
         return self.name
 
     class Meta:
-        verbose_name = 'Taxonomy'
-        verbose_name_plural = 'Taxonomies'
+        verbose_name = "Taxonomy"
+        verbose_name_plural = "Taxonomies"
 
 
 class BasicNodeChoiceField(forms.ModelChoiceField):
     def label_from_instance(self, obj):
-        depth_line = '-' * (obj.get_depth() - 1)
+        depth_line = "-" * (obj.get_depth() - 1)
         return "{} {}".format(depth_line, super().label_from_instance(obj))
 
 
@@ -111,23 +117,23 @@ class NodeForm(WagtailAdminModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        instance = kwargs['instance']
+        instance = kwargs["instance"]
 
         if instance.is_root() or Node.objects.count() == 0:
             # hide and disable the parent field
-            self.fields['parent'].disabled = True
-            self.fields['parent'].required = False
-            self.fields['parent'].empty_label = 'N/A - Root Node'
-            self.fields['parent'].widget = forms.HiddenInput()
+            self.fields["parent"].disabled = True
+            self.fields["parent"].required = False
+            self.fields["parent"].empty_label = "N/A - Root Node"
+            self.fields["parent"].widget = forms.HiddenInput()
 
             # update label to indicate this is the root
-            self.fields['name'].label += ' (Root)'
+            self.fields["name"].label += " (Root)"
         elif instance.id:
-            self.fields['parent'].initial = instance.get_parent()
+            self.fields["parent"].initial = instance.get_parent()
 
     def save(self, commit=True, *args, **kwargs):
         instance = super().save(commit=False, *args, **kwargs)
-        parent = self.cleaned_data['parent']
+        parent = self.cleaned_data["parent"]
 
         if not commit:
             # simply return the instance if not actually saving (committing)
@@ -141,7 +147,7 @@ class NodeForm(WagtailAdminModelForm):
         else:  # editing an existing node
             instance.save()  # update existing node
             if instance.get_parent() != parent:
-                instance.move(parent, pos='sorted-child')
+                instance.move(parent, pos="sorted-child")
         return instance
 
 
@@ -167,24 +173,23 @@ class NodeButtonHelper(ButtonHelper):
     def inspect_button(self, *args, **kwargs):
         """Replace the term 'Inspect' with 'Details' in listing buttons."""
         button = super().inspect_button(*args, **kwargs)
-        button['label'] = button['label'].replace('Inspect', 'Details')
-        button['title'] = button['label'].replace('Inspect', 'Details', 1)
+        button["label"] = button["label"].replace("Inspect", "Details")
+        button["title"] = button["label"].replace("Inspect", "Details", 1)
         return button
 
     def add_child_button(self, pk, child_verbose_name, **kwargs):
         """Build a add child button, to easily add a child under node."""
         classnames = self.prepare_classnames(
-            start=self.edit_button_classnames + ['icon', 'icon-plus'],
-            add=kwargs.get('classnames_add'),
-            exclude=kwargs.get('classnames_exclude')
+            start=self.edit_button_classnames + ["icon", "icon-plus"],
+            add=kwargs.get("classnames_add"),
+            exclude=kwargs.get("classnames_exclude"),
         )
         return {
-            'classname': classnames,
-            'label': 'Add %s %s' % (
-                child_verbose_name, self.verbose_name),
-            'title': 'Add %s %s under this one' % (
-                child_verbose_name, self.verbose_name),
-            'url': self.url_helper.get_action_url('add_child', quote(pk)),
+            "classname": classnames,
+            "label": "Add %s %s" % (child_verbose_name, self.verbose_name),
+            "title": "Add %s %s under this one"
+            % (child_verbose_name, self.verbose_name),
+            "url": self.url_helper.get_action_url("add_child", quote(pk)),
         }
 
     def get_buttons_for_obj(self, obj, exclude=None, *args, **kwargs):
@@ -193,7 +198,7 @@ class NodeButtonHelper(ButtonHelper):
 
         add_child_button = self.add_child_button(
             pk=getattr(obj, self.opts.pk.attname),
-            child_verbose_name=getattr(obj, 'node_child_verbose_name'),
+            child_verbose_name=getattr(obj, "node_child_verbose_name"),
             **kwargs
         )
         buttons.append(add_child_button)
@@ -217,15 +222,15 @@ class AddChildNodeViewClass(CreateView):
     def get_page_title(self):
         """Generate a title that explains you are adding a child."""
         title = super().get_page_title()
-        return title + ' %s %s for %s' % (
+        return title + " %s %s for %s" % (
             self.model.node_child_verbose_name,
             self.opts.verbose_name,
-            self.parent_instance
+            self.parent_instance,
         )
 
     def get_initial(self):
         """Set the selected parent field to the parent_pk."""
-        return {'parent': self.parent_pk}
+        return {"parent": self.parent_pk}
 
 
 class NodeAdmin(ModelAdmin):
@@ -234,17 +239,17 @@ class NodeAdmin(ModelAdmin):
     model = Node
 
     # admin menu options
-    menu_icon = 'fa-cube'  # using wagtail fontawesome
+    menu_icon = "fa-cube"  # using wagtail fontawesome
     menu_order = 800
 
     # listing view options
-    list_display = ('get_as_listing_header', 'get_parent', 'aliases')
+    list_display = ("get_as_listing_header", "get_parent", "aliases")
     list_per_page = 50
-    search_fields = ('name', 'aliases')
+    search_fields = ("name", "aliases")
 
     # inspect view options
     inspect_view_enabled = True
-    inspect_view_fields = ('name', 'get_parent', 'aliases', 'id')
+    inspect_view_fields = ("name", "get_parent", "aliases", "id")
 
     # other overrides
     button_helper_class = NodeButtonHelper
@@ -252,7 +257,7 @@ class NodeAdmin(ModelAdmin):
     def add_child_view(self, request, instance_pk):
         """Generate a class-based view to provide 'add child' functionality."""
         # instance_pk will become the default selected parent_pk
-        kwargs = {'model_admin': self, 'parent_pk': instance_pk}
+        kwargs = {"model_admin": self, "parent_pk": instance_pk}
         view_class = AddChildNodeViewClass
         return view_class.as_view(**kwargs)(request)
 
@@ -260,8 +265,8 @@ class NodeAdmin(ModelAdmin):
         """Add the new url for add child page to the registered URLs."""
         urls = super().get_admin_urls_for_registration()
         add_child_url = re_path(
-            self.url_helper.get_action_url_pattern('add_child'),
+            self.url_helper.get_action_url_pattern("add_child"),
             self.add_child_view,
-            name=self.url_helper.get_action_url_name('add_child')
+            name=self.url_helper.get_action_url_name("add_child"),
         )
-        return urls + (add_child_url, )
+        return urls + (add_child_url,)
