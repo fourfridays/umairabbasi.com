@@ -1,5 +1,4 @@
 from django.db import models
-from django.shortcuts import render
 
 from wagtail.models import Page
 from wagtail.fields import StreamField
@@ -71,10 +70,8 @@ class MoviesIndexPage(RoutablePageMixin, Page):
         View function for must-watch movies
         """
         filtered_results = MoviePage.objects.filter(
-            rating__gte=7
-        ).order_by(
-            "title"
-        )
+                           rating__gte=7
+                           ).order_by("title")
         movie_count = self.get_movie_count(filtered_results)
 
         return self.render(
@@ -113,8 +110,8 @@ class MoviesIndexPage(RoutablePageMixin, Page):
         View function for must-watch movies
         """
         filtered_results = MoviePage.objects.filter(
-            rating__lte=3
-        ).order_by("title")
+                           rating__lte=3
+                            ).order_by("title")
         movie_count = self.get_movie_count(filtered_results)
 
         return self.render(
@@ -179,8 +176,7 @@ class TvIndexPage(RoutablePageMixin, Page):
     def get_context(self, request):
         context = super(TvIndexPage, self).get_context(request)
         context["media"] = TvPage.objects.live().filter(
-            rating__gte=7
-        ).order_by("title")
+                           rating__gte=7).order_by("title")
         context["tv_count"] = context["media"].count()
         return context
 
@@ -190,8 +186,7 @@ class TvIndexPage(RoutablePageMixin, Page):
         View function for must-watch movies
         """
         filtered_results = TvPage.objects.filter(
-            rating__gte=7
-        ).order_by("title")
+                           rating__gte=7).order_by("title")
         tv_count = self.get_tv_count(filtered_results)
 
         return self.render(
@@ -210,10 +205,8 @@ class TvIndexPage(RoutablePageMixin, Page):
         """
         filtered_results = (
             TvPage.objects.filter(
-                rating__gte=4
-            ).filter(
-                rating__lte=6
-            ).order_by("title")
+                           rating__gte=4
+                           ).filter(rating__lte=6).order_by("title")
         )
         tv_count = self.get_tv_count(filtered_results)
 
@@ -232,8 +225,7 @@ class TvIndexPage(RoutablePageMixin, Page):
         View function for must-watch movies
         """
         filtered_results = TvPage.objects.filter(
-            rating__lte=3
-        ).order_by("title")
+                           rating__lte=3).order_by("title")
         tv_count = self.get_tv_count(filtered_results)
 
         return self.render(
