@@ -60,7 +60,7 @@ class MoviesIndexPage(RoutablePageMixin, Page):
 
     def get_context(self, request):
         context = super(MoviesIndexPage, self).get_context(request)
-        context["media"] = MoviePage.objects.live().order_by("title")
+        context["media"] = MoviePage.objects.live().order_by("-release_date")
         context["movie_count"] = self.get_movie_count(context["media"])
         return context
 
@@ -71,7 +71,7 @@ class MoviesIndexPage(RoutablePageMixin, Page):
         """
         filtered_results = MoviePage.objects.filter(
                            rating__gte=7
-                           ).order_by("title")
+                           ).order_by("-release_date")
         movie_count = self.get_movie_count(filtered_results)
 
         return self.render(
@@ -91,7 +91,7 @@ class MoviesIndexPage(RoutablePageMixin, Page):
         filtered_results = (
             MoviePage.objects.filter(rating__gte=4)
             .filter(rating__lte=6)
-            .order_by("title")
+            .order_by("-release_date")
         )
         movie_count = self.get_movie_count(filtered_results)
 
@@ -111,7 +111,7 @@ class MoviesIndexPage(RoutablePageMixin, Page):
         """
         filtered_results = MoviePage.objects.filter(
                            rating__lte=3
-                            ).order_by("title")
+                            ).order_by("-release_date")
         movie_count = self.get_movie_count(filtered_results)
 
         return self.render(
@@ -176,7 +176,7 @@ class TvIndexPage(RoutablePageMixin, Page):
     def get_context(self, request):
         context = super(TvIndexPage, self).get_context(request)
         context["media"] = TvPage.objects.live().filter(
-                           rating__gte=7).order_by("title")
+                           rating__gte=7).order_by("-release_date")
         context["tv_count"] = context["media"].count()
         return context
 
@@ -186,7 +186,7 @@ class TvIndexPage(RoutablePageMixin, Page):
         View function for must-watch movies
         """
         filtered_results = TvPage.objects.filter(
-                           rating__gte=7).order_by("title")
+                           rating__gte=7).order_by("-release_date")
         tv_count = self.get_tv_count(filtered_results)
 
         return self.render(
@@ -206,7 +206,7 @@ class TvIndexPage(RoutablePageMixin, Page):
         filtered_results = (
             TvPage.objects.filter(
                            rating__gte=4
-                           ).filter(rating__lte=6).order_by("title")
+                           ).filter(rating__lte=6).order_by("-release_date")
         )
         tv_count = self.get_tv_count(filtered_results)
 
@@ -225,7 +225,7 @@ class TvIndexPage(RoutablePageMixin, Page):
         View function for must-watch movies
         """
         filtered_results = TvPage.objects.filter(
-                           rating__lte=3).order_by("title")
+                           rating__lte=3).order_by("-release_date")
         tv_count = self.get_tv_count(filtered_results)
 
         return self.render(
