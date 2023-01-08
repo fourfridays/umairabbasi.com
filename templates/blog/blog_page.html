@@ -165,7 +165,7 @@
                                 <img class="mb-2 img-fluid" {{ recentheroimage.attrs }}/>
                             </picture>
                         </a>
-                        <h5 class="mb-0 text-uppercase">{{ post.title }}</h5>
+                        <a href="{{ post.url }}"><h5 class="mb-0 text-uppercase">{{ post.title }}</h5></a>
                         <p class="small">{{ post.date_published }}</p>
                     </div>
                 {% endfor %}
