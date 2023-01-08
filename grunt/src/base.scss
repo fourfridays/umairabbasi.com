@@ -2,10 +2,10 @@
 
 
 body {
-    font-family: 'Frank Ruhl Libre', serif;
-    font-size: 18px;
-    color: #adbac7;
-    background-color: #22272e;
+    font-family: 'Montserrat', serif;
+    font-size: 16px;
+    color: rgba(246, 247, 238, 1.00);
+    background-color: rgba(17, 28, 42, 1.00);
 }
 
 h1,
@@ -15,7 +15,7 @@ h4,
 h5,
 h6 {
     font-family: 'Oswald', sans-serif;
-    color: #adbac7;
+    color: rgba(249, 181, 55, 1.00);
 }
 
 h1 {
@@ -23,11 +23,13 @@ h1 {
 }
 
 a {
-    color: #428bca;
+    color: rgba(84, 193, 220, 1.00);
 }
 
-.small {
-    color: #acc1d5
+i {
+    &.fa, &.fas {
+        color: rgba(111, 78, 188, 1.00);
+    }
 }
 
 .bg-dark {
@@ -107,13 +109,9 @@ figure img {
     }
 }
 
-.swatch-red {
-    color: #b94a48;
-}
-
 code {
-    color: #d63384;
-    background-color: #000;
+    color: rgba(246, 247, 238, 1.00);
+    background-color: rgba(23, 33, 52, 1.00);
     padding: 12px;
     display: block;
 }
@@ -175,20 +173,6 @@ code {
    ========================================================================== */
 /* Hero Images */
 .hero-image figure {
-    figcaption {
-        background-color: rgba(43, 78, 114, 0.88);
-
-        h1 {
-            color: #f0f0f0;
-            font-size: 2.4rem;
-            letter-spacing: -0.03rem;
-        }
-
-        small {
-            color: #d2d2d2;
-        }
-    }
-
     .photo-credit {
         position: absolute;
         /* absolute position (so we can position it where we want)*/
@@ -275,14 +259,6 @@ footer {
                 }
             }
 
-            a {
-                color: #2790b0;
-
-                &:hover {
-                    color: #fff;
-                }
-            }
-
             &.copyright {
                 color: #b94a48;
                 font-size: 14px;
@@ -364,14 +340,6 @@ code {
         }
     }
 
-    .hero-image figure {
-        figcaption {
-            h1 {
-                font-size: 1.4rem;
-            }
-        }
-    }
-
     footer ul {
         text-align: center;
     }
@@ -383,18 +351,6 @@ code {
 
 /* Landscape phones and down */
 @media (max-width: 480px) {
-    .hero-image figure {
-        figcaption {
-            h1 {
-                font-size: 1.1rem;
-            }
-
-            small {
-                font-size: 0.88rem;
-            }
-        }
-    }
-
     /* ==========================================================================
   BLOG
    ========================================================================== */
