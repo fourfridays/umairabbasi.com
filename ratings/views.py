@@ -16,6 +16,7 @@ def movie_search(request):
             request,
             "ratings/movies_index_page.html",
             {
+                "title": "Movie Search Results",
                 "search_query": search_query,
                 "movie_count": movie_count,
                 "media": search_results,
@@ -46,6 +47,7 @@ def tv_search(request):
             request,
             "ratings/tv_index_page.html",
             {
+                "title": "TV Show Search Results",
                 "search_query": search_query,
                 "tv_count": tv_count,
                 "media": search_results,
