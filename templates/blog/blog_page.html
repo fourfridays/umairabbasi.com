@@ -150,12 +150,11 @@
             {% endif %}
         {% endfor %}
 
+        <hr/>
+
         <!-- RECENT POSTS -->
         {% if recent_posts %}
             <div class="row">
-                <div class="col-md-12 text-center my-4">
-                    <h3 class="text-uppercase">Other Good Reads</h3>
-                </div>
                 {% for post in recent_posts %}
                     <div class="col-md-4">
                         {% image post.hero_image fill-540x229-c100 as recentheroimage %}
