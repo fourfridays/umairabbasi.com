@@ -10,26 +10,24 @@
     {% if page.hero_image %}
         {% image page.hero_image fill-2400x658-c100 jpegquality-60 as heroimage %}
         {% image page.hero_image fill-2400x658-c100 format-webp as webp_heroimage %}
+        <div class="text-center p-lg-3 p-2">
+            <h1 class="text-uppercase card-title">{{ page.title }}</h1>
+            <hr class="m-0">
+            <p class="small hidden-sm"> 
+                {% for person in page.authors %}
+                    {{ person.first_name }} {{ person.last_name }} | {{ page.date_published }}        
+                {% endfor %}
+                {% if page.category %}
+                    | {{ page.category.name }}
+                {% endif %}
+            </p>
+        </div>
         <div class="hero-image card border-0">
             <figure class="mb-0">
                 <picture>
                     <source srcset="{{ webp_heroimage.url }}" type="image/webp">
                     <img class="card-img rounded-0" {{ heroimage.attrs }}/>
                 </picture>
-                <div class="card-img-overlay d-flex flex-column justify-content-center">
-                    <figcaption class="text-center p-lg-3 p-2">
-                        <h1 class="text-uppercase card-title">{{ page.title }}</h1>
-                        <hr class="m-0">
-                        <p class="small hidden-sm"> 
-                            {% for person in page.authors %}
-                                {{ person.first_name }} {{ person.last_name }} | {{ page.date_published }}        
-                            {% endfor %}
-                            {% if page.category %}
-                                | {{ page.category.name }}
-                            {% endif %}
-                        </p>
-                    </figcaption>
-                </div>
             </figure>
         </div>
     {% endif %}
