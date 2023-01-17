@@ -83,7 +83,7 @@ class PersonDateBlock(StructBlock):
     )
 
     panels = [
-        # Use a SnippetChooserPanel because blog.BlogAuthor is registered 
+        # Use a SnippetChooserPanel because blog.BlogAuthor is registered
         # as a snippet
         FieldPanel("people"),
     ]
@@ -146,14 +146,11 @@ class ImageGridBlock(StreamBlock):
                 max_length=26,
                 help_text="26 characters limit"
             )),
-            (
-                "description",
-                CharBlock(
+            ("description", CharBlock(
                     max_length=300,
                     required=False,
                     help_text="300 characters limit"
-                ),
-            ),
+            )),
             ("link", PageChooserBlock(required=False)),
         ]
     )
@@ -165,7 +162,7 @@ class ImageGridBlock(StreamBlock):
 
 class HeadingBlock(StructBlock):
     """
-    Custom `StructBlock` that allows the user to select h2 - h6 
+    Custom `StructBlock` that allows the user to select h2 - h6
     sizes for headers
     """
 
