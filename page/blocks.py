@@ -204,10 +204,11 @@ class BaseStreamBlock(StreamBlock):
     image_grid_block = ImageGridBlock()
     document_block = DocumentBlock()
     embed_block = EmbedBlock(
-        help_text="Insert an embed URL \
+        max_width = "1200",
+        help_text="Insert a URL \
         e.g https://www.youtube.com/embed/SGJFWirQ3ks",
         icon="code",
-        template="blocks/embed_block.html",
+        template="blocks/embed_block.html"
     )
     icon_block = IconBlock()
     table = TableBlock(template="includes/table.html")
