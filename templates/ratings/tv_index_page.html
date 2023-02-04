@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load wagtailcore_tags %}
 {% wagtail_site as current_site %}
-{% block title %}TV Show Ratings by {{ current_site.site_name }}{% endblock %}
+{% block title %}{{ title }} by {{ current_site.site_name }}{% endblock %}
 {% block body_class %}tv{% endblock %}
 
 
@@ -9,7 +9,7 @@
     <div class="container text-light">
         <div class="row mt-3 mb-2">
             <div class="col-12 col-md-5 col-lg-5 col-xl-6 text-center text-md-start">
-                <h3 class="text-white">Umair's {% if rating %} {{ rating|title }}{% endif %} TV Show Ratings</h3>
+                <h3 class="text-white">{{ title }}</h3>
                 <p class="mb-1"><small>{{ tv_count }} TV shows{% if search_query %} | Showing search results for: {{ search_query }}{% endif %}</small></p>
             </div>
             <div class="col-7 col-sm-7 col-md-4 col-lg-4 col-xl-4 text-center text-md-end">

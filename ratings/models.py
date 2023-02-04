@@ -60,6 +60,7 @@ class MoviesIndexPage(RoutablePageMixin, Page):
 
     def get_context(self, request):
         context = super(MoviesIndexPage, self).get_context(request)
+        context['title'] = "Movie Ratings"
         context["media"] = MoviePage.objects.live().order_by("-release_date")
         context["movie_count"] = self.get_movie_count(context["media"])
         return context
@@ -77,6 +78,7 @@ class MoviesIndexPage(RoutablePageMixin, Page):
         return self.render(
             request,
             context_overrides={
+                "title": "Movies Rated: Top-Rated",
                 "rating": "top-rated",
                 "media": filtered_results,
                 "movie_count": movie_count,
@@ -98,6 +100,7 @@ class MoviesIndexPage(RoutablePageMixin, Page):
         return self.render(
             request,
             context_overrides={
+                "title": "Movies Rated: Recommended",
                 "rating": "recommended",
                 "media": filtered_results,
                 "movie_count": movie_count,
@@ -117,6 +120,7 @@ class MoviesIndexPage(RoutablePageMixin, Page):
         return self.render(
             request,
             context_overrides={
+                "title": "Movies Rated: Not-Recommended",
                 "rating": "not-recommended",
                 "media": filtered_results,
                 "movie_count": movie_count,
@@ -175,6 +179,7 @@ class TvIndexPage(RoutablePageMixin, Page):
 
     def get_context(self, request):
         context = super(TvIndexPage, self).get_context(request)
+        context['title'] = "TV Show Ratings"
         context["media"] = TvPage.objects.live().filter(
                            rating__gte=7).order_by("-release_date")
         context["tv_count"] = context["media"].count()
@@ -192,6 +197,7 @@ class TvIndexPage(RoutablePageMixin, Page):
         return self.render(
             request,
             context_overrides={
+                "title": "TV Shows Rated: Top-Rated",
                 "rating": "top-rated",
                 "media": filtered_results,
                 "tv_count": tv_count,
@@ -213,6 +219,7 @@ class TvIndexPage(RoutablePageMixin, Page):
         return self.render(
             request,
             context_overrides={
+                "title": "TV Shows Rated: Recommended",
                 "rating": "recommended",
                 "media": filtered_results,
                 "tv_count": tv_count,
@@ -231,6 +238,7 @@ class TvIndexPage(RoutablePageMixin, Page):
         return self.render(
             request,
             context_overrides={
+                "title": "TV Shows Rated: Not-Recommended",
                 "rating": "not-recommended",
                 "media": filtered_results,
                 "tv_count": tv_count,

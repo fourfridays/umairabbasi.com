@@ -2,41 +2,63 @@
 
 
 body {
-    font-family: 'Frank Ruhl Libre', serif;
-    font-size: 18px;
-    color: #adbac7;
-    background-color: #22272e;
+    font-family: 'Montserrat', serif;
+    font-size: 16px;
+    color: rgba(246, 247, 238, 1.00);
+    background-color: rgba(17, 28, 42, 1.00);
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-family: 'Oswald', sans-serif;
-    color: #adbac7;
+    color: rgba(249, 181, 55, 1.00);
 }
 
-h1 { text-transform: uppercase; }
+h1 {
+    text-transform: uppercase;
+}
 
-a { color: #428bca; }
+a {
+    color: rgba(84, 193, 220, 1.00);
+}
 
-.small { color: #acc1d5 }
+i {
+    &.fa, &.fas {
+        color: rgba(111, 78, 188, 1.00);
+    }
+}
 
-.bg-dark { background-color: #4e4d4a !important; }
+.bg-dark {
+    background-color: #4e4d4a !important;
+}
+
 $dark-gray: #403F3C;
-.bg-dark-gray { 
-    background-color: $dark-gray; 
-    color: #E6E6E6; 
+
+.bg-dark-gray {
+    background-color: $dark-gray;
+    color: #E6E6E6;
+
     &:hover {
         background-color: #4E4D4A !important;
     }
 }
 
-.text-muted { color: #999 !important; }
+.text-muted {
+    color: #999 !important;
+}
 
-.assistive-text { /*For accessibility to skip navigation*/
+.assistive-text {
+    /*For accessibility to skip navigation*/
     clip: rect(1px, 1px, 1px, 1px);
     position: absolute !important;
 }
 
-.btn-label { /*To hide empty links on social media links*/
+.btn-label {
+    /*To hide empty links on social media links*/
     font-size: 0;
     height: 1px;
     overflow: hidden;
@@ -46,12 +68,15 @@ $dark-gray: #403F3C;
 .richtext-image {
     @extend .img-fluid;
 }
+
 .richtext-image.start {
     @extend .float-start;
 }
+
 .richtext-image.end {
     @extend .float-end;
 }
+
 /* Extends images added via the image field for mobile responsiveness*/
 figure img {
     @extend .img-fluid;
@@ -71,8 +96,11 @@ figure img {
     line-height: 1.42857;
     margin-bottom: 20px;
     padding: 4px;
-    transition: border 0.2s ease-in-out 0s; 
-    iframe, object, embed {
+    transition: border 0.2s ease-in-out 0s;
+
+    iframe,
+    object,
+    embed {
         position: absolute;
         top: 0;
         left: 0;
@@ -80,13 +108,10 @@ figure img {
         height: 100%;
     }
 }
-.swatch-red {
-    color: #b94a48;
-}
 
 code {
-    color: #d63384;
-    background-color: #000;
+    color: rgba(246, 247, 238, 1.00);
+    background-color: rgba(23, 33, 52, 1.00);
     padding: 12px;
     display: block;
 }
@@ -99,14 +124,16 @@ code {
 .navbar {
     li {
         &.active {
-            & > a {
+            &>a {
                 background-color: #b94a48 !important;
             }
         }
     }
-    a {   
+
+    a {
         text-transform: uppercase;
         color: #fff !important;
+
         &.navbar-brand {
             font-family: 'Montserrat', sans-serif;
             font-size: 18px;
@@ -116,23 +143,28 @@ code {
             text-transform: uppercase;
             padding: 0.5rem 0.9rem;
         }
+
         &.nav-link {
             padding: 0.59rem 0.9rem !important;
             font-size: 1rem;
         }
+
         &:hover {
             background-color: #b94a48;
         }
     }
+
     .dropdown-menu {
         @extend .bg-dark;
     }
+
     .navbar-toggler {
         font-size: 0.575em;
     }
 }
+
 .navbar-default .navbar-toggle {
-  border-color: #b94a48;
+    border-color: #b94a48;
 }
 
 
@@ -141,26 +173,19 @@ code {
    ========================================================================== */
 /* Hero Images */
 .hero-image figure {
-    figcaption {
-        background-color: rgba(43, 78, 114, 0.88);
-        h1 {
-            color: #f0f0f0;
-            font-size: 2.4rem;
-            letter-spacing: -0.03rem;
-        }
-        small {
-            color: #d2d2d2;
-        }
-    }
     .photo-credit {
-        position: absolute; /* absolute position (so we can position it where we want)*/
-        bottom: 0; /* position will be on bottom */
+        position: absolute;
+        /* absolute position (so we can position it where we want)*/
+        bottom: 0;
+        /* position will be on bottom */
         width: auto;
         right: 0;
         background-color: #000;
         color: #fff;
-        opacity: 0.5; /* transparency */
-        filter: alpha(opacity=50); /* IE transparency */
+        opacity: 0.5;
+        /* transparency */
+        filter: alpha(opacity=50);
+        /* IE transparency */
     }
 }
 
@@ -172,13 +197,20 @@ code {
 /*==============================
 =       MOVIES & TV Shows      =
 ==============================*/
-.movies { background: linear-gradient(#b94a48, #235789); }
-.tv { background: linear-gradient(#22272e, #235789); }
+.movies {
+    background: linear-gradient(#b94a48, #235789);
+}
 
-.movies, .tv {
+.tv {
+    background: linear-gradient(#22272e, #235789);
+}
+
+.movies,
+.tv {
     .poster-bg {
-        background: rgba(0,0,0, 0.38);
+        background: rgba(0, 0, 0, 0.38);
     }
+
     form {
         input#inlineMediaSearch {
             font-size: 14px;
@@ -186,6 +218,7 @@ code {
             height: 27px;
             padding: 8px;
         }
+
         select#inlineFormRatingSelect {
             font-size: 12px;
         }
@@ -199,10 +232,12 @@ code {
 footer {
     background-color: #403F3C;
     overflow: hidden;
+
     div {
         &.text-end {
             ul {
                 list-style: none;
+
                 li {
                     a {
                         font-size: 14px;
@@ -211,21 +246,19 @@ footer {
             }
         }
     }
+
     ul {
         padding: 0;
+
         li {
             svg {
                 color: #fff;
+
                 &:hover {
                     color: #b94a48;
                 }
             }
-            a {
-                color: #2790b0;
-                &:hover {
-                    color: #fff;
-                }
-            }
+
             &.copyright {
                 color: #b94a48;
                 font-size: 14px;
@@ -240,39 +273,47 @@ footer {
 code {
     white-space: normal;
 }
+
 .codeColor {
     margin: 30px 0;
+
     code {
         &.swatchFooterGrey {
             background-color: #403F3C;
             padding: 20px;
             color: #fff;
         }
+
         &.swatchDarkGrey {
             background-color: #4E4D4A;
             padding: 20px;
             color: #fff;
         }
+
         &.swatchDarkBlue {
             background-color: #2B4E72;
             padding: 20px;
             color: #fff;
         }
+
         &.swatchBlue {
             background-color: #2790B0;
             padding: 20px;
             color: #fff;
         }
+
         &.swatchRed {
             background-color: #B94A48;
             padding: 20px;
             color: #fff;
         }
+
         &.swatchGrey {
             background-color: #999999;
             padding: 20px;
             color: #fff;
         }
+
         &.swatchLightGrey {
             background-color: #E6E6E6;
             padding: 20px;
@@ -286,11 +327,11 @@ code {
    ========================================================================== */
 
 /* Large desktop */
-@media (min-width: 1200px) {  }
- 
+@media (min-width: 1200px) {}
+
 /* Portrait tablet to landscape and desktop */
-@media (min-width: 768px) and (max-width: 979px) {  }
- 
+@media (min-width: 768px) and (max-width: 979px) {}
+
 /* Landscape phone to portrait tablet */
 @media (max-width: 767px) {
     header {
@@ -298,16 +339,11 @@ code {
             padding: 0.5rem 1rem !important;
         }
     }
-    .hero-image figure {
-        figcaption {
-            h1 {
-                font-size: 1.4rem;
-            }
-        }
-    }
+
     footer ul {
         text-align: center;
     }
+
     article .blogListing ul {
         padding: 0;
     }
@@ -315,17 +351,7 @@ code {
 
 /* Landscape phones and down */
 @media (max-width: 480px) {
-    .hero-image figure {
-        figcaption {
-            h1 {
-                font-size: 1.1rem;
-            }
-            small {
-                font-size: 0.88rem;
-            }
-        }
-    }
-/* ==========================================================================
+    /* ==========================================================================
   BLOG
    ========================================================================== */
     .blog-index {

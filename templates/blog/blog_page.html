@@ -10,26 +10,24 @@
     {% if page.hero_image %}
         {% image page.hero_image fill-2400x658-c100 jpegquality-60 as heroimage %}
         {% image page.hero_image fill-2400x658-c100 format-webp as webp_heroimage %}
+        <div class="text-center p-lg-3 p-2">
+            <h1 class="text-uppercase card-title">{{ page.title }}</h1>
+            <hr class="m-0">
+            <p class="small hidden-sm"> 
+                {% for person in page.authors %}
+                    {{ person.first_name }} {{ person.last_name }} | {{ page.date_published }}        
+                {% endfor %}
+                {% if page.category %}
+                    | {{ page.category.name }}
+                {% endif %}
+            </p>
+        </div>
         <div class="hero-image card border-0">
             <figure class="mb-0">
                 <picture>
                     <source srcset="{{ webp_heroimage.url }}" type="image/webp">
                     <img class="card-img rounded-0" {{ heroimage.attrs }}/>
                 </picture>
-                <div class="card-img-overlay d-flex flex-column justify-content-center">
-                    <figcaption class="text-center p-lg-3 p-2">
-                        <h1 class="text-uppercase card-title">{{ page.title }}</h1>
-                        <hr class="m-0">
-                        <p class="small hidden-sm"> 
-                            {% for person in page.authors %}
-                                {{ person.first_name }} {{ person.last_name }} | {{ page.date_published }}        
-                            {% endfor %}
-                            {% if page.category %}
-                                | {{ page.category.name }}
-                            {% endif %}
-                        </p>
-                    </figcaption>
-                </div>
             </figure>
         </div>
     {% endif %}
@@ -67,7 +65,7 @@
         </div>
 
         <!-- COMMENT -->
-        <div class="row my-3">
+        <div class="row text-center my-3">
             <div class="offset-md-2 col-md-8">
                 {% if user.is_authenticated %}
                     <p class="small">You are logged in as <strong>{{ request.user.username }}</strong>. <a href="/logout/">Logout</a></p>
@@ -84,7 +82,7 @@
                 {% else %}
                     {% get_providers as socialaccount_providers %}
 
-                    <h4>Please sign in to comment</h4>
+                    <h5>Please sign in to comment</h5>
 
                     {% include "socialaccount/snippets/provider_list.html" with process="login" %}
                 {% endif %}
@@ -92,7 +90,7 @@
         </div>
 
         {% if comments %}
-            <div class="row text-center">
+            <div class="row text">
                 <div class="col-12">
                     <h3 class="text-uppercase">Comments ({{ comment_count }})</h3>
                 </div>
@@ -152,12 +150,11 @@
             {% endif %}
         {% endfor %}
 
+        <hr/>
+
         <!-- RECENT POSTS -->
         {% if recent_posts %}
             <div class="row">
-                <div class="col-md-12 text-center my-4">
-                    <h3 class="text-uppercase">Other Good Reads</h3>
-                </div>
                 {% for post in recent_posts %}
                     <div class="col-md-4">
                         {% image post.hero_image fill-540x229-c100 as recentheroimage %}
@@ -165,10 +162,10 @@
                         <a href="{{ post.url }}">
                             <picture>
                                 <source srcset="{{ webp_recent_heroimage.url }}" type="image/webp">
-                                <img class="mb-2 img-fluid" {{ heroimage.attrs }}/>
+                                <img class="mb-2 img-fluid" {{ recentheroimage.attrs }}/>
                             </picture>
                         </a>
-                        <h5 class="mb-0 text-uppercase">{{ post.title }}</h5>
+                        <a href="{{ post.url }}"><h5 class="mb-0 text-uppercase">{{ post.title }}</h5></a>
                         <p class="small">{{ post.date_published }}</p>
                     </div>
                 {% endfor %}
