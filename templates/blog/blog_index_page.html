@@ -7,147 +7,29 @@
         <h1 class="my-3 text-center">Blogs</h1>
         <div class="row">
             {% for article in posts %}
-                {% if forloop.counter <= 2 %}
-                    <div class="col-md-6">
-                        <article>
-                            {% if article.hero_image %}
-                                {% image article.hero_image fill-540x229-c100 as heroimage %}
-                                {% image article.hero_image fill-540x229-c100 format-webp as webp_heroimage %}
-                                <a href="{{ article.slug }}/">
-                                    <picture>
-                                        <source srcset="{{ webp_heroimage.url }}" type="image/webp">
-                                        <img class="mb-2 img-fluid" {{ heroimage.attrs }}/>
-                                    </picture>
-                                </a>
-                            {% endif %}
-                            <a href="{{ article.slug }}/"><h2 class="mb-0 text-uppercase">{{ article.title }}</h2></a>
-                            <p class="small">
-                                {{ article.date_published }}        
-                                {% if article.category %}
-                                        - <span style="text-transform: uppercase;">{{ article.category.name }}</span>
-                                {% endif %}
-                            </p>
-                        </article>
-                    </div>
-                {% endif %}
-
-                {% if forloop.counter == 2 %}
-                    </div>
-                    <div class="row">
-                        <div class="col d-none d-md-block"><hr></div>
-                    </div>
-                    <div class="row">
-                {% endif %}
-
-                {% if forloop.counter >= 3 and forloop.counter <= 4 %}
-                    <div class="col-md-6">
-                        <article>
-                            {% if article.hero_image %}
-                                {% image article.hero_image fill-540x229-c100 as heroimage %}
-                                {% image article.hero_image fill-540x229-c100 format-webp as webp_heroimage %}
-                                <a href="{{ article.slug }}/">
-                                    <picture>
-                                        <source srcset="{{ webp_heroimage.url }}" type="image/webp">
-                                        <img class="mb-2 img-fluid" {{ heroimage.attrs }}/>
-                                    </picture>
-                                </a>
-                            {% endif %}
-                            <a href="{{ article.slug }}/"><h2 class="mb-0 text-uppercase">{{ article.title }}</h2></a>
-                            <p class="small">
-                                {{ article.date_published }}        
-                                {% if article.category %}
-                                        - <span style="text-transform: uppercase;">{{ article.category.name }}</span>
-                                {% endif %}
-                            </p>
-                        </article>
-                    </div>
-                {% endif %}
-
-                {% if forloop.counter == 4 %}
-                    </div>
-                    <div class="row">
-                        <div class="col d-none d-md-block"><hr></div>
-                    </div>
-                    <div class="row">
-                {% endif %}
-
-                {% if forloop.counter >= 5 and forloop.counter <= 6 %}
-                    <div class="col-md-6">
-                        <article>
-                            {% if article.hero_image %}
-                                {% image article.hero_image fill-540x229-c100 as heroimage %}
-                                {% image article.hero_image fill-540x229-c100 format-webp as webp_heroimage %}
-                                <a href="{{ article.slug }}/">
-                                    <picture>
-                                        <source srcset="{{ webp_heroimage.url }}" type="image/webp">
-                                        <img class="mb-2 img-fluid" {{ heroimage.attrs }}/>
-                                    </picture>
-                                </a>
-                            {% endif %}
-                            <a href="{{ article.slug }}/"><h2 class="mb-0 text-uppercase">{{ article.title }}</h2></a>
-                            <p class="small">
-                                {{ article.date_published }}        
-                                {% if article.category %}
-                                        - <span style="text-transform: uppercase;">{{ article.category.name }}</span>
-                                {% endif %}
-                            </p>
-                        </article>
-                    </div>
-                {% endif %}
-
-                {% if forloop.counter == 6 %}
-                    </div>
-                    <div class="row">
-                        <div class="col d-none d-md-block"><hr></div>
-                    </div>
-                    <div class="row">
-                {% endif %}
-
-                {% if forloop.counter >= 7 and forloop.counter <= 8 %}
-                    <div class="col-md-6">
-                        <article>
-                            {% if article.hero_image %}
-                                {% image article.hero_image fill-540x229-c100 as heroimage %}
-                                {% image article.hero_image fill-540x229-c100 format-webp as webp_heroimage %}
-                                <a href="{{ article.slug }}/">
-                                    <picture>
-                                        <source srcset="{{ webp_heroimage.url }}" type="image/webp">
-                                        <img class="mb-2 img-fluid" {{ heroimage.attrs }}/>
-                                    </picture>
-                                </a>
-                            {% endif %}
-                            <a href="{{ article.slug }}/"><h2 class="mb-0 text-uppercase">{{ article.title }}</h2></a>
-                            <p class="small">
-                                {{ article.date_published }}        
-                                {% if article.category %}
-                                        - <span style="text-transform: uppercase;">{{ article.category.name }}</span>
-                                {% endif %}
-                            </p>
-                        </article>
-                    </div>
-                {% endif %}
-
-                {% if forloop.counter == 8 %}
-                    </div>
-                    <hr/>
-                    <div class="row"><h2 class="my-4 text-uppercase text-center">Older Blogs</h2></div>
-                    <div class="row">
-                {% endif %}
-
-                {% if forloop.counter >= 9 %}
-                    <div class="col-md-3 mb-2">
-                        <h5 class="text-uppercase"><a href="{{ article.slug }}/">{{ article.title }}</a></h5>
+                <div class="col-md-4">
+                    <article>
+                        {% if article.hero_image %}
+                            {% image article.hero_image fill-540x229-c100 as heroimage %}
+                            {% image article.hero_image fill-540x229-c100 format-webp as webp_heroimage %}
+                            <a href="{{ article.slug }}/">
+                                <picture>
+                                    <source srcset="{{ webp_heroimage.url }}" type="image/webp">
+                                    <img class="mb-2 img-fluid border border-white border-4" {{ heroimage.attrs }}/>
+                                </picture>
+                            </a>
+                        {% endif %}
+                        <a href="{{ article.slug }}/">
+                            <h5 class="mb-0 text-uppercase">{{ article.title }}</h5>
+                        </a>
                         <p class="small">
-                            {{ article.date }}        
-                            {% if article.categories.all %}
-                                {% for cat in article.categories.all %}
-                                   - <span style="text-transform: uppercase;">{{ cat.category.name }}</span> {% if not forloop.last %}, {% endif %}
-                                {% endfor %}
+                            {{ article.date_published }}        
+                            {% if article.category %}
+                                    - <span style="text-transform: uppercase;">{{ article.category.name }}</span>
                             {% endif %}
                         </p>
-                        <hr class="d-block d-sm-none">
-                    </div>
-                {% endif %}
+                    </article>
+                </div>
             {% endfor %}
         </div>
     </div>
