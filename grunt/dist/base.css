@@ -10771,7 +10771,7 @@ textarea.form-control-lg {
 }
 body {
   font-family: "Playfair Display", serif;
-  font-size: 20px;
+  font-size: 16px;
   color: rgb(246, 247, 238);
   background-color: rgb(17, 28, 42);
 }
@@ -10923,6 +10923,11 @@ code {
 
 .flickr {
   margin: 12px;
+}
+
+/* Blog Page */
+.blog-post {
+  font-size: 20px;
 }
 
 /*==============================
