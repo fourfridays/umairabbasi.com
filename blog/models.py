@@ -117,9 +117,6 @@ class BlogPage(Page):
 
     def get_context(self, request):
         context = super(BlogPage, self).get_context(request)
-        context["recent_posts"] = (
-            BlogPage.objects.live().exclude(id=self.id).order_by("-date_published")[:3]
-        )
         context["tags"] = self.tags.all().order_by("name")
         context["comments"] = self.comments.all().filter(active=True)
         context["comment_count"] = self.comments.all().filter(active=True).count()

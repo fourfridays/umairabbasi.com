@@ -149,30 +149,5 @@
                 </div>
             {% endif %}
         {% endfor %}
-
-        <hr/>
-
-        <!-- RECENT POSTS -->
-        {% if recent_posts %}
-            <div class="row">
-                {% for post in recent_posts %}
-                    <div class="col-md-4">
-                        {% image post.hero_image fill-540x229-c100 as recentheroimage %}
-                        {% image post.hero_image fill-540x229-c100 format-webp as webp_recent_heroimage %}
-                        <a href="{{ post.url }}">
-                            <picture>
-                                <source srcset="{{ webp_recent_heroimage.url }}" type="image/webp">
-                                <img class="mb-2 img-fluid" {{ recentheroimage.attrs }}/>
-                            </picture>
-                        </a>
-                        <a href="{{ post.url }}"><h5 class="mb-0 text-uppercase">{{ post.title }}</h5></a>
-                        <p class="small">{{ post.date_published }}</p>
-                    </div>
-                {% endfor %}
-                <div class="col-12">
-                    <hr>
-                </div>
-            </div>
-        {% endif %}
     </div>
 {% endblock %}
