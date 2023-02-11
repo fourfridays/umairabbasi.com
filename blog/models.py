@@ -31,14 +31,10 @@ class BlogPeopleRelationship(Orderable, models.Model):
     """
 
     page = ParentalKey(
-        "BlogPage",
-        related_name="blog_person_relationship",
-        on_delete=models.CASCADE
+        "BlogPage", related_name="blog_person_relationship", on_delete=models.CASCADE
     )
     people = models.ForeignKey(
-        "page.People",
-        related_name="person_blog_relationship",
-        on_delete=models.CASCADE
+        "page.People", related_name="person_blog_relationship", on_delete=models.CASCADE
     )
     panels = [FieldPanel("people")]
 
@@ -64,15 +60,8 @@ class BlogPage(Page):
     http://docs.wagtail.io/en/latest/topics/pages.html#inline-models
     """
 
-    date_published = models.DateField(
-        "Date article published",
-        blank=True,
-        null=True
-    )
-    introduction = models.TextField(
-        help_text="Text to describe the page",
-        blank=True
-    )
+    date_published = models.DateField("Date article published", blank=True, null=True)
+    introduction = models.TextField(help_text="Text to describe the page", blank=True)
     hero_image = models.ForeignKey(
         "wagtailimages.Image",
         null=True,
@@ -83,10 +72,7 @@ class BlogPage(Page):
                    horizontal width between 1000px and 3000px.",
     )
     body = StreamField(
-        BaseStreamBlock(),
-        verbose_name="Page body",
-        blank=True,
-        use_json_field=True
+        BaseStreamBlock(), verbose_name="Page body", blank=True, use_json_field=True
     )
     subtitle = models.CharField(blank=True, max_length=255)
     tags = ClusterTaggableManager(through=BlogPageTag, blank=True)
@@ -107,10 +93,7 @@ class BlogPage(Page):
         FieldPanel("body"),
         FieldPanel("date_published"),
         InlinePanel(
-            "blog_person_relationship",
-            label="Author(s)",
-            panels=None,
-            min_num=1
+            "blog_person_relationship", label="Author(s)", panels=None, min_num=1
         ),
         FieldPanel("tags"),
         FieldPanel("category"),
@@ -135,17 +118,11 @@ class BlogPage(Page):
     def get_context(self, request):
         context = super(BlogPage, self).get_context(request)
         context["recent_posts"] = (
-            BlogPage.objects.live().exclude(
-                id=self.id
-            ).order_by(
-                "-date_published"
-            )[:3]
+            BlogPage.objects.live().exclude(id=self.id).order_by("-date_published")[:3]
         )
         context["tags"] = self.tags.all().order_by("name")
         context["comments"] = self.comments.all().filter(active=True)
-        context["comment_count"] = self.comments.all().filter(
-            active=True
-        ).count()
+        context["comment_count"] = self.comments.all().filter(active=True).count()
         return context
 
     # Specifies parent to BlogPage as being BlogIndexPages
@@ -166,10 +143,7 @@ class BlogIndexPage(RoutablePageMixin, Page):
     defined above.
     """
 
-    introduction = models.TextField(
-        help_text="Text to describe the page",
-        blank=True
-    )
+    introduction = models.TextField(help_text="Text to describe the page", blank=True)
     hero_image = models.ForeignKey(
         "wagtailimages.Image",
         null=True,
@@ -199,11 +173,7 @@ class BlogIndexPage(RoutablePageMixin, Page):
     def get_context(self, request):
         context = super(BlogIndexPage, self).get_context(request)
         context["posts"] = (
-            BlogPage.objects.descendant_of(
-                self
-            ).live().order_by(
-                "-date_published"
-            )
+            BlogPage.objects.descendant_of(self).live().order_by("-date_published")
         )
         return context
 
