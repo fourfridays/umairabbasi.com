@@ -5,7 +5,7 @@
                 {% image page.image original format-webp as webp_media_poster %}
                 <picture>
                     <source srcset="{{ webp_media_poster.url }}" type="image/webp">
-                    <img class="img-fluid pb-1 rounded" {{ media_poster.attrs }}/>
+                    <img class="img-fluid rounded border border-white border-4" {{ media_poster.attrs }}/>
                 </picture>
             </div>
             <div class="col-7 col-md-8">
