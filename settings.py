@@ -55,7 +55,6 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
-    'allauth.socialaccount.providers.twitter',
 ]
 
 MIDDLEWARE = [
@@ -249,13 +248,6 @@ SOCIALACCOUNT_PROVIDERS = {
         'APP': {
             'client_id': os.getenv('GOOGLE_CLIENT_ID', default=''),
             'secret': os.getenv('GOOGLE_CLIENT_SECRET', default=''),
-            'key': ''
-        }
-    },
-    'twitter': {
-        'APP': {
-            'client_id': os.getenv('TWITTER_CLIENT_ID', default=''),
-            'secret': os.getenv('TWITTER_CLIENT_SECRET', default=''),
             'key': ''
         }
     },
