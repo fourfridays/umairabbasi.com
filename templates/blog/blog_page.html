@@ -55,7 +55,8 @@
                 {% if tags %}
                     <hr style="margin-top: 0; margin-bottom: 10px; clear: both;">
 
-                    <div class="small .text-muted">
+                    <div class="small">
+                        More articles tagged: 
                         {% for tag in tags %}
                             <i class="fas fa-tag swatch-red mx-1" aria-hidden="true"></i><a href="{{ page.get_parent.url }}tag/{{ tag }}">{{ tag }}</a>{% if not forloop.last %}{% endif %}
                         {% endfor %}
