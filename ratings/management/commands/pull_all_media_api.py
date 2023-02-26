@@ -5,8 +5,7 @@ from django.db.utils import IntegrityError
 from django.core.exceptions import ValidationError
 from django.core.files.images import ImageFile
 
-from wagtail.models import Page
-from wagtail.core.models import Collection
+from wagtail.models import Page, Collection
 from wagtail.images.models import Image
 from ratings.models import MoviePage, TvPage
 from datetime import datetime
