@@ -1,7 +1,7 @@
 {
   "name": "Umair Abbasi",
   "version": "1.0.0",
-  "description": "Package file for fourfridays websites.",
+  "description": "Package file for Umair Abbasi website.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
