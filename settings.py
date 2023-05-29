@@ -21,7 +21,7 @@ INSTALLED_APPS = [
     "page",
     "ratings",
     "taxonomy",
-    "django.contrib.sitemaps",
+
     "wagtail.contrib.table_block",
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
@@ -38,17 +38,15 @@ INSTALLED_APPS = [
     "wagtail",
     "modelcluster",
     "taggit",
+
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.sites",
+    "django.contrib.sitemaps",
     "django.contrib.staticfiles",
-    "allauth",
-    "allauth.account",
-    "allauth.socialaccount",
-    "allauth.socialaccount.providers.google",
 ]
 
 MIDDLEWARE = [
@@ -126,7 +124,6 @@ TEMPLATES = [
 # Authentication Backends
 AUTHENTICATION_BACKENDS = (
     "django.contrib.auth.backends.ModelBackend",
-    "allauth.account.auth_backends.AuthenticationBackend",
 )
 
 # Search Backends
@@ -228,21 +225,10 @@ ANYMAIL = {
 EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
 DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", default="")
 SERVER_EMAIL = os.getenv("SERVER_EMAIL", default="")
-COMMENT_ADMIN_EMAIL = os.getenv("COMMENT_ADMIN_EMAIL", default="")
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 PREPEND_WWW = os.getenv("PREPEND_WWW", default=False)
 SITE_ID = 1
-
-SOCIALACCOUNT_PROVIDERS = {
-    "google": {
-        "APP": {
-            "client_id": os.getenv("GOOGLE_CLIENT_ID", default=""),
-            "secret": os.getenv("GOOGLE_CLIENT_SECRET", default=""),
-            "key": "",
-        }
-    },
-}
 
 LOGIN_URL = "/login/"
 LOGOUT_REDIRECT_URL = "/logged-out/"

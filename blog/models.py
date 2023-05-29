@@ -1,10 +1,8 @@
 from __future__ import unicode_literals
 
 from django.contrib import messages
-from django.conf import settings
 from django.db import models
 from django.shortcuts import redirect, render
-from django.utils import timezone
 
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.fields import ParentalKey
@@ -118,8 +116,6 @@ class BlogPage(Page):
     def get_context(self, request):
         context = super(BlogPage, self).get_context(request)
         context["tags"] = self.tags.all().order_by("name")
-        context["comments"] = self.comments.all().filter(active=True)
-        context["comment_count"] = self.comments.all().filter(active=True).count()
         return context
 
     # Specifies parent to BlogPage as being BlogIndexPages
@@ -219,24 +215,3 @@ class BlogIndexPage(RoutablePageMixin, Page):
         tags = sorted(set(tags))
         return tags
 
-
-class Comment(models.Model):
-    article = models.ForeignKey(
-        "BlogPage", on_delete=models.CASCADE, related_name="comments"
-    )
-    parent_comment = models.ForeignKey(
-        "self", on_delete=models.CASCADE, null=True, blank=True
-    )
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-    )
-    content = models.TextField()
-    created_on = models.DateTimeField(default=timezone.now)
-    active = models.BooleanField(default=False)
-
-    class Meta:
-        ordering = ["created_on"]
-
-    def __str__(self):
-        return self.content

@@ -8,14 +8,11 @@ from wagtail import urls as wagtail_urls
 from wagtail.documents import urls as wagtaildocs_urls
 from wagtail.contrib.sitemaps.views import sitemap
 
-from blog import views as blog_views
 from ratings import views as ratings_search_views
 
 
 urlpatterns = [
     path("django-admin/", admin.site.urls),
-    re_path(r"", include("allauth.urls")),
-    re_path(r"^comment/", blog_views.article_comment),
     re_path(
         r"^robots\.txt",
         TemplateView.as_view(

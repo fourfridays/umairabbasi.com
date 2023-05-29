@@ -1,11 +1,10 @@
 {% extends "base.html" %}
-{% load account socialaccount flickr_tags wagtailcore_tags wagtailimages_tags %}
+{% load flickr_tags wagtailcore_tags wagtailimages_tags %}
 {% wagtail_site as current_site %}
 {% block body_class %}blog-post{% endblock %}
 {% block head-extra %}<link rel="canonical" href="{{ page.full_url }}" />{% endblock head-extra %}
 
 {% block content %}
-    {% get_providers as provider %}
     <!-- HERO IMAGE -->
     {% if page.hero_image %}
         {% image page.hero_image fill-2400x658-c100 jpegquality-60 as heroimage %}
@@ -65,90 +64,6 @@
             </div>
         </div>
 
-        <!-- COMMENT -->
-        <div class="row text-center my-3">
-            <div class="offset-md-2 col-md-8">
-                {% if user.is_authenticated %}
-                    <p class="small">You are logged in as <strong>{{ request.user.username }}</strong>. <a href="/logout/">Logout</a></p>
-                    <form action="/comment/" method="post">
-                        {% csrf_token %}
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Post Comment </label>
-                            <textarea class="form-control my-2" name="comment" placeholder="Enter comment here" rows="3" required></textarea>
-                        </div>
-                        <input type="hidden" name="user_name" value="{{ request.user.username }}">
-                        <input type="hidden" name="slug" value="{{ page.slug }}">
-                        <button type="submit" class="btn btn-primary btn-md my-2">Submit</button>
-                    </form>
-                {% else %}
-                    {% get_providers as socialaccount_providers %}
 
-                    <h5>Please sign in to comment</h5>
-
-                    {% include "socialaccount/snippets/provider_list.html" with process="login" %}
-                {% endif %}
-            </div>
-        </div>
-
-        {% if comments %}
-            <div class="row text">
-                <div class="col-12">
-                    <h3 class="text-uppercase">Comments ({{ comment_count }})</h3>
-                </div>
-            </div>
-            {% for comment in comments %}
-                <div class="row">
-                    <div class="my-3 offset-md-2 col-md-8">
-                        <div class="card text-white bg-dark mb-3">
-                            <div class="card-header small">{{ comment.user }} - {{ comment.created_on|date:'M d, Y h:i A' }}</div>
-                            <div class="card-body">
-                                {% if comment.parent_comment %}
-                                    <div class="card-text bg-secondary p-3 mb-2">
-                                        <p class="small">Quote from: {{ comment.parent_comment.user }}</p>
-                                        <p>{{ comment.parent_comment }}</p>
-                                    </div>
-                                {% endif %}
-                                <p class="card-text">{{ comment.content }}</p>
-                                {% if user.is_authenticated %}
-                                    <button class="btn btn-sm btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#reply{{ comment.id }}" aria-expanded="false" aria-controls="reply{{ comment.id }}">Reply</button>
-                                    <div class="collapse" id="reply{{ comment.id }}">
-                                        <div class="card card-body bg-dark my-2">
-                                            <form action="/comment/" method="post">
-                                                {% csrf_token %}
-                                                <div class="form-group">
-                                                    <label for="comment">Post a Reply</label>
-                                                    <textarea class="form-control my-2" name="comment" placeholder="Enter comment here" rows="3" required></textarea>
-                                                    <input type="hidden" name="user_name" value="{{ request.user.username }}">
-                                                    <input type="hidden" name="parent_comment" value="{{ comment.id }}">
-                                                    <input type="hidden" name="slug" value="{{ page.slug }}">
-                                                    <input type="hidden" name="parentSno" value="">
-                                                    <button type="submit" class="btn btn-primary btn-sm my-2">Submit</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-        {% endif %}
-
-        {% for key, value in request.GET.items %}
-            {% if value == 'success' %}
-                <div class="row">
-                    <div class="my-3 offset-md-2 col-md-8">
-                        <h6 class="bg-success text-white p-3" id="anchor-comment-status">Comment submitted. Please allow  24 hours to review.</h6>
-                    </div>
-                </div>
-            {% elif value == 'unsuccessful' %}
-                <div class="row">
-                    <div class="my-3 offset-md-2 col-md-8">
-                        <h6 class="bg-danger text-white p-3" id="anchor-comment-status">Sorry, something went wrong. Please try submitting comment again.</h6>
-                    </div>
-                </div>
-            {% endif %}
-        {% endfor %}
     </div>
 {% endblock %}
