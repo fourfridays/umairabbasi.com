@@ -6,14 +6,6 @@ from django_storage_url import dsn_configured_storage_class
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Your own Django settings can be applied from here on. Key settings like
-# INSTALLED_APPS, MIDDLEWARE and TEMPLATES are provided in the Aldryn Django
-# addon. See:
-#
-#   http://docs.divio.com/en/latest/how-to/configure-settings.html
-#
-# for guidance on managing these settings.
-
 INSTALLED_APPS = [
     "anymail",
     "blog",
@@ -229,11 +221,6 @@ SERVER_EMAIL = os.getenv("SERVER_EMAIL", default="")
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 PREPEND_WWW = os.getenv("PREPEND_WWW", default=False)
 SITE_ID = 1
-
-LOGIN_URL = "/login/"
-LOGOUT_REDIRECT_URL = "/logged-out/"
-ACCOUNT_ADAPTER = "page.adapter.MyAccountAdapter"
-SOCIALACCOUNT_LOGIN_ON_GET = True
 
 # Make low-quality but small images
 WAGTAILIMAGES_JPEG_QUALITY = 40
