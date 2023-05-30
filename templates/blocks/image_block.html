@@ -1,7 +1,7 @@
 {% load wagtailimages_tags %}
 
 <figure class="my-4">
-    {% image self.image width-665 as theimage %}
+    {% image self.image fill-1200x500-c100 as theimage %}
     
     <img class="img-fluid {% if self.border == True %}img-thumbnail {% endif %}{% if self.alignment != 'center' %}float-{{ self.alignment }}{% else %}mx-auto d-block{% endif %}" src="{{ theimage.url }}" width="{{ theimage.width }}" height="{{ theimage.height }}" alt="{{ theimage.alt }}"/>
 
