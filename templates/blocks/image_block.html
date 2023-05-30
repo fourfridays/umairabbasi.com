@@ -1,9 +1,9 @@
 {% load wagtailimages_tags %}
 
-<figure>
+<figure class="my-4">
     {% image self.image width-665 as theimage %}
     
-    <img class="img-fluid img-thumbnail {% if self.alignment != 'center' %}float-{{ self.alignment }}{% else %}mx-auto d-block{% endif %}" src="{{ theimage.url }}" width="{{ theimage.width }}" height="{{ theimage.height }}" alt="{{ theimage.alt }}"/>
+    <img class="img-fluid {% if self.border == True %}img-thumbnail {% endif %}{% if self.alignment != 'center' %}float-{{ self.alignment }}{% else %}mx-auto d-block{% endif %}" src="{{ theimage.url }}" width="{{ theimage.width }}" height="{{ theimage.height }}" alt="{{ theimage.alt }}"/>
 
     {% if self.caption and self.attribution %}
         <figcaption>{{ self.caption }} - {{ self.attribution }}</figcaption>
