@@ -6,6 +6,6 @@
     {% if self.caption and self.attribution %}
         <figcaption>{{ self.caption }} - {{ self.attribution }}</figcaption>
     {% else %}
-        <figcaption>{{ self.caption }}</figcaption>
+        <figcaption class="{% if self.alignment != 'center' %}text-{{ self.alignment }} {% else %}text-center{% endif %}">{{ self.caption }}</figcaption>
     {%endif %}
 </figure>
