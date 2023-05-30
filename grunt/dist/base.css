@@ -10815,6 +10815,11 @@ i.fa, i.fas {
   background-color: #4E4D4A !important;
 }
 
+.bg-cobalt {
+  background-color: rgb(249, 181, 55);
+  color: #000000;
+}
+
 .text-muted {
   color: #999 !important;
 }
