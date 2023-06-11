@@ -13,6 +13,7 @@ INSTALLED_APPS = [
     "page",
     "ratings",
     "taxonomy",
+    "wagtailcodeblock",
 
     "wagtail.contrib.table_block",
     "wagtail.contrib.forms",
@@ -227,3 +228,7 @@ WAGTAILIMAGES_JPEG_QUALITY = 40
 WAGTAILIMAGES_WEBP_QUALITY = 45
 WAGTAIL_ENABLE_WHATS_NEW_BANNER = False
 WAGTAILEMBEDS_FINDERS = [{"class": "wagtail.embeds.finders.oembed"}]
+
+# wagtailcodeblock
+WAGTAIL_CODE_BLOCK_LINE_NUMBERS = False
+WAGTAIL_CODE_BLOCK_THEME = "tomorrow"
