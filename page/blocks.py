@@ -18,6 +18,7 @@ from wagtail.blocks import (
 )
 from wagtail.snippets.blocks import SnippetChooserBlock
 from wagtail.contrib.table_block.blocks import TableBlock
+from wagtailcodeblock.blocks import CodeBlock
 from wagtail.admin.panels import FieldPanel
 
 
@@ -64,6 +65,10 @@ class ButtonBlock(StructBlock):
     class Meta:
         icon = "pick"
         template = "blocks/button_block.html"
+
+
+class CodeBlock(StructBlock):
+    code = CodeBlock(label='Code')
 
 
 class DocumentBlock(StructBlock):
@@ -212,6 +217,7 @@ class BaseStreamBlock(StreamBlock):
     )
     icon_block = IconBlock()
     table = TableBlock(template="includes/table.html")
+    code_block = CodeBlock()
     raw_html = AlignedRAWHTMLBlock()
 
 
