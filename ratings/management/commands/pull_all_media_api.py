@@ -20,52 +20,88 @@ class Command(BaseCommand):
         # ==============================
         print("Pulling Movies")
 
-        account_id = os.getenv('TMDB_ACCOUNT_ID').strip('""').strip('\'\'')
-        api_key = os.getenv('TMDB_API_KEY').strip('""').strip('\'\'')
-        session_id = os.getenv('TMDB_SESSION_ID').strip('""').strip('\'\'')
-        r = requests.get('https://api.themoviedb.org/3/account/%s/rated/movies?api_key=%s&language=en-US&session_id=%s&sort_by=created_at.desc&page=1' % (account_id, api_key, session_id))
+        account_id = os.getenv("TMDB_ACCOUNT_ID").strip('""').strip("''")
+        api_key = os.getenv("TMDB_API_KEY").strip('""').strip("''")
+        session_id = os.getenv("TMDB_SESSION_ID").strip('""').strip("''")
+        r = requests.get(
+            "https://api.themoviedb.org/3/account/%s/rated/movies?api_key=%s&language=en-US&session_id=%s&sort_by=created_at.desc&page=1"
+            % (account_id, api_key, session_id)
+        )
         json_content = r.json()
-        pages = json_content['total_pages']
-        parent_page = Page.objects.get(title='Movies').specific
-        poster_size = 'w500'
+        pages = json_content["total_pages"]
+        parent_page = Page.objects.get(title="Movies").specific
+        poster_size = "w500"
 
-        for movie in json_content['results']:
+        for movie in json_content["results"]:
             try:
-                movie_page = MoviePage(tmdb_id=movie['id'], title=movie['title'], description=movie['overview'], release_date=datetime.datetime.strptime(movie['release_date'], '%Y-%m-%d').date(), rating=movie['rating'], poster='https://image.tmdb.org/t/p/'+poster_size+movie['poster_path'], language=movie['original_language'])
+                movie_page = MoviePage(
+                    tmdb_id=movie["id"],
+                    title=movie["title"],
+                    description=movie["overview"],
+                    release_date=datetime.datetime.strptime(
+                        movie["release_date"], "%Y-%m-%d"
+                    ).date(),
+                    rating=movie["rating"],
+                    poster="https://image.tmdb.org/t/p/"
+                    + poster_size
+                    + movie["poster_path"],
+                    language=movie["original_language"],
+                )
                 parent_page.add_child(instance=movie_page)
                 movie_page.save()
             except ValidationError:
-                m = MoviePage.objects.get(tmdb_id=movie['id'])
-                #if we updated our movie rating for an existing movie in Wagtail
-                if m.rating != movie['rating']:
-                    m.rating = movie['rating']
+                m = MoviePage.objects.get(tmdb_id=movie["id"])
+                # if we updated our movie rating for an existing movie in Wagtail
+                if m.rating != movie["rating"]:
+                    m.rating = movie["rating"]
                     m.save_revision().publish()
                 else:
                     pass
-                #if we updated poster size for an existing poster path in Wagtail
-                m.poster = 'https://image.tmdb.org/t/p/'+poster_size+movie['poster_path']
+                # if we updated poster size for an existing poster path in Wagtail
+                m.poster = (
+                    "https://image.tmdb.org/t/p/" + poster_size + movie["poster_path"]
+                )
                 m.save()
 
         page = 2
 
         while page <= pages:
-            r = requests.get('https://api.themoviedb.org/3/account/%s/rated/movies?api_key=%s&language=en-US&session_id=%s&sort_by=created_at.desc&page=%s' % (account_id, api_key, session_id, page))
+            r = requests.get(
+                "https://api.themoviedb.org/3/account/%s/rated/movies?api_key=%s&language=en-US&session_id=%s&sort_by=created_at.desc&page=%s"
+                % (account_id, api_key, session_id, page)
+            )
             json_content = r.json()
 
-            for movie in json_content['results']:
+            for movie in json_content["results"]:
                 try:
-                    movie_page = MoviePage(tmdb_id=movie['id'], title=movie['title'], description=movie['overview'], release_date=datetime.datetime.strptime(movie['release_date'], '%Y-%m-%d').date(), rating=movie['rating'], poster='https://image.tmdb.org/t/p/'+poster_size+movie['poster_path'], language=movie['original_language'])
+                    movie_page = MoviePage(
+                        tmdb_id=movie["id"],
+                        title=movie["title"],
+                        description=movie["overview"],
+                        release_date=datetime.datetime.strptime(
+                            movie["release_date"], "%Y-%m-%d"
+                        ).date(),
+                        rating=movie["rating"],
+                        poster="https://image.tmdb.org/t/p/"
+                        + poster_size
+                        + movie["poster_path"],
+                        language=movie["original_language"],
+                    )
                     parent_page.add_child(instance=movie_page)
                     movie_page.save()
                 except ValidationError:
-                    m = MoviePage.objects.get(tmdb_id=movie['id'])
-                    if m.rating != movie['rating']:
-                        m.rating = movie['rating']
+                    m = MoviePage.objects.get(tmdb_id=movie["id"])
+                    if m.rating != movie["rating"]:
+                        m.rating = movie["rating"]
                         m.save_revision().publish()
                     else:
                         pass
-                    
-                    m.poster = 'https://image.tmdb.org/t/p/'+poster_size+movie['poster_path']
+
+                    m.poster = (
+                        "https://image.tmdb.org/t/p/"
+                        + poster_size
+                        + movie["poster_path"]
+                    )
                     m.save()
 
             page = page + 1
@@ -75,47 +111,81 @@ class Command(BaseCommand):
         # ==========================
         print("Pulling TV Shows")
 
-        r = requests.get('https://api.themoviedb.org/3/account/%s/rated/tv?api_key=%s&language=en-US&session_id=%s&sort_by=created_at.desc&page=1' % (account_id, api_key, session_id))
+        r = requests.get(
+            "https://api.themoviedb.org/3/account/%s/rated/tv?api_key=%s&language=en-US&session_id=%s&sort_by=created_at.desc&page=1"
+            % (account_id, api_key, session_id)
+        )
         json_content = r.json()
-        pages = json_content['total_pages']
-        parent_page = Page.objects.get(title='TV').specific
+        pages = json_content["total_pages"]
+        parent_page = Page.objects.get(title="TV").specific
 
-        for tv in json_content['results']:
+        for tv in json_content["results"]:
             try:
-                tv_page = TvPage(tmdb_id=tv['id'], title = tv['name'], description = tv['overview'], release_date = datetime.datetime.strptime(tv['first_air_date'], '%Y-%m-%d').date(), rating = tv['rating'], poster = 'https://image.tmdb.org/t/p/'+poster_size+tv['poster_path'], language = tv['original_language'])
+                tv_page = TvPage(
+                    tmdb_id=tv["id"],
+                    title=tv["name"],
+                    description=tv["overview"],
+                    release_date=datetime.datetime.strptime(
+                        tv["first_air_date"], "%Y-%m-%d"
+                    ).date(),
+                    rating=tv["rating"],
+                    poster="https://image.tmdb.org/t/p/"
+                    + poster_size
+                    + tv["poster_path"],
+                    language=tv["original_language"],
+                )
                 parent_page.add_child(instance=tv_page)
                 tv_page.save()
             except ValidationError:
-                t = TvPage.objects.get(tmdb_id = tv['id'])
-                if t.rating != tv['rating']:
-                    t.rating = tv['rating']
+                t = TvPage.objects.get(tmdb_id=tv["id"])
+                if t.rating != tv["rating"]:
+                    t.rating = tv["rating"]
                     t.save_revision().publish()
                 else:
                     pass
 
-                t.poster = 'https://image.tmdb.org/t/p/'+poster_size+tv['poster_path']
+                t.poster = (
+                    "https://image.tmdb.org/t/p/" + poster_size + tv["poster_path"]
+                )
                 t.save()
 
         page = 2
 
         while page <= pages:
-            r = requests.get('https://api.themoviedb.org/3/account/%s/rated/tv?api_key=%s&language=en-US&session_id=%s&sort_by=created_at.desc&page=%s' % (account_id, api_key, session_id, page))
+            r = requests.get(
+                "https://api.themoviedb.org/3/account/%s/rated/tv?api_key=%s&language=en-US&session_id=%s&sort_by=created_at.desc&page=%s"
+                % (account_id, api_key, session_id, page)
+            )
             json_content = r.json()
 
-            for tv in json_content['results']:
+            for tv in json_content["results"]:
                 try:
-                    tv_page = TvPage(tmdb_id=tv['id'], title = tv['name'], description = tv['overview'], release_date = datetime.datetime.strptime(tv['first_air_date'], '%Y-%m-%d').date(), rating = tv['rating'], poster = 'https://image.tmdb.org/t/p/'+poster_size+tv['poster_path'], language = tv['original_language'])
+                    tv_page = TvPage(
+                        tmdb_id=tv["id"],
+                        title=tv["name"],
+                        description=tv["overview"],
+                        release_date=datetime.datetime.strptime(
+                            tv["first_air_date"], "%Y-%m-%d"
+                        ).date(),
+                        rating=tv["rating"],
+                        poster="https://image.tmdb.org/t/p/"
+                        + poster_size
+                        + tv["poster_path"],
+                        language=tv["original_language"],
+                    )
                     parent_page.add_child(instance=tv_page)
                     tv_page.save()
                 except ValidationError:
-                    t = TvPage.objects.get(tmdb_id = tv['id'])
-                    if t.rating != tv['rating']:
-                        t.rating = tv['rating']
+                    t = TvPage.objects.get(tmdb_id=tv["id"])
+                    if t.rating != tv["rating"]:
+                        t.rating = tv["rating"]
                         t.save_revision().publish()
                     else:
                         pass
 
-                    t.poster = 'https://image.tmdb.org/t/p/'+poster_size+tv['poster_path']
+                    t.poster = (
+                        "https://image.tmdb.org/t/p/" + poster_size + tv["poster_path"]
+                    )
                     t.save()
 
             page = page + 1
@@ -127,7 +197,11 @@ class Command(BaseCommand):
             response = requests.get(media.poster)
             filename = pathlib.Path(media.poster).name
 
-            i = Image(title=media.title, file=ImageFile(BytesIO(response.content), name=filename), collection_id=collection.id)
+            i = Image(
+                title=media.title,
+                file=ImageFile(BytesIO(response.content), name=filename),
+                collection_id=collection.id,
+            )
             i.save()
             i.tags.add("poster")
             media.image = i
@@ -146,4 +220,3 @@ class Command(BaseCommand):
         for tv in tv_shows:
             if not tv.image:
                 get_poster(tv)
-        
