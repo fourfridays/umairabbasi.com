@@ -9,8 +9,26 @@ from wagtail.contrib.routable_page.models import RoutablePageMixin, re_path
 from page.blocks import PersonDateBlock
 
 
+class MovieGenre(models.Model):
+    id = models.IntegerField(primary_key=True)
+    name = models.TextField(max_length=255, help_text="Max length 255 characters")
+
+    def __str__(self):
+        return f"{self.name}"
+
+
+class People(models.Model):
+    id = models.IntegerField(primary_key=True)
+    name = models.CharField(max_length=100, help_text="Max Characters 100")
+    image = models.URLField(blank=True)
+
+    def __str__(self):
+        return f"{self.name}"
+
+
 class MoviePage(Page):
     parent_page_types = ["MoviesIndexPage"]
+    movie_id = models.IntegerField(unique=True, default=None)
     description = models.TextField()
     release_date = models.DateField()
     rating = models.IntegerField(blank=True)
@@ -24,7 +42,7 @@ class MoviePage(Page):
         help_text="Testing image pull from poster URLField",
     )
     language = models.CharField(max_length=2, blank=True)
-    tmdb_id = models.IntegerField(unique=True, default=None)
+    genre = models.ManyToManyField(MovieGenre)
     watch_party = StreamField(
         [
             ("view_block", PersonDateBlock()),
@@ -40,15 +58,37 @@ class MoviePage(Page):
     ]
 
     content_panels = Page.content_panels + [
+        FieldPanel("movie_id"),
         FieldPanel("description"),
         FieldPanel("release_date"),
         FieldPanel("rating"),
         FieldPanel("poster"),
         FieldPanel("image"),
         FieldPanel("language"),
-        FieldPanel("tmdb_id"),
+        FieldPanel("genre"),
         FieldPanel("watch_party"),
     ]
+
+    def get_context(self, request):
+        context = super(MoviePage, self).get_context(request)
+        context["cast_members"] = Cast.objects.filter(movie=self)
+        return context
+
+
+class Cast(models.Model):
+    movie = models.ForeignKey(
+        MoviePage,
+        null=True,
+        blank=True,
+        on_delete=models.PROTECT
+    )
+    cast_member = models.ForeignKey(People, on_delete=models.PROTECT)
+    character = models.TextField(
+        max_length=100, help_text="Max length 100 characters"
+    )
+
+    def __str__(self):
+        return f"{self.cast_member}"
 
 
 class MoviesIndexPage(RoutablePageMixin, Page):
@@ -60,7 +100,7 @@ class MoviesIndexPage(RoutablePageMixin, Page):
 
     def get_context(self, request):
         context = super(MoviesIndexPage, self).get_context(request)
-        context['title'] = "Movie Ratings"
+        context["title"] = "Movie Ratings"
         context["media"] = MoviePage.objects.live().order_by("-release_date")
         context["movie_count"] = self.get_movie_count(context["media"])
         return context
@@ -70,9 +110,9 @@ class MoviesIndexPage(RoutablePageMixin, Page):
         """
         View function for must-watch movies
         """
-        filtered_results = MoviePage.objects.filter(
-                           rating__gte=7
-                           ).order_by("-release_date")
+        filtered_results = MoviePage.objects.filter(rating__gte=7).order_by(
+            "-release_date"
+        )
         movie_count = self.get_movie_count(filtered_results)
 
         return self.render(
@@ -112,9 +152,9 @@ class MoviesIndexPage(RoutablePageMixin, Page):
         """
         View function for must-watch movies
         """
-        filtered_results = MoviePage.objects.filter(
-                           rating__lte=3
-                            ).order_by("-release_date")
+        filtered_results = MoviePage.objects.filter(rating__lte=3).order_by(
+            "-release_date"
+        )
         movie_count = self.get_movie_count(filtered_results)
 
         return self.render(
@@ -130,6 +170,7 @@ class MoviesIndexPage(RoutablePageMixin, Page):
 
 class TvPage(Page):
     parent_page_types = ["TvIndexPage"]
+    tv_id = models.IntegerField(unique=True, default=None)
     description = models.TextField()
     release_date = models.DateField()
     rating = models.IntegerField(blank=True)
@@ -143,7 +184,6 @@ class TvPage(Page):
         help_text="Testing image pull from poster URLField",
     )
     language = models.CharField(max_length=2, blank=True)
-    tmdb_id = models.IntegerField(unique=True, default=None)
     watch_party = StreamField(
         [
             ("view_block", PersonDateBlock()),
@@ -159,13 +199,13 @@ class TvPage(Page):
     ]
 
     content_panels = Page.content_panels + [
+        FieldPanel("tv_id"),
         FieldPanel("description"),
         FieldPanel("release_date"),
         FieldPanel("rating"),
         FieldPanel("poster"),
         FieldPanel("image"),
         FieldPanel("language"),
-        FieldPanel("tmdb_id"),
         FieldPanel("watch_party"),
     ]
 
@@ -179,9 +219,10 @@ class TvIndexPage(RoutablePageMixin, Page):
 
     def get_context(self, request):
         context = super(TvIndexPage, self).get_context(request)
-        context['title'] = "TV Show Ratings"
-        context["media"] = TvPage.objects.live().filter(
-                           rating__gte=7).order_by("-release_date")
+        context["title"] = "TV Show Ratings"
+        context["media"] = (
+            TvPage.objects.live().filter(rating__gte=7).order_by("-release_date")
+        )
         context["tv_count"] = context["media"].count()
         return context
 
@@ -190,8 +231,9 @@ class TvIndexPage(RoutablePageMixin, Page):
         """
         View function for must-watch movies
         """
-        filtered_results = TvPage.objects.filter(
-                           rating__gte=7).order_by("-release_date")
+        filtered_results = TvPage.objects.filter(rating__gte=7).order_by(
+            "-release_date"
+        )
         tv_count = self.get_tv_count(filtered_results)
 
         return self.render(
@@ -210,9 +252,9 @@ class TvIndexPage(RoutablePageMixin, Page):
         View function for must-watch movies
         """
         filtered_results = (
-            TvPage.objects.filter(
-                           rating__gte=4
-                           ).filter(rating__lte=6).order_by("-release_date")
+            TvPage.objects.filter(rating__gte=4)
+            .filter(rating__lte=6)
+            .order_by("-release_date")
         )
         tv_count = self.get_tv_count(filtered_results)
 
@@ -231,8 +273,9 @@ class TvIndexPage(RoutablePageMixin, Page):
         """
         View function for must-watch movies
         """
-        filtered_results = TvPage.objects.filter(
-                           rating__lte=3).order_by("-release_date")
+        filtered_results = TvPage.objects.filter(rating__lte=3).order_by(
+            "-release_date"
+        )
         tv_count = self.get_tv_count(filtered_results)
 
         return self.render(
