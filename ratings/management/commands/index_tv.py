@@ -24,6 +24,6 @@ class Command(BaseCommand):
                 "Rating": tv_show.rating,
                 "Poster": tv_show.poster,
                 "Genre": list(tv_show.genre.values_list("name", flat=True)),
-                "Cast": list(tv_show.cast_set.values_list("cast_member__name", flat=True)),
+                "Cast": list(tv_show.tvcast_set.values_list("cast_member__name", flat=True)),
             }
             index.save_object(tv_index)
