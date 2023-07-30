@@ -141,7 +141,7 @@ code {
 
         &.navbar-brand {
             font-family: 'Montserrat', sans-serif;
-            font-size: 18px;
+            font-size: 16px;
             background-color: #235789;
             color: #fdfffc;
             text-shadow: none;
@@ -149,9 +149,9 @@ code {
             padding: 0.5rem 0.9rem;
         }
 
-        &.nav-link {
+        &.nav-link, &.dropdown-item {
             padding: 0.59rem 0.9rem !important;
-            font-size: 1rem;
+            font-size: 0.88rem;
         }
 
         &:hover {
@@ -200,7 +200,7 @@ code {
 
 /* Blog Page */
 .blog-post {
-    font-size: 19px;
+    font-size: 1.15rem;
 }
 
 /*==============================
