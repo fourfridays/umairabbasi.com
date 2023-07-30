@@ -12,7 +12,8 @@ uWSGI>=2.0.21,<2.1
 wagtail>=5.0.1,<6.0.0
 whitenoise>=6.4.0,<7.0
 
-# wagtailcodeblock from fourfridays PR
-git+https://github.com/fourfridays/wagtailcodeblock.git@d6b4f3b#egg=wagtailcodeblock
+algoliasearch==3.0.0
 elasticsearch==7.10.1
 flickrapi>=2.4.0,<3.0
+# wagtailcodeblock from fourfridays PR
+git+https://github.com/fourfridays/wagtailcodeblock.git@d6b4f3b#egg=wagtailcodeblock
