@@ -18,12 +18,12 @@ class Command(BaseCommand):
             tv_index = {}
             tv_index = {
                 "objectID": tv_show.tv_id,
-                "Title": tv_show.title,
-                "Description": tv_show.description,
-                "Release Year": tv_show.release_date.year,
-                "Rating": tv_show.rating,
-                "Poster": tv_show.poster,
-                "Genre": list(tv_show.genre.values_list("name", flat=True)),
-                "Cast": list(tv_show.tvcast_set.values_list("cast_member__name", flat=True)),
+                "title": tv_show.title,
+                "description": tv_show.description,
+                "releaseYear": tv_show.release_date.year,
+                "rating": tv_show.rating,
+                "poster": tv_show.poster,
+                "genre": list(tv_show.genre.values_list("name", flat=True)),
+                "cast": list(tv_show.tvcast_set.values_list("cast_member__name", flat=True)),
             }
             index.save_object(tv_index)

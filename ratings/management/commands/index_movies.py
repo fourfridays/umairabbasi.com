@@ -18,12 +18,12 @@ class Command(BaseCommand):
             movie_index = {}
             movie_index = {
                 "objectID": movie.movie_id,
-                "Title": movie.title,
-                "Description": movie.description,
-                "Release Year": movie.release_date.year,
-                "Rating": movie.rating,
-                "Poster": movie.poster,
-                "Genre": list(movie.genre.values_list("name", flat=True)),
-                "Cast": list(movie.cast_set.values_list("cast_member__name", flat=True)),
+                "tile": movie.title,
+                "description": movie.description,
+                "releaseYear": movie.release_date.year,
+                "rating": movie.rating,
+                "poster": movie.poster,
+                "genre": list(movie.genre.values_list("name", flat=True)),
+                "cast": list(movie.cast_set.values_list("cast_member__name", flat=True)),
             }
             index.save_object(movie_index)
