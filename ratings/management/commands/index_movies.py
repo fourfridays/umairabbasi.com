@@ -18,7 +18,7 @@ class Command(BaseCommand):
             movie_index = {}
             movie_index = {
                 "objectID": movie.movie_id,
-                "tile": movie.title,
+                "title": movie.title,
                 "description": movie.description,
                 "releaseYear": movie.release_date.year,
                 "rating": movie.rating,
