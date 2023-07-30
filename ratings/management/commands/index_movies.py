@@ -25,5 +25,6 @@ class Command(BaseCommand):
                 "poster": movie.poster,
                 "genre": list(movie.genre.values_list("name", flat=True)),
                 "cast": list(movie.cast_set.values_list("cast_member__name", flat=True)),
+                "url": movie.url,
             }
             index.save_object(movie_index)
