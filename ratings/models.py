@@ -17,6 +17,14 @@ class MovieGenre(models.Model):
         return f"{self.name}"
 
 
+class TvGenre(models.Model):
+    id = models.IntegerField(primary_key=True)
+    name = models.TextField(max_length=255, help_text="Max length 255 characters")
+
+    def __str__(self):
+        return f"{self.name}"
+
+
 class People(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=100, help_text="Max Characters 100")
@@ -184,6 +192,7 @@ class TvPage(Page):
         help_text="Testing image pull from poster URLField",
     )
     language = models.CharField(max_length=2, blank=True)
+    genre = models.ManyToManyField(TvGenre)
     watch_party = StreamField(
         [
             ("view_block", PersonDateBlock()),
@@ -206,8 +215,30 @@ class TvPage(Page):
         FieldPanel("poster"),
         FieldPanel("image"),
         FieldPanel("language"),
+        FieldPanel("genre"),
         FieldPanel("watch_party"),
     ]
+
+    def get_context(self, request):
+        context = super(TvPage, self).get_context(request)
+        context["cast_members"] = TvCast.objects.filter(tv=self)
+        return context
+
+
+class TvCast(models.Model):
+    tv = models.ForeignKey(
+        TvPage,
+        null=True,
+        blank=True,
+        on_delete=models.PROTECT
+    )
+    cast_member = models.ForeignKey(People, on_delete=models.PROTECT)
+    character = models.TextField(
+        max_length=100, help_text="Max length 100 characters"
+    )
+
+    def __str__(self):
+        return f"{self.cast_member}"
 
 
 class TvIndexPage(RoutablePageMixin, Page):
