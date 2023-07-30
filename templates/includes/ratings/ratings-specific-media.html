@@ -10,8 +10,8 @@
             </div>
             <div class="col-12 col-md-8">
                 <h1 class="text-white mb-1"><small>{{ page.title }}</small></h1>
-                <p><small><span class="badge text-bg-warning rounded-0">Rating: {{ page.rating }}/10</span> {% for genre in page.genre.values %} <span class="badge text-bg-secondary rounded-0">{{ genre.name }}</span>{% endfor %}
-                <strong>Release Year:</strong> {{ page.release_date|date:'Y' }} | <strong>Language:</strong> {{ page.language }}</small></p>
+                <p class="mb-0"><small><small><span class="badge text-bg-warning rounded-0">Rating: {{ page.rating }}/10</span> {% for genre in page.genre.values %} <span class="badge text-bg-light rounded-0">{{ genre.name }}</span>{% endfor %}</small></p>
+                <p><span class="badge text-bg-secondary rounded-0">Release Year: {{ page.release_date|date:'Y' }}</span> <span class="badge text-bg-dark rounded-0">Language: {{ page.language }}</span></small></p>
 
                 <h2>Overview</h2>
                 <p>{{ page.description }}</p>
