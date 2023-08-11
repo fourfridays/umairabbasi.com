@@ -1,4 +1,5 @@
 import os
+import time
 
 from django.core.management.base import BaseCommand
 from algoliasearch.search_client import SearchClient
@@ -10,7 +11,7 @@ class Command(BaseCommand):
         algolia_app_id = os.environ.get("ALGOLIA_APP_ID", "")
         algolia_api = os.environ.get("ALGOLIA_API", "")
         client = SearchClient.create(algolia_app_id, algolia_api)
-        index = client.init_index('tv_index')
+        index = client.init_index("tv_index")
 
         tv_shows = TvPage.objects.live().all()
 
@@ -21,12 +22,14 @@ class Command(BaseCommand):
                 "title": tv_show.title,
                 "description": tv_show.description,
                 "language": tv_show.language,
-                "releaseDate": tv_show.release_date.strftime("%Y-%m-%d"),
+                "release_date_timestamp": time.mktime(tv_show.release_date.timetuple()),
                 "releaseYear": tv_show.release_date.year,
                 "rating": tv_show.rating,
                 "poster": tv_show.poster,
                 "genre": list(tv_show.genre.values_list("name", flat=True)),
-                "cast": list(tv_show.tvcast_set.values_list("cast_member__name", flat=True)),
+                "cast": list(
+                    tv_show.tvcast_set.values_list("cast_member__name", flat=True)
+                ),
                 "url": tv_show.url,
             }
             index.save_object(tv_index)
