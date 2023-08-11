@@ -21,6 +21,7 @@ class Command(BaseCommand):
                 "title": movie.title,
                 "description": movie.description,
                 "language": movie.language,
+                "releaseDate": movie.release_date.strftime("%Y-%m-%d"),
                 "releaseYear": movie.release_date.year,
                 "rating": movie.rating,
                 "poster": movie.poster,

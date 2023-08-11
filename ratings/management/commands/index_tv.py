@@ -21,6 +21,7 @@ class Command(BaseCommand):
                 "title": tv_show.title,
                 "description": tv_show.description,
                 "language": tv_show.language,
+                "releaseDate": tv_show.release_date.strftime("%Y-%m-%d"),
                 "releaseYear": tv_show.release_date.year,
                 "rating": tv_show.rating,
                 "poster": tv_show.poster,
