@@ -20,6 +20,7 @@ class Command(BaseCommand):
                 "objectID": movie.movie_id,
                 "title": movie.title,
                 "description": movie.description,
+                "language": movie.language,
                 "releaseYear": movie.release_date.year,
                 "rating": movie.rating,
                 "poster": movie.poster,

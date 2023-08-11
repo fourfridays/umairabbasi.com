@@ -20,6 +20,7 @@ class Command(BaseCommand):
                 "objectID": tv_show.tv_id,
                 "title": tv_show.title,
                 "description": tv_show.description,
+                "language": tv_show.language,
                 "releaseYear": tv_show.release_date.year,
                 "rating": tv_show.rating,
                 "poster": tv_show.poster,
