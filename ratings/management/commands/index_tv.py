@@ -23,7 +23,7 @@ class Command(BaseCommand):
                 "description": tv_show.description,
                 "language": tv_show.language,
                 "release_date_timestamp": time.mktime(tv_show.release_date.timetuple()),
-                "releaseYear": tv_show.release_date.year,
+                "release_year": tv_show.release_date.year,
                 "rating": tv_show.rating,
                 "poster": tv_show.poster,
                 "genre": list(tv_show.genre.values_list("name", flat=True)),

@@ -23,7 +23,7 @@ class Command(BaseCommand):
                 "description": movie.description,
                 "language": movie.language,
                 "release_date_timestamp": time.mktime(movie.release_date.timetuple()),
-                "releaseYear": movie.release_date.year,
+                "release_year": movie.release_date.year,
                 "rating": movie.rating,
                 "poster": movie.poster,
                 "genre": list(movie.genre.values_list("name", flat=True)),
