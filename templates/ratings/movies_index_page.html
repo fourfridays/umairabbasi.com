@@ -1,38 +1,49 @@
 {% extends "base.html" %}
-{% load wagtailcore_tags %}
+{% load static wagtailcore_tags %}
 {% wagtail_site as current_site %}
 {% block title %}{{ title }} by {{ current_site.site_name }}{% endblock %}
-{% block body_class %}movies{% endblock %}
+{% block head-extra %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.css@8.0.0/themes/reset-min.css" integrity="sha256-2AeJLzExpZvqLUxMfcs+4DWcMwNfpnjUeAAvEtPr0wU=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.css@8.0.0/themes/satellite-min.css" integrity="sha256-p/rGN4RGy6EDumyxF9t7LKxWGg6/MZfGhJM/asKkqvA=" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/algolia_dropdown.css' %}">
+    <link rel="stylesheet" href="{% static 'css/app.css' %}">
+{% endblock head-extra %}
 
+{% block body_class %}movies{% endblock %}
 
 {% block content %}
     <div class="container text-light">
-        <div class="row mt-3 mb-2">
-            <div class="col-12 col-md-5 col-lg-5 col-xl-6 text-center text-md-start">
-                <h3 class="text-white">{{ title }}</h3>
-                <p class="mb-1"><small>{{ movie_count }} movies{% if search_query %} | Showing search results for: {{ search_query }}{% endif %}</small></p>
+        <div class="row mt-3">
+            <div class="col-12 col-md-3 text-center text-md-start">
+                <h3 class="text-white">Movie Ratings</h3>
+                <p id="stats"></p>
             </div>
-            <div class="col-7 col-sm-7 col-md-4 col-lg-4 col-xl-4 text-center text-md-end">
-                <form action="{% url 'movie_search' %}" method="get">
-                    <label class="form-label visually-hidden" for="inlineMediaSearch">Movie Search</label>
-                    <input id="inlineMediaSearch" type="text" name="query" value="{{ search_query }}" placeholder="Movie Search">
-                    <input class="visually-hidden" type="submit" value="search">
-                </form>
+            <div class="col-12 col-md-5 offset-lg-2 col-lg-4 d-flex justify-content-center justify-content-lg-end">
+                <!-- Container for all Dropdown facet filters -->
+                <div class="search-panel__filters">
+                    <div id="genre"></div>
+                    <div id="rating"></div>
+                    <div id="release-year"></div>
+                </div>
             </div>
-            <div class="col-5 col-sm-5 col-md-3 col-lg-3 col-xl-2 text-center text-md-end">
-                <form class="form-inline" method="get">
-                    <label class="visually-hidden" for="inlineFormRatingSelect">Rating Filter</label>
-                    <select id="inlineFormRatingSelect" class="form-control form-control-sm custom-select mr-sm-2" onchange="javascript:location.href=this.value;">
-                        <option value="/ratings/movies/">Rating Filter</option>
-                        <option {% if rating == "top-rated" %}selected{%endif %} value="/ratings/movies/top-rated/">Top-Rated</option>
-                        <option {% if rating == "recommended" %}selected{%endif %} value="/ratings/movies/recommended/">Recommended</option>
-                        <option {% if rating == "not-recommended" %}selected{%endif %} value="/ratings/movies/not-recommended/">Not-Recommended</option>
-                        <option value="/ratings/movies/">View All</option>
-                    </select> 
-                </form>
-            </div>
+            <div class="col-12 col-md-4 col-lg-3 d-flex justify-content-center justify-content-md-end" id="searchbox"></div>
+            <div id="current-refinements" class="my-2"></div>
         </div>
-        <hr class="mt-0"/>
-        {% include "includes/ratings/ratings-all-media.html" %}
+
+        <hr class="mt-0">
+
+        <div id="hits"></div>
+
+        <div class="my-4 d-flex justify-content-center" id="pagination"></div>
     </div>
+{% endblock %}
+
+{% block extra_js %}
+    <script>
+        var algoliaAppId = "{{ algolia_app_id }}";
+        var algoliaApi = "{{ algolia_search_api }}";
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.19.1/dist/algoliasearch-lite.umd.js" integrity="sha256-qzlNbRtZWHoUV5I2mI2t9QR7oYXlS9oNctX+0pECXI0=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.56.8/dist/instantsearch.production.min.js" integrity="sha256-xUys6KCuRGBxFaRaYZlWulRUjY48XFv6/Q2s0mb1dmc=" crossorigin="anonymous"></script>
+    <script type="module" src="{% static 'js/algolia_movie_index.js' %}"></script>
 {% endblock %}

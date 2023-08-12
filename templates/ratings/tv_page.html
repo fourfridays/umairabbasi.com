@@ -11,25 +11,6 @@
             <div class="col-12 col-md-5 col-lg-5 col-xl-6 text-center text-md-start">
                 <h3 class="text-white">Umair's {% if rating %} {{ rating|title }}{% endif %} TV Show Ratings</h3>
             </div>
-            <div class="col-7 col-sm-7 col-md-4 col-lg-4 col-xl-4 text-center text-md-end">
-                <form action="{% url 'tv_search' %}" method="get">
-                    <label class="form-label visually-hidden" for="inlineMediaSearch">TV Show Search</label>
-                    <input id="inlineMediaSearch" type="text" name="query" value="{{ search_query }}" placeholder="TV Show Search">
-                    <input class="visually-hidden" type="submit" value="search">
-                </form>
-            </div>
-            <div class="col-5 col-sm-5 col-md-3 col-lg-3 col-xl-2 text-center text-md-end">
-                <form class="form-inline" method="get">
-                    <label class="visually-hidden" for="inlineFormRatingSelect">Rating Filter</label>
-                    <select id="inlineFormRatingSelect" class="form-control form-control-sm custom-select mr-sm-2" onchange="javascript:location.href=this.value;">
-                        <option value="/ratings/tv/">Rating Filter</option>
-                        <option {% if rating == "top-rated" %}selected{%endif %} value="/ratings/tv/top-rated/">Top-Rated</option>
-                        <option {% if rating == "recommended" %}selected{%endif %} value="/ratings/tv/recommended/">Recommended</option>
-                        <option {% if rating == "not-recommended" %}selected{%endif %} value="/ratings/tv/not-recommended/">Not-Recommended</option>
-                        <option value="/ratings/tv/">View All</option>
-                    </select> 
-                </form>
-            </div>
         </div>
         <hr class="mt-0"/>
         {% include "includes/ratings/ratings-specific-media.html" %}
