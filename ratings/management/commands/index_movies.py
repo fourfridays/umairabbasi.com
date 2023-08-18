@@ -9,7 +9,7 @@ from ratings.models import MoviePage
 class Command(BaseCommand):
     def handle(self, *args, **options):
         algolia_app_id = os.environ.get("ALGOLIA_APP_ID", "")
-        algolia_api = os.environ.get("ALGOLIA_SEARCH_API", "")
+        algolia_api = os.environ.get("ALGOLIA_API", "")
         client = SearchClient.create(algolia_app_id, algolia_api)
         index = client.init_index("movie_index")
 
