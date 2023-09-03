@@ -2,8 +2,8 @@
 
 
 body {
-    font-family: 'Raleway', sans-serif;
-    font-size: 16px;
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1rem;
     color: rgba(246, 247, 238, 1.00);
     background-color: rgba(17, 28, 42, 1.00);
 }
@@ -27,7 +27,9 @@ a {
 }
 
 i {
-    &.fa, &.fas {
+
+    &.fa,
+    &.fas {
         color: rgba(111, 78, 188, 1.00);
     }
 }
@@ -149,7 +151,8 @@ code {
             padding: 0.5rem 0.9rem;
         }
 
-        &.nav-link, &.dropdown-item {
+        &.nav-link,
+        &.dropdown-item {
             padding: 0.59rem 0.9rem !important;
             font-size: 0.88rem;
         }
@@ -198,11 +201,6 @@ code {
     margin: 12px;
 }
 
-/* Blog Page */
-.blog-post {
-    font-size: 1.15rem;
-}
-
 /*==============================
 =       MOVIES & TV Shows      =
 ==============================*/
@@ -236,7 +234,8 @@ code {
 
 
 /* CODE BLOCK */
-code[class*="language-"], pre[class*="language-"] {
+code[class*="language-"],
+pre[class*="language-"] {
     font-size: 15px !important;
 }
 
@@ -366,6 +365,7 @@ code {
 
 /* Landscape phones and down */
 @media (max-width: 480px) {
+
     /* ==========================================================================
   BLOG
    ========================================================================== */
