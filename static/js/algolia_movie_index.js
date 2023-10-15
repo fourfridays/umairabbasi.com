@@ -11,8 +11,8 @@ const search = instantsearch({
 const MOBILE_WIDTH = 375;
 
 const genreDropdown = createDropdown(instantsearch.widgets.refinementList, {
-  closeOnChange: () => window.innerWidth >= MOBILE_WIDTH,
-  cssClasses: { root: 'genreDropdown' },
+    closeOnChange: () => window.innerWidth >= MOBILE_WIDTH,
+    cssClasses: { root: 'genreDropdown' },
 });
 const ratingDropdown = createDropdown(instantsearch.widgets.refinementList, {
     closeOnChange: () => window.innerWidth >= MOBILE_WIDTH,
@@ -30,8 +30,8 @@ const renderHits = (renderOptions, isFirstRender) => {
     widgetParams.container.innerHTML = `
         <div class="row mb-4 rounded justify-content-center">
             ${hits
-                .map(item =>
-                    `
+            .map(item =>
+                `
                         <div class="col-5 col-md-3 col-lg-2 rounded poster-bg p-2 m-2">
                             <a href="${item.url}">
                                 <figure class="mb-0">
@@ -44,7 +44,7 @@ const renderHits = (renderOptions, isFirstRender) => {
                             <p class="lh-1 mb-0"><small><span class="badge text-bg-warning rounded-0">Rating: ${item.rating}/10</span></small></p>
                         </div>
                     `
-                )
+            )
             .join('')}
         </div>
     `;
