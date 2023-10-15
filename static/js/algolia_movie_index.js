@@ -18,9 +18,9 @@ const ratingDropdown = createDropdown(instantsearch.widgets.refinementList, {
     closeOnChange: () => window.innerWidth >= MOBILE_WIDTH,
     cssClasses: { root: 'ratingsDropdown' },
 });
-const releaseYearDropdown = createDropdown(instantsearch.widgets.refinementList, {
+const languageDropdown = createDropdown(instantsearch.widgets.refinementList, {
     closeOnChange: () => window.innerWidth >= MOBILE_WIDTH,
-    cssClasses: { root: 'releaseYearDropdown' },
+    cssClasses: { root: 'languageDropdown' },
 });
 
 // Render function
@@ -82,9 +82,9 @@ search.addWidgets([
         container: '#rating',
         attribute: 'rating',
     }),
-    releaseYearDropdown({
-        container: '#release-year',
-        attribute: 'release_year',
+    languageDropdown({
+        container: '#language',
+        attribute: 'language',
     }),
     instantsearch.widgets.pagination({
         container: '#pagination',
