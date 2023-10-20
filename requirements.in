@@ -15,6 +15,5 @@ willow==1.6.2
 
 algoliasearch==3.0.0
 elasticsearch==7.10.1
+wagtailcodeblock==1.29.0.1
 flickrapi>=2.4.0,<3.0
-# wagtailcodeblock from fourfridays PR
-git+https://github.com/fourfridays/wagtailcodeblock.git@d6b4f3b#egg=wagtailcodeblock
