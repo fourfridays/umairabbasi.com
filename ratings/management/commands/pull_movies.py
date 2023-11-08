@@ -77,6 +77,7 @@ class Command(BaseCommand):
 
     def save_cast(self, cast_results):
         for person in cast_results["cast"]:
+            print("Saving Movie Credits and People")
             try:
                 Cast.objects.update_or_create(
                     movie=MoviePage.objects.get(movie_id=cast_results["id"]),
@@ -130,7 +131,6 @@ class Command(BaseCommand):
                 for media in json_results["results"]:
                     self.save_media(media, movies_index_page, poster_size)
 
-                    print("Pulling Movie Credits and People")
                     # Fetch movie credits first that has the person_id we want to fetch next
                     # See https://developer.themoviedb.org/reference/movie-credits
                     url = f"https://api.themoviedb.org/3/movie/{media['id']}/credits?api_key={api_key}&language=en-US&session_id={session_id}"
