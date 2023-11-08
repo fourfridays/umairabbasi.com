@@ -137,7 +137,8 @@ class Command(BaseCommand):
                     response = requests.get(url, headers=headers)
                     cast_results = response.json()
 
-                    self.save_cast(cast_results)
+                    if cast_results["cast"]:
+                        self.save_cast(cast_results)
 
                 page_number += 1
 

@@ -136,8 +136,9 @@ class Command(BaseCommand):
                     url = f"https://api.themoviedb.org/3/tv/{media['id']}/credits?api_key={api_key}&language=en-US&session_id={session_id}"
                     response = requests.get(url, headers=headers)
                     cast_results = response.json()
-
-                    self.save_cast(cast_results)
+                    
+                    if cast_results["cast"]:
+                        self.save_cast(cast_results)
 
                 page_number += 1
 
