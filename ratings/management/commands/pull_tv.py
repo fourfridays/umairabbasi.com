@@ -78,13 +78,14 @@ class Command(BaseCommand):
     def save_cast(self, cast_results):
         for person in cast_results["cast"]:
             try:
-                print("Saving Tv Credits and People")
+                print("Update/Create Tv Cast")
                 TvCast.objects.update_or_create(
                     tv=TvPage.objects.get(tv_id=cast_results["id"]),
                     cast_member=People.objects.get(id=person["id"]),
                     character=person["character"],
                 )
             except ObjectDoesNotExist:
+                print("Person does not exist. Saving Person")
                 # Fetch people from person API
                 # See https://developer.themoviedb.org/reference/person-details
                 self.save_people(person)
@@ -97,19 +98,28 @@ class Command(BaseCommand):
                 )
 
     def handle(self, *args, **options):
+        def tv_show_exists(tv_id):
+            try:
+                TvPage.objects.get(id=tv_id)
+                return True
+            except ObjectDoesNotExist:
+                return False
+
         # Check to see if TvIndexPage exists
         tv_index_page = TvIndexPage.objects.live().public().get()
 
         # Get tv shows rated by user if tv_index_page exists
         if tv_index_page:
-            page_number = 1 
+            page_number = 1
             account_id = os.getenv("TMDB_ACCOUNT_ID").strip('""').strip("''")
             api_key = os.getenv("TMDB_API_KEY").strip('""').strip("''")
             session_id = os.getenv("TMDB_SESSION_ID").strip('""').strip("''")
             headers = {"accept": "application/json"}
 
             print("Pulling Tv Genre's")
-            response = requests.get(f"https://api.themoviedb.org/3/genre/tv/list?api_key={api_key}&language=en-US&session_id={session_id}, headers={headers}")
+            response = requests.get(
+                f"https://api.themoviedb.org/3/genre/tv/list?api_key={api_key}&language=en-US&session_id={session_id}, headers={headers}"
+            )
             json_results = response.json()
 
             for genre in json_results["genres"]:
@@ -119,26 +129,38 @@ class Command(BaseCommand):
                 )
 
             print("Pulling TV Shows")
-            response = requests.get(f"https://api.themoviedb.org/3/account/{account_id}/rated/tv?api_key={api_key}&language=en-US&session_id={session_id}&sort_by=created_at.desc&page={page_number}, headers={headers}")
+            response = requests.get(
+                f"https://api.themoviedb.org/3/account/{account_id}/rated/tv?api_key={api_key}&language=en-US&session_id={session_id}&sort_by=created_at.desc&page={page_number}, headers={headers}"
+            )
             json_results = response.json()
             total_pages = json_results["total_pages"]
             poster_size = "w500"
 
             while page_number <= total_pages:
-                response = requests.get(f"https://api.themoviedb.org/3/account/{account_id}/rated/tv?api_key={api_key}&language=en-US&session_id={session_id}&sort_by=created_at.desc&page={page_number}")
+                response = requests.get(
+                    f"https://api.themoviedb.org/3/account/{account_id}/rated/tv?api_key={api_key}&language=en-US&session_id={session_id}&sort_by=created_at.desc&page={page_number}"
+                )
                 json_results = response.json()
 
                 for media in json_results["results"]:
-                    self.save_media(media, tv_index_page, poster_size)
+                    # Check to see if Movie Page exists
+                    if tv_show_exists(media["id"]):
+                        # if it does exist, update the rating
+                        TvPage.objects.filter(tv_id=media["id"]).update(
+                            rating=media["rating"]
+                        )
+                    else:
+                        # if it does not exist, create a new Tv Page
+                        self.save_media(media, tv_index_page, poster_size)
 
-                    # Fetch tv credits first that has the person_id we want to fetch next
-                    # See https://developer.themoviedb.org/reference/tv-credits
-                    url = f"https://api.themoviedb.org/3/tv/{media['id']}/credits?api_key={api_key}&language=en-US&session_id={session_id}"
-                    response = requests.get(url, headers=headers)
-                    cast_results = response.json()
-                    
-                    if cast_results["cast"]:
-                        self.save_cast(cast_results)
+                        # Fetch tv credits first that has the person_id we want to fetch next
+                        # See https://developer.themoviedb.org/reference/tv-credits
+                        url = f"https://api.themoviedb.org/3/tv/{media['id']}/credits?api_key={api_key}&language=en-US&session_id={session_id}"
+                        response = requests.get(url, headers=headers)
+                        cast_results = response.json()
+
+                        if cast_results["cast"]:
+                            self.save_cast(cast_results)
 
                 page_number += 1
 

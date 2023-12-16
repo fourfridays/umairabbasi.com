@@ -14,25 +14,45 @@ from io import BytesIO
 
 class Command(BaseCommand):
     def save_media(self, media, movies_index_page, poster_size):
-        child_page = MoviePage(
-            movie_id=media["id"],
-            title=media["title"],
-            description=media["overview"],
-            release_date=datetime.datetime.strptime(
-                media["release_date"], "%Y-%m-%d"
-            ).date(),
-            rating=media["rating"],
-            poster="https://image.tmdb.org/t/p/"
-            + poster_size
-            + media["poster_path"],
-            language=media["original_language"],
-        )
-        movies_index_page.add_child(instance=child_page)
+        try:
+            child_page = MoviePage(
+                movie_id=media["id"],
+                title=media["title"],
+                description=media["overview"],
+                release_date=datetime.datetime.strptime(
+                    media["release_date"], "%Y-%m-%d"
+                ).date(),
+                rating=media["rating"],
+                poster="https://image.tmdb.org/t/p/"
+                + poster_size
+                + media["poster_path"],
+                language=media["original_language"],
+            )
+            movies_index_page.add_child(instance=child_page)
 
-        # Setting genre
-        child_page.genre.set(media["genre_ids"])
+            # Setting genre
+            child_page.genre.set(media["genre_ids"])
 
-        child_page.save()
+            child_page.save()
+
+        except ValidationError:
+            media_page = MoviePage.objects.get(movie_id=media["id"])
+            # if we updated our rating for an existing media in Wagtail
+            if media_page.rating != media["rating"]:
+                media_page.rating = media["rating"]
+                media_page.save_revision().publish()
+            else:
+                pass
+
+            # if we updated poster size for an existing poster path in Wagtail
+            media_page.poster = (
+                "https://image.tmdb.org/t/p/" + poster_size + media["poster_path"]
+            )
+
+            # Setting genre
+            media_page.genre.set(media["genre_ids"])
+
+            media_page.save()
 
     def get_poster(self, media, collection):
         response = requests.get(media.poster)
@@ -57,14 +77,15 @@ class Command(BaseCommand):
 
     def save_cast(self, cast_results):
         for person in cast_results["cast"]:
-            print("Saving Movie Credits and People")
             try:
+                print("Update/Create Movie Cast")
                 Cast.objects.update_or_create(
                     movie=MoviePage.objects.get(movie_id=cast_results["id"]),
                     cast_member=People.objects.get(id=person["id"]),
                     character=person["character"],
                 )
             except ObjectDoesNotExist:
+                print("Person does not exist. Saving Person")
                 # Fetch people from person API
                 # See https://developer.themoviedb.org/reference/person-details
                 self.save_people(person)
@@ -77,6 +98,13 @@ class Command(BaseCommand):
                 )
 
     def handle(self, *args, **options):
+        def movie_exists(movie_id):
+            try:
+                MoviePage.objects.get(id=movie_id)
+                return True
+            except ObjectDoesNotExist:
+                return False
+
         # Check to see if MovieIndexPage exists
         movies_index_page = MoviesIndexPage.objects.live().public().get()
 
@@ -89,7 +117,9 @@ class Command(BaseCommand):
             headers = {"accept": "application/json"}
 
             print("Pulling Movie Genre's")
-            response = requests.get(f"https://api.themoviedb.org/3/genre/movie/list?api_key={api_key}&language=en-US&session_id={session_id}, headers={headers}")
+            response = requests.get(
+                f"https://api.themoviedb.org/3/genre/movie/list?api_key={api_key}&language=en-US&session_id={session_id}, headers={headers}"
+            )
             json_results = response.json()
 
             for genre in json_results["genres"]:
@@ -99,37 +129,28 @@ class Command(BaseCommand):
                 )
 
             print("Pulling Movies")
-            response = requests.get(f"https://api.themoviedb.org/3/account/{account_id}/rated/movies?api_key={api_key}&language=en-US&session_id={session_id}&sort_by=created_at.desc&page={page_number}, headers={headers}")
+            response = requests.get(
+                f"https://api.themoviedb.org/3/account/{account_id}/rated/movies?api_key={api_key}&language=en-US&session_id={session_id}&sort_by=created_at.desc&page={page_number}, headers={headers}"
+            )
             json_results = response.json()
             total_pages = json_results["total_pages"]
             poster_size = "w500"
 
             while page_number <= total_pages:
-                response = requests.get(f"https://api.themoviedb.org/3/account/{account_id}/rated/movies?api_key={api_key}&language=en-US&session_id={session_id}&sort_by=created_at.desc&page={page_number}")
+                response = requests.get(
+                    f"https://api.themoviedb.org/3/account/{account_id}/rated/movies?api_key={api_key}&language=en-US&session_id={session_id}&sort_by=created_at.desc&page={page_number}"
+                )
                 json_results = response.json()
 
                 for media in json_results["results"]:
-                    # If Movies page already exists do some updated
-                    try:
-                        media_page = MoviePage.objects.get(movie_id=media["id"])
-                        # if we updated our rating for an existing media in Wagtail then update it
-                        if media_page.rating != media["rating"]:
-                            media_page.rating = media["rating"]
-                            media_page.save_revision().publish()
-                        else:
-                            pass
-                        
-                        # Incase we updated poster size for an existing poster path in Wagtail
-                        media_page.poster = (
-                            "https://image.tmdb.org/t/p/" + poster_size + media["poster_path"]
+                    # Check to see if Movie Page exists
+                    if movie_exists(media["id"]):
+                        # if it does exist, update the rating
+                        MoviePage.objects.filter(movie_id=media["id"]).update(
+                            rating=media["rating"]
                         )
-
-                        # Setting genre
-                        media_page.genre.set(media["genre_ids"])
-
-                        media_page.save()
-                    # If Movies page doesn't exist then create it
-                    except ObjectDoesNotExist:
+                    else:
+                        # if it does not exist, create a new Movie Page
                         self.save_media(media, movies_index_page, poster_size)
 
                         # Fetch movie credits first that has the person_id we want to fetch next
