@@ -10,9 +10,9 @@
         {% image page.hero_image fill-2400x658-c100 jpegquality-60 as heroimage %}
         {% image page.hero_image fill-2400x658-c100 format-webp as webp_heroimage %}
         <div class="text-center p-lg-3 p-2">
-            <h1 class="text-uppercase card-title">{{ page.title }}</h1>
+            <h1 class="text-uppercase card-title p-2">{{ page.title }}</h1>
             <hr class="m-0">
-            <p class="small hidden-sm"> 
+            <p class="small hidden-sm p-2"> 
                 {% for person in page.authors %}
                     {{ person.first_name }} {{ person.last_name }} | {{ page.date_published }}        
                 {% endfor %}
