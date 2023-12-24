@@ -120,13 +120,13 @@ AUTHENTICATION_BACKENDS = (
 )
 
 # Search Backends
-# WAGTAILSEARCH_BACKENDS = {
-#     'default': {
-#         'BACKEND': 'wagtail.search.backends.database',
-#     }
-# }
-
 WAGTAILSEARCH_BACKENDS = {
+    'default': {
+        'BACKEND': 'wagtail.search.backends.database',
+    }
+}
+
+""" WAGTAILSEARCH_BACKENDS = {
     "default": {
         "BACKEND": "wagtail.search.backends.elasticsearch7",
         "URLS": os.environ.get("ELASTIC_SEARCH_URL", None),
@@ -143,7 +143,7 @@ WAGTAILSEARCH_BACKENDS = {
             },
         },
     }
-}
+} """
 
 WSGI_APPLICATION = "wsgi.application"
 
