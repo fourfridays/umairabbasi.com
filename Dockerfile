@@ -19,4 +19,4 @@ RUN pip install -r requirements.txt
 RUN python manage.py collectstatic --noinput
 
 EXPOSE 80
-CMD uwsgi --http=0.0.0.0:80 --module=wsgi --ignore-sigpipe --ignore-write-errors --disable-write-exception
+CMD uwsgi --http=0.0.0.0:80 --module=wsgi --ignore-sigpipe --ignore-write-errors --disable-write-exception --enable-threads
