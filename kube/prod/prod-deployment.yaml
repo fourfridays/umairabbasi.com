@@ -1,0 +1,97 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: umairabbasi
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: umairabbasi
+  template:
+    metadata:
+      labels:
+        app: umairabbasi
+    spec:
+      initContainers:
+        - name: migrate
+          image: ghcr.io/fourfridays/umairabbasi:latest
+          imagePullPolicy: Always
+          command: ["python", "manage.py", "migrate"]
+          envFrom:
+          - secretRef:
+              name: secret
+      containers:
+        - image: ghcr.io/fourfridays/umairabbasi:latest
+          name: umairabbasi
+          resources:
+            requests:
+              memory: "256Mi"
+            limits:
+              memory: "512Mi"
+          envFrom:
+          - secretRef:
+              name: secret
+          - configMapRef:
+              name: config
+          ports:
+            - containerPort: 8000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: umairabbasi
+  labels:
+    app: umairabbasi
+spec:
+  selector:
+    app: umairabbasi
+  ports:
+    - port: 8088
+      targetPort: 8000
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: umairabbasi
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+spec:
+  rules:
+    - host: umairabbasi.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: umairabbasi
+                port:
+                  number: 8088
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: umairabbasi-tls
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`umairabbasi.com`)
+      middlewares:
+        - name: umairabbasi-gzip-compress
+      services:
+        - name: umairabbasi
+          port: 8088
+  tls: # This route uses TLS
+    certResolver: le # Uses our certificate resolver to get a certificate automatically!
+---
+# Enable gzip compression
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: umairabbasi-gzip-compress
+spec:
+  compress: {}

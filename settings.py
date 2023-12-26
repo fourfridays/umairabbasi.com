@@ -5,6 +5,7 @@ from django_storage_url import dsn_configured_storage_class
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+DEBUG = os.environ.get("DJANGO_DEBUG") == "True"
 
 INSTALLED_APPS = [
     "anymail",
@@ -69,34 +70,10 @@ if sentry_dsn:
         dsn=sentry_dsn,
         before_send=ignore_disallowedhost,
         integrations=[DjangoIntegration()],
-        release=os.environ.get("GIT_COMMIT", "develop"),
-        environment=os.environ.get("STAGE", "local"),
         traces_sample_rate=0.2,
     )
 
 ROOT_URLCONF = "urls"
-
-SECRET_KEY = os.environ.get("SECRET_KEY", "<a string of random characters>")
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get("DJANGO_DEBUG") == "True"
-
-DIVIO_DOMAIN = os.environ.get("DOMAIN", "")
-DIVIO_DOMAIN_ALIASES = [
-    d.strip() for d in os.environ.get("DOMAIN_ALIASES", "").split(",") if d.strip()
-]
-DIVIO_DOMAIN_REDIRECTS = [
-    d.strip() for d in os.environ.get("DOMAIN_REDIRECTS", "").split(",") if d.strip()
-]
-
-ALLOWED_HOSTS = [DIVIO_DOMAIN] + DIVIO_DOMAIN_ALIASES + DIVIO_DOMAIN_REDIRECTS
-
-CSRF_TRUSTED_ORIGINS = [
-    os.environ.get("CSRF_TRUSTED_ORIGINS", default="https://umairabbasi.com")
-]
-
-# Redirect to HTTPS by default, unless explicitly disabled
-SECURE_SSL_REDIRECT = os.environ.get("SECURE_SSL_REDIRECT") != "False"
 
 TEMPLATES = [
     {
@@ -114,26 +91,13 @@ TEMPLATES = [
     },
 ]
 
-# Authentication Backends
-AUTHENTICATION_BACKENDS = (
-    "django.contrib.auth.backends.ModelBackend",
-)
-
-# Search Backends
-WAGTAILSEARCH_BACKENDS = {
-    'default': {
-        'BACKEND': 'wagtail.search.backends.database',
-    }
-}
-
 WSGI_APPLICATION = "wsgi.application"
 
 DATABASE_URL = os.environ.get("DATABASE_URL", "sqlite://:memory:")
-
 DATABASES = {"default": dj_database_url.parse(DATABASE_URL)}
 
 # Password validation
-# https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
+# https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -150,42 +114,79 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
 # Internationalization
-# https://docs.djangoproject.com/en/3.2/topics/i18n/
+# https://docs.djangoproject.com/en/4.0/topics/i18n/
 
 LANGUAGE_CODE = "en-us"
+TIME_ZONE = "America/New_York"
 USE_I18N = True
+USE_L10N = True
 USE_TZ = True
 
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATICFILES_DIRS = ["static"]
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/4.0/howto/static-files/
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
 ]
 
-STATICFILES_DIRS = ["static"]
-
+staticfiles_backend = "django.contrib.staticfiles.storage.StaticFilesStorage"
 STATIC_URL = "/static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-# Media files
-# DEFAULT_FILE_STORAGE is configured using DEFAULT_STORAGE_DSN
+if DEBUG is True:
+    storage_backend = "django.core.files.storage.FileSystemStorage"
+    MEDIA_URL = "media/"
+    MEDIA_ROOT = os.path.join("/data/media")
+else:
+    AWS_S3_ACCESS_KEY_ID = os.environ.get("AWS_S3_ACCESS_KEY_ID", default=None)
+    AWS_S3_SECRET_ACCESS_KEY = os.environ.get("AWS_S3_SECRET_ACCESS_KEY", default=None)
+    AWS_STORAGE_BUCKET_NAME = os.environ.get("AWS_STORAGE_BUCKET_NAME", default=None)
+    AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
+    AWS_S3_FILE_OVERWRITE = os.environ.get("AWS_S3_FILE_OVERWRITE", default=False)
+    AWS_QUERYSTRING_AUTH = os.environ.get("AWS_QUERYSTRING_AUTH", default=False)
+    AWS_IS_GZIPPED = os.environ.get("AWS_IS_GZIPPED", default=True)
+    AWS_S3_OBJECT_PARAMETERS = {
+        "Expires": "Thu, 31 Dec 2099 20:00:00 GMT",
+        "CacheControl": "max-age=94608000"
+    }
+    # S3 static settings
+    # STATIC_LOCATION = "static"
+    # STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{STATIC_LOCATION}/"
+    # staticfiles_backend = "page.storage_backends.StaticStorage"
+    # S3 public media settings
+    PUBLIC_MEDIA_LOCATION = "media"
+    MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{PUBLIC_MEDIA_LOCATION}/"
+    storage_backend = "page.storage_backends.PublicMediaStorage"
+    # S3 private media settings
+    PRIVATE_MEDIA_LOCATION = "private"
+    PRIVATE_FILE_STORAGE = "page.storage_backends.PrivateMediaStorage"
 
-# read the setting value from the environment variable
-DEFAULT_STORAGE_DSN = os.environ.get("DEFAULT_STORAGE_DSN")
+STORAGES = {
+    "default": {"BACKEND": storage_backend},
+    "staticfiles": {"BACKEND": staticfiles_backend},
+}
 
-# dsn_configured_storage_class() requires the name of the setting
-DefaultStorageClass = dsn_configured_storage_class("DEFAULT_STORAGE_DSN")
+# Wagtail settings
+WAGTAIL_SITE_NAME = os.environ.get(
+    "WAGTAIL_SITE_NAME", default="Umair Abbasi"
+)
 
-# Django's DEFAULT_FILE_STORAGE requires the class name
-DEFAULT_FILE_STORAGE = "settings.DefaultStorageClass"
+# Base URL to use when referring to full URLs within the Wagtail admin backend -
+# e.g. in notification emails. Don't include '/admin' or a trailing slash
+WAGTAILADMIN_BASE_URL = os.environ.get("WAGTAILADMIN_BASE_URL", default="localhost")
 
-# only required for local file storage and serving, in development
-MEDIA_URL = "media/"
-MEDIA_ROOT = os.path.join("/data/media/")
-
-WAGTAIL_SITE_NAME = "Umair Abbasi"
-WAGTAILADMIN_BASE_URL = "https://umairabbasi.com/"
+DOMAIN_ALIASES = [
+    d.strip() for d in os.environ.get("DOMAIN_ALIASES", "").split(",") if d.strip()
+]
+ALLOWED_HOSTS = DOMAIN_ALIASES
+CSRF_TRUSTED_ORIGINS = [
+    os.environ.get("CSRF_TRUSTED_ORIGINS", default="http://localhost")
+]
+SECRET_KEY = os.environ.get("SECRET_KEY", default="<a string of random characters>")
 
 FLICKR_API_KEY = os.getenv("FLICKR_API_KEY", default="")
 FLICKR_API_SECRET = os.getenv("FLICKR_API_SECRET", default="")
