@@ -4,15 +4,20 @@
 #
 # See our Developer Handbook for more information:
 # http://docs.divio.com/en/latest/reference/docker-docker-compose.html
-version: "2.4"
+version: "3.8"
 
 services:
   # The web container is an instance of exactly the same Docker image as your
   # Cloud application container.
   web:
     build: "."
+    container_name: umairabbasi-web
     links:
       - "db:postgres"
+    depends_on:
+      db:
+        condition: service_healthy
+        restart: true
     # Change the port if you'd like to expose your project locally on a
     # different port, for example if you already use port 8000 for
     # something else.
@@ -32,9 +37,25 @@ services:
   # On the Cloud, your database runs on a dedicated cluster. Locally, we
   # replicate it in a Docker container called "db".
   db:
-    image: postgres:latest
+    image: postgres:15.3-alpine
+    container_name: umairabbasi-db
     environment:
-      POSTGRES_DB: "db"
+      POSTGRES_USER: "postgres"
+      POSTGRES_DB: "db_umairabbasi"
       POSTGRES_HOST_AUTH_METHOD: "trust"
+      PGUSER: "postgres"
+      PGDATABASE: "db_umairabbasi"
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 1s
+      timeout: 5s
+      retries: 5
     volumes:
-      - ".:/app:rw"
+      - db:/var/lib/postgresql/data
+      - ./data/init.sql:/docker-entrypoint-initdb.d/create_tables.sql
+
+volumes:
+  db:
+    driver: local
