@@ -14,14 +14,14 @@ spec:
     spec:
       initContainers:
         - name: migrate
-          image: ghcr.io/fourfridays/umairabbasi:latest
+          image: ghcr.io/fourfridays/umairabbasi.com:latest
           imagePullPolicy: Always
           command: ["python", "manage.py", "migrate"]
           envFrom:
           - secretRef:
               name: secret
       containers:
-        - image: ghcr.io/fourfridays/umairabbasi:latest
+        - image: ghcr.io/fourfridays/umairabbasi.com:latest
           name: umairabbasi
           resources:
             requests:
