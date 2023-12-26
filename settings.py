@@ -126,25 +126,6 @@ WAGTAILSEARCH_BACKENDS = {
     }
 }
 
-""" WAGTAILSEARCH_BACKENDS = {
-    "default": {
-        "BACKEND": "wagtail.search.backends.elasticsearch7",
-        "URLS": os.environ.get("ELASTIC_SEARCH_URL", None),
-        "INDEX": "umairabbasi",
-        "AUTO_UPDATE": False,
-        "ATOMIC_REBUILD": True,
-        "TIMEOUT": 5,
-        "OPTIONS": {},
-        "INDEX_SETTINGS": {
-            "settings": {
-                "index": {
-                    "number_of_shards": 1,
-                },
-            },
-        },
-    }
-} """
-
 WSGI_APPLICATION = "wsgi.application"
 
 DATABASE_URL = os.environ.get("DATABASE_URL", "sqlite://:memory:")
