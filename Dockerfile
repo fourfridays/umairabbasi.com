@@ -21,7 +21,7 @@ RUN pip install -r requirements.txt
 
 RUN python manage.py collectstatic --noinput --clear
 
-EXPOSE 8000
+EXPOSE 80
 
 # GUNICORN
-CMD ["gunicorn", "--bind", ":8000", "--workers", "1", "--threads", "2", "--worker-class", "gevent", "--max-requests-jitter", " 2000", "--max-requests", "1500", "wsgi"]
+CMD ["gunicorn", "--bind", ":80", "--workers", "1", "--threads", "2", "--worker-class", "gevent", "--max-requests-jitter", " 2000", "--max-requests", "1500", "wsgi"]
