@@ -95,6 +95,9 @@ CSRF_TRUSTED_ORIGINS = [
     os.environ.get("CSRF_TRUSTED_ORIGINS", default="https://umairabbasi.com")
 ]
 
+# Redirect to HTTPS by default disabled, unless explicitly enabled
+SECURE_SSL_REDIRECT = os.environ.get("SECURE_SSL_REDIRECT") == "True"
+
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
