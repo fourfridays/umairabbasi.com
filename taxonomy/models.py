@@ -92,6 +92,13 @@ class Node(MP_Node):
             .get_children()
             .values_list("id", flat=True)
         }
+    
+    def get_micro_blog_categories():
+        return {
+            "pk__in": Node.objects.get(name="Blog")
+            .get_children()
+            .values_list("id", flat=True)
+        }
 
     def __str__(self):
         return self.name

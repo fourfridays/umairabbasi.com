@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags wagtailimages_tags %}
+{% block body_class %}blog-index{% endblock %}
+
+{% block content %}
+    <div class="container text-center">
+        <h1 class="my-3">MicroBlogs</h1>
+        <p>{{ page.introduction }}</p>
+        <section class="row">
+            {% for article in posts %}
+                <hr class="my-4">
+                <div class="offset-4 col-4">
+                    <article>
+                        {% if article.image %}
+                            {% image article.image fill-389x150-c100 as heroimage %}
+                            {% image article.image fill-389x150-c100 format-webp as webp_heroimage %}
+                                <picture>
+                                    <source srcset="{{ webp_heroimage.url }}" type="image/webp">
+                                    <img class="mb-2 img-fluid border border-white border-4" {{ heroimage.attrs }}/>
+                                </picture>
+                        {% endif %}
+                        
+                        <h5 class="mb-0 text-uppercase">{{ article.title }}</h5>
+                        {% for block in article.body %}
+                            {% if block.block_type == "date_published" %}
+                                <p>
+                                    <small>
+                                        {{ block.value|date:"M. d, Y" }}
+
+                                        {% if article.category %}
+                                            <span class="badge bg-secondary rounded-0">Category: {{ article.category.name }}</span>
+                                        {% endif %}
+                                    </small>
+                                </p>
+                            {% endif %}
+                            {% if block.block_type == 'paragraph' %}
+                                <p>{{ block.value }}</p>
+                            {% endif %}
+                        {% endfor %}
+                        <p class="small">
+
+                        </p>
+                    </article>
+                </div>
+            {% endfor %}
+        </section>
+    </div>
+{% endblock %}

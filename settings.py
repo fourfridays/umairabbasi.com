@@ -10,6 +10,7 @@ INSTALLED_APPS = [
     "anymail",
     "blog",
     "fontawesomefree",
+    "microblog",
     "page",
     "ratings",
     "taxonomy",
