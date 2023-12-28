@@ -8,9 +8,8 @@
         <p>{{ page.introduction }}</p>
         <section class="row">
             {% for article in posts %}
-                <hr class="my-4">
                 <div class="offset-4 col-4">
-                    <article>
+                    <article class="bg-dark-gray p-3 rounded-2 my-4">
                         {% if article.image %}
                             {% image article.image fill-389x150-c100 as heroimage %}
                             {% image article.image fill-389x150-c100 format-webp as webp_heroimage %}
@@ -37,9 +36,6 @@
                                 <p>{{ block.value }}</p>
                             {% endif %}
                         {% endfor %}
-                        <p class="small">
-
-                        </p>
                     </article>
                 </div>
             {% endfor %}
