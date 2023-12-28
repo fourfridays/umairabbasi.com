@@ -36,7 +36,6 @@ services:
     image: postgres:15.3-alpine
     container_name: umairabbasi-db
     environment:
-      POSTGRES_USER: "umairabbasi"
       POSTGRES_DB: "db"
       POSTGRES_HOST_AUTH_METHOD: "trust"
     ports:
