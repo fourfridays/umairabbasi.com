@@ -8,7 +8,7 @@
         <p>{{ page.introduction }}</p>
         <section class="row">
             {% for article in posts %}
-                <div class="offset-4 col-4">
+                <div class="offset-1 col-10 offset-sm-2 col-sm-8 offset-md-3 col-md-6 offset-lg-4 col-lg-4">
                     <article class="bg-dark-gray p-3 rounded-2 my-4">
                         {% if article.image %}
                             {% image article.image fill-389x150-c100 as heroimage %}
