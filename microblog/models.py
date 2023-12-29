@@ -4,6 +4,7 @@ from operator import attrgetter
 from django.contrib import messages
 from django.db import models
 from django.shortcuts import redirect, render
+from django.utils import timezone
 
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.fields import ParentalKey
@@ -13,7 +14,7 @@ from taggit.models import Tag, TaggedItemBase
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 from wagtail.admin.panels import FieldPanel, InlinePanel
 from wagtail.blocks import DateTimeBlock, RichTextBlock
-from wagtail.fields import StreamField
+from wagtail.fields import RichTextField, StreamField
 from wagtail.models import Page, Orderable
 
 from taxonomy.models import Node
@@ -69,6 +70,8 @@ class MicroBlogPage(Page):
         on_delete=models.SET_NULL,
         related_name="+",
     )
+    date_published = models.DateTimeField(default=timezone.now)
+    content = RichTextField(features=['h2', 'h3', 'bold', 'italic', 'link', "code"])
     body = StreamField(
         [
             (
@@ -98,6 +101,8 @@ class MicroBlogPage(Page):
 
     content_panels = Page.content_panels + [
         FieldPanel("image"),
+        FieldPanel("date_published"),
+        FieldPanel("content"),
         FieldPanel("body"),
         InlinePanel(
             "micro_blog_person_relationship", label="Author(s)", panels=None, min_num=1
@@ -158,17 +163,7 @@ class MicroBlogIndexPage(RoutablePageMixin, Page):
     # http://docs.wagtail.io/en/latest/getting_started/tutorial.html#overriding-context
     def get_context(self, request):
         context = super().get_context(request)
-        posts = MicroBlogPage.objects.descendant_of(self).live()
-
-        # Extract date_published from each post's StreamField
-        for post in posts:
-            for block in post.body:
-                if block.block_type == 'date_published':
-                    post.date_published = block.value
-                    break
-
-        # Sort posts by date_published
-        context['posts'] = sorted(posts, key=attrgetter('date_published'), reverse=True)
+        context['posts'] = MicroBlogPage.objects.descendant_of(self).live().order_by("-date_published")
 
         return context
 
