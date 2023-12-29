@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 {% load wagtailcore_tags wagtailimages_tags %}
-{% block body_class %}blog-index{% endblock %}
+{% block body_class %}microblog-index{% endblock %}
 
 {% block content %}
     <div class="container text-center">
-        <h1 class="my-3">MicroBlogs</h1>
+        <h1 class="my-1">MicroBlogs</h1>
         <p>{{ page.introduction }}</p>
         <section class="row">
             {% for article in posts %}
                 <div class="offset-1 col-10 offset-sm-2 col-sm-8 offset-md-3 col-md-6 offset-lg-4 col-lg-4">
-                    <article class="bg-dark-gray p-3 rounded-2 my-4">
+                    <article class="bg-dark-gray p-3 rounded-2 my-3">
                         {% if article.image %}
                             {% image article.image fill-389x150-c100 as heroimage %}
                             {% image article.image fill-389x150-c100 format-webp as webp_heroimage %}
@@ -20,18 +20,15 @@
                         {% endif %}
                         
                         <h5 class="mb-0 text-uppercase">{{ article.title }}</h5>
+                        <p>
+                            <small>
+                                {{ article.date_published|date:"M. d, Y" }}
+                                {% if article.category %}
+                                    <span class="badge bg-secondary rounded-0">Category: {{ article.category.name }}</span>
+                                {% endif %}
+                            </small>
+                        </p>
                         {% for block in article.body %}
-                            {% if block.block_type == "date_published" %}
-                                <p>
-                                    <small>
-                                        {{ block.value|date:"M. d, Y" }}
-
-                                        {% if article.category %}
-                                            <span class="badge bg-secondary rounded-0">Category: {{ article.category.name }}</span>
-                                        {% endif %}
-                                    </small>
-                                </p>
-                            {% endif %}
                             {% if block.block_type == 'paragraph' %}
                                 <p>{{ block.value }}</p>
                             {% endif %}
