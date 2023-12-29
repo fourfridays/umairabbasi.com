@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags wagtailimages_tags %}
+{% wagtail_site as current_site %}
+{% block body_class %}microblog-post{% endblock %}
+{% block head-extra %}<link rel="canonical" href="{{ page.full_url }}" />{% endblock head-extra %}
+
+{% block content %}
+    <!-- HERO IMAGE -->
+    {% if page.image %}
+        {% image page.image fill-2400x658-c100 as heroimage %}
+        {% image page.image fill-2400x658-c100 format-webp as webp_heroimage %}
+        <div class="text-center p-lg-3 p-2">
+            <h1 class="text-uppercase card-title p-2">{{ page.title }}</h1>
+            <hr class="m-0">
+            <p class="small hidden-sm p-2"> 
+                {% for person in page.authors %}
+                    {{ person.first_name }} {{ person.last_name }} | {{ page.body }}        
+                {% endfor %}
+                {% if page.category %}
+                    | {{ page.category.name }}
+                {% endif %}
+            </p>
+        </div>
+        <div class="hero-image card border-0">
+            <figure class="mb-0">
+                <picture>
+                    <source srcset="{{ webp_heroimage.url }}" type="image/webp">
+                    <img class="card-img rounded-0" {{ heroimage.attrs }}/>
+                </picture>
+            </figure>
+        </div>
+    {% endif %}
+
+    <!-- BODY -->
+    <div class="container">
+        <section class="row">
+            <div class="my-3 offset-md-2 col-md-8">
+                <article>
+                    {{ page.body }}
+                </article>
+            </div>
+        </section>
+
+        <!-- TAGS -->
+        <div class="row">
+            <div class="col-12">
+                {% if tags %}
+                    <hr style="margin-top: 0; margin-bottom: 10px; clear: both;">
+
+                    <div class="small">
+                        More articles tagged: 
+                        {% for tag in tags %}
+                            <i class="fas fa-tag swatch-red mx-1" aria-hidden="true"></i><a href="{{ page.get_parent.url }}tag/{{ tag }}">{{ tag }}</a>{% if not forloop.last %}{% endif %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div id="disqus_thread"></div>
+        <script>
+            /**
+            *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+            var disqus_config = function () {
+                this.page.identifier = {{ page.id }};
+                this.page.title = "{{ page.title }}";
+                this.page.url = "{{ page.full_url }}";
+            };
+
+            (function() { // DON'T EDIT BELOW THIS LINE
+                var d = document, s = d.createElement('script');
+                s.src = "https://umairabbasi.disqus.com/embed.js";
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+{% endblock %}
