@@ -71,24 +71,7 @@ class MicroBlogPage(Page):
         related_name="+",
     )
     date_published = models.DateTimeField(default=timezone.now)
-    content = RichTextField(features=['h2', 'h3', 'bold', 'italic', 'link', "code"])
-    body = StreamField(
-        [
-            (
-                "paragraph",
-                RichTextBlock(
-                    features=["h2", "h3", "bold", "italic", "link", "code"],
-                    icon="pilcrow",
-                    template="blocks/paragraph_block.html",
-                ),
-            ),
-            (
-                "date_published",
-                DateTimeBlock(blank=True, null=True),
-            ),
-        ],
-        use_json_field=True,
-    )
+    body = RichTextField(features=['h2', 'h3', 'bold', 'italic', 'link', "code"])
     tags = ClusterTaggableManager(through=MicroBlogPageTag, blank=True)
     category = models.ForeignKey(
         "taxonomy.Node",
@@ -102,7 +85,6 @@ class MicroBlogPage(Page):
     content_panels = Page.content_panels + [
         FieldPanel("image"),
         FieldPanel("date_published"),
-        FieldPanel("content"),
         FieldPanel("body"),
         InlinePanel(
             "micro_blog_person_relationship", label="Author(s)", panels=None, min_num=1
@@ -189,7 +171,7 @@ class MicroBlogIndexPage(RoutablePageMixin, Page):
 
         posts = self.get_posts(tag=tag)
         context = {"tag": tag, "posts": posts}
-        return render(request, "tags/blog_tag_index_page.html", context)
+        return render(request, "tags/micro_blog_tag_index_page.html", context)
 
     def serve_preview(self, request, mode_name):
         # Needed for previews to work
