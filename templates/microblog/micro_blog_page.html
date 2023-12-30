@@ -5,23 +5,23 @@
 {% block head-extra %}<link rel="canonical" href="{{ page.full_url }}" />{% endblock head-extra %}
 
 {% block content %}
+    <div class="text-center p-lg-3 p-2">
+        <h1 class="text-uppercase card-title p-2">{{ page.title }}</h1>
+        <hr class="m-0">
+        <p class="small hidden-sm p-2"> 
+            {% for person in page.authors %}
+            <span class="badge text-bg-warning rounded-0">{{ person.first_name }} {{ person.last_name }}</span>
+                <span class="badge text-bg-light rounded-0">{{ page.date_published|date:"M. d, Y" }}</span>
+            {% endfor %}
+            {% if page.category %}
+                <span class="badge bg-secondary rounded-0">{{ page.category.name }}</span>
+            {% endif %}
+        </p>
+    </div>
     <!-- HERO IMAGE -->
     {% if page.image %}
         {% image page.image fill-2400x658-c100 as heroimage %}
         {% image page.image fill-2400x658-c100 format-webp as webp_heroimage %}
-        <div class="text-center p-lg-3 p-2">
-            <h1 class="text-uppercase card-title p-2">{{ page.title }}</h1>
-            <hr class="m-0">
-            <p class="small hidden-sm p-2"> 
-                {% for person in page.authors %}
-                <span class="badge text-bg-warning rounded-0">{{ person.first_name }} {{ person.last_name }}</span>
-                    <span class="badge text-bg-light rounded-0">{{ page.date_published|date:"M. d, Y" }}</span>
-                {% endfor %}
-                {% if page.category %}
-                    <span class="badge bg-secondary rounded-0">{{ page.category.name }}</span>
-                {% endif %}
-            </p>
-        </div>
         <div class="hero-image card border-0">
             <figure class="mb-0">
                 <picture>
