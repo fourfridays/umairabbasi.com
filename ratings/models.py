@@ -87,15 +87,10 @@ class MoviePage(Page):
 
 class Cast(models.Model):
     movie = models.ForeignKey(
-        MoviePage,
-        null=True,
-        blank=True,
-        on_delete=models.PROTECT
+        MoviePage, null=True, blank=True, on_delete=models.PROTECT
     )
     cast_member = models.ForeignKey(People, on_delete=models.PROTECT)
-    character = models.TextField(
-        max_length=100, help_text="Max length 100 characters"
-    )
+    character = models.TextField(max_length=100, help_text="Max length 100 characters")
 
     def __str__(self):
         return f"{self.cast_member}"
@@ -230,16 +225,9 @@ class TvPage(Page):
 
 
 class TvCast(models.Model):
-    tv = models.ForeignKey(
-        TvPage,
-        null=True,
-        blank=True,
-        on_delete=models.PROTECT
-    )
+    tv = models.ForeignKey(TvPage, null=True, blank=True, on_delete=models.PROTECT)
     cast_member = models.ForeignKey(People, on_delete=models.PROTECT)
-    character = models.TextField(
-        max_length=100, help_text="Max length 100 characters"
-    )
+    character = models.TextField(max_length=100, help_text="Max length 100 characters")
 
     def __str__(self):
         return f"{self.cast_member}"
