@@ -79,7 +79,9 @@ class MoviePage(Page):
 
     def get_context(self, request):
         context = super(MoviePage, self).get_context(request)
-        context["cast_members"] = Cast.objects.filter(movie=self)
+        context["cast_members"] = Cast.objects.filter(movie=self).select_related(
+            "cast_member"
+        )
         return context
 
 
@@ -221,7 +223,9 @@ class TvPage(Page):
 
     def get_context(self, request):
         context = super(TvPage, self).get_context(request)
-        context["cast_members"] = TvCast.objects.filter(tv=self)
+        context["cast_members"] = TvCast.objects.filter(tv=self).select_related(
+            "cast_member"
+        )
         return context
 
 
