@@ -17,7 +17,8 @@ COPY . /app
 
 COPY requirements.* /app/
 
-RUN pip install -r requirements.txt
+RUN pip install pip install -U pip pip-tools wheel \
+    && pip install -r requirements.txt
 
 RUN python manage.py collectstatic --noinput --clear
 
