@@ -34,7 +34,7 @@ defusedxml==0.7.1
     # via willow
 dj-database-url==2.1.0
     # via -r requirements.in
-django==4.2.9
+django==5.0.1
     # via
     #   -r requirements.in
     #   dj-database-url
@@ -159,7 +159,7 @@ sqlparse==0.4.4
     # via
     #   django
     #   django-debug-toolbar
-telepath==0.3
+telepath==0.3.1
     # via wagtail
 typing-extensions==4.5.0
     # via
@@ -172,7 +172,7 @@ urllib3==1.26.15
     #   elasticsearch
     #   requests
     #   sentry-sdk
-wagtail==5.2.2
+wagtail==5.2.3
     # via
     #   -r requirements.in
     #   wagtailcodeblock
