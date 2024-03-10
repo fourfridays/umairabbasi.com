@@ -4,7 +4,6 @@ from django.shortcuts import render
 from django.views import View
 
 from ratings.models import *
-from wagtail.search.models import Query
 
 
 class MovieIndexView(View):
@@ -44,8 +43,6 @@ def movie_search(request):
     if search_query:
         search_results = MoviePage.objects.live().search(search_query)
         movie_count = MoviesIndexPage.get_movie_count(request, search_results)
-        # Log the query so Wagtail can suggest promoted results
-        Query.get(search_query).add_hit()
 
         return render(
             request,
@@ -75,8 +72,6 @@ def tv_search(request):
     if search_query:
         search_results = TvPage.objects.live().search(search_query)
         tv_count = TvIndexPage.get_tv_count(request, search_results)
-        # Log the query so Wagtail can suggest promoted results
-        Query.get(search_query).add_hit()
 
         return render(
             request,
