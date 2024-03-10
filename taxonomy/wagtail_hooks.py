@@ -1,4 +1,4 @@
-from .models import NodeAdmin
-from wagtail.contrib.modeladmin.options import modeladmin_register
+from .models import NodeSnippetViewSet
+from wagtail.snippets.models import register_snippet
 
-modeladmin_register(NodeAdmin)
+register_snippet(NodeSnippetViewSet)
