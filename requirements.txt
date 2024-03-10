@@ -48,16 +48,15 @@ django==5.0.3
     #   django-taggit
     #   django-treebeard
     #   djangorestframework
+    #   laces
     #   wagtail
 django-anymail[mailgun]==10.2
-    # via
-    #   -r requirements.in
-    #   django-anymail
+    # via -r requirements.in
 django-debug-toolbar==4.2.0
     # via -r requirements.in
 django-filter==23.4
     # via wagtail
-django-modelcluster==6.1
+django-modelcluster==6.3
     # via wagtail
 django-permissionedforms==0.1
     # via wagtail
@@ -102,6 +101,8 @@ jmespath==1.0.1
     #   boto3
     #   botocore
 l18n==2021.3
+    # via wagtail
+laces==0.1.1
     # via wagtail
 oauthlib==3.2.2
     # via requests-oauthlib
@@ -172,11 +173,11 @@ urllib3==1.26.15
     #   elasticsearch
     #   requests
     #   sentry-sdk
-wagtail==5.2.3
+wagtail==6.0.1
     # via
     #   -r requirements.in
     #   wagtailcodeblock
-wagtailcodeblock==1.29.0.1
+wagtailcodeblock==1.29.0.2
     # via -r requirements.in
 webencodings==0.5.1
     # via html5lib
