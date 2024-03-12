@@ -3,7 +3,7 @@ import os
 from django.shortcuts import render
 from django.views import View
 
-from ratings.models import *
+from ratings.models import MoviePage, MoviesIndexPage, TvPage, TvIndexPage
 
 
 class MovieIndexView(View):
