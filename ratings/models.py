@@ -110,68 +110,6 @@ class MoviesIndexPage(RoutablePageMixin, Page):
         context["movie_count"] = self.get_movie_count(context["media"])
         return context
 
-    @re_path(r"^top-rated/$")
-    def top_recommended(self, request):
-        """
-        View function for must-watch movies
-        """
-        filtered_results = MoviePage.objects.filter(rating__gte=7).order_by(
-            "-release_date"
-        )
-        movie_count = self.get_movie_count(filtered_results)
-
-        return self.render(
-            request,
-            context_overrides={
-                "title": "Movies Rated: Top-Rated",
-                "rating": "top-rated",
-                "media": filtered_results,
-                "movie_count": movie_count,
-            },
-        )
-
-    @re_path(r"^recommended/$")
-    def recommended(self, request):
-        """
-        View function for must-watch movies
-        """
-        filtered_results = (
-            MoviePage.objects.filter(rating__gte=4)
-            .filter(rating__lte=6)
-            .order_by("-release_date")
-        )
-        movie_count = self.get_movie_count(filtered_results)
-
-        return self.render(
-            request,
-            context_overrides={
-                "title": "Movies Rated: Recommended",
-                "rating": "recommended",
-                "media": filtered_results,
-                "movie_count": movie_count,
-            },
-        )
-
-    @re_path(r"^not-recommended/$")
-    def not_recommended(self, request):
-        """
-        View function for must-watch movies
-        """
-        filtered_results = MoviePage.objects.filter(rating__lte=3).order_by(
-            "-release_date"
-        )
-        movie_count = self.get_movie_count(filtered_results)
-
-        return self.render(
-            request,
-            context_overrides={
-                "title": "Movies Rated: Not-Recommended",
-                "rating": "not-recommended",
-                "media": filtered_results,
-                "movie_count": movie_count,
-            },
-        )
-
 
 class TvPage(Page):
     parent_page_types = ["TvIndexPage"]
@@ -186,7 +124,7 @@ class TvPage(Page):
         blank=True,
         on_delete=models.SET_NULL,
         related_name="+",
-        help_text="Testing image pull from poster URLField",
+        help_text="Image pull from poster URL Field",
     )
     language = models.CharField(max_length=2, blank=True)
     genre = models.ManyToManyField(TvGenre)
@@ -248,68 +186,6 @@ class TvIndexPage(RoutablePageMixin, Page):
         )
         context["tv_count"] = context["media"].count()
         return context
-
-    @re_path(r"^top-rated/$")
-    def top_recommended(self, request):
-        """
-        View function for must-watch movies
-        """
-        filtered_results = TvPage.objects.filter(rating__gte=7).order_by(
-            "-release_date"
-        )
-        tv_count = self.get_tv_count(filtered_results)
-
-        return self.render(
-            request,
-            context_overrides={
-                "title": "TV Shows Rated: Top-Rated",
-                "rating": "top-rated",
-                "media": filtered_results,
-                "tv_count": tv_count,
-            },
-        )
-
-    @re_path(r"^recommended/$")
-    def recommended(self, request):
-        """
-        View function for must-watch movies
-        """
-        filtered_results = (
-            TvPage.objects.filter(rating__gte=4)
-            .filter(rating__lte=6)
-            .order_by("-release_date")
-        )
-        tv_count = self.get_tv_count(filtered_results)
-
-        return self.render(
-            request,
-            context_overrides={
-                "title": "TV Shows Rated: Recommended",
-                "rating": "recommended",
-                "media": filtered_results,
-                "tv_count": tv_count,
-            },
-        )
-
-    @re_path(r"^not-recommended/$")
-    def not_recommended(self, request):
-        """
-        View function for must-watch movies
-        """
-        filtered_results = TvPage.objects.filter(rating__lte=3).order_by(
-            "-release_date"
-        )
-        tv_count = self.get_tv_count(filtered_results)
-
-        return self.render(
-            request,
-            context_overrides={
-                "title": "TV Shows Rated: Not-Recommended",
-                "rating": "not-recommended",
-                "media": filtered_results,
-                "tv_count": tv_count,
-            },
-        )
 
 
 class RatingsIndexPage(Page):
