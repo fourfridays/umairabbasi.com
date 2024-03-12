@@ -69,7 +69,6 @@ class Command(BaseCommand):
         media.save()
 
     def save_people(self, person):
-        print("Saving Person")
         People.objects.update_or_create(
             id=person["id"],
             name=person["name"],
@@ -78,14 +77,12 @@ class Command(BaseCommand):
     def save_cast(self, cast_results):
         for person in cast_results["cast"]:
             try:
-                print("Update/Create Tv Cast")
                 TvCast.objects.update_or_create(
                     tv=TvPage.objects.get(tv_id=cast_results["id"]),
                     cast_member=People.objects.get(id=person["id"]),
                     character=person["character"],
                 )
             except ObjectDoesNotExist:
-                print("Person does not exist. Saving Person")
                 # Fetch people from person API
                 # See https://developer.themoviedb.org/reference/person-details
                 self.save_people(person)
@@ -116,7 +113,6 @@ class Command(BaseCommand):
             session_id = os.getenv("TMDB_SESSION_ID").strip('""').strip("''")
             headers = {"accept": "application/json"}
 
-            print("Pulling Tv Genre's")
             response = requests.get(
                 f"https://api.themoviedb.org/3/genre/tv/list?api_key={api_key}&language=en-US&session_id={session_id}, headers={headers}"
             )
@@ -128,7 +124,6 @@ class Command(BaseCommand):
                     name=genre["name"],
                 )
 
-            print("Pulling TV Shows")
             response = requests.get(
                 f"https://api.themoviedb.org/3/account/{account_id}/rated/tv?api_key={api_key}&language=en-US&session_id={session_id}&sort_by=created_at.desc&page={page_number}, headers={headers}"
             )
@@ -164,7 +159,6 @@ class Command(BaseCommand):
 
                 page_number += 1
 
-            print("Pulling TV Posters")
             tv_shows = TvPage.objects.live().public().all()
             collection = Collection.objects.get(name="TV")
             for tv in tv_shows:

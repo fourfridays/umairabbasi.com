@@ -69,7 +69,6 @@ class Command(BaseCommand):
         media.save()
 
     def save_people(self, person):
-        print("Saving Person")
         People.objects.update_or_create(
             id=person["id"],
             name=person["name"],
@@ -78,14 +77,12 @@ class Command(BaseCommand):
     def save_cast(self, cast_results):
         for person in cast_results["cast"]:
             try:
-                print("Update/Create Movie Cast")
                 Cast.objects.update_or_create(
                     movie=MoviePage.objects.get(movie_id=cast_results["id"]),
                     cast_member=People.objects.get(id=person["id"]),
                     character=person["character"],
                 )
             except ObjectDoesNotExist:
-                print("Person does not exist. Saving Person")
                 # Fetch people from person API
                 # See https://developer.themoviedb.org/reference/person-details
                 self.save_people(person)
@@ -116,7 +113,6 @@ class Command(BaseCommand):
             session_id = os.getenv("TMDB_SESSION_ID").strip('""').strip("''")
             headers = {"accept": "application/json"}
 
-            print("Pulling Movie Genre's")
             response = requests.get(
                 f"https://api.themoviedb.org/3/genre/movie/list?api_key={api_key}&language=en-US&session_id={session_id}, headers={headers}"
             )
@@ -128,7 +124,6 @@ class Command(BaseCommand):
                     name=genre["name"],
                 )
 
-            print("Pulling Movies")
             response = requests.get(
                 f"https://api.themoviedb.org/3/account/{account_id}/rated/movies?api_key={api_key}&language=en-US&session_id={session_id}&sort_by=created_at.desc&page={page_number}, headers={headers}"
             )
@@ -164,7 +159,6 @@ class Command(BaseCommand):
 
                 page_number += 1
 
-            print("Pulling Movie Posters")
             movies = MoviePage.objects.live().public().all()
             collection = Collection.objects.get(name="Movies")
             for movie in movies:
