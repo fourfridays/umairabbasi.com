@@ -47,7 +47,7 @@ class MoviePage(Page):
         blank=True,
         on_delete=models.SET_NULL,
         related_name="+",
-        help_text="Testing image pull from poster URLField",
+        help_text="Image pull from poster URL Field",
     )
     language = models.CharField(max_length=2, blank=True)
     genre = models.ManyToManyField(MovieGenre)
