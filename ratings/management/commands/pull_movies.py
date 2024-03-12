@@ -94,14 +94,14 @@ class Command(BaseCommand):
                     character=person["character"],
                 )
 
-    def handle(self, *args, **options):
-        def movie_exists(movie_id):
-            try:
-                MoviePage.objects.get(id=movie_id)
-                return True
-            except ObjectDoesNotExist:
-                return False
+    def movie_exists(self, movie_id):
+        try:
+            MoviePage.objects.get(movie_id=movie_id)
+            return True
+        except ObjectDoesNotExist:
+            return False
 
+    def handle(self, *args, **options):
         # Check to see if MovieIndexPage exists
         movies_index_page = MoviesIndexPage.objects.live().public().get()
 
@@ -113,6 +113,7 @@ class Command(BaseCommand):
             session_id = os.getenv("TMDB_SESSION_ID").strip('""').strip("''")
             headers = {"accept": "application/json"}
 
+            # Movie Genres
             response = requests.get(
                 f"https://api.themoviedb.org/3/genre/movie/list?api_key={api_key}&language=en-US&session_id={session_id}, headers={headers}"
             )
@@ -124,6 +125,7 @@ class Command(BaseCommand):
                     name=genre["name"],
                 )
 
+            # Rated Movies
             response = requests.get(
                 f"https://api.themoviedb.org/3/account/{account_id}/rated/movies?api_key={api_key}&language=en-US&session_id={session_id}&sort_by=created_at.desc&page={page_number}, headers={headers}"
             )
@@ -139,8 +141,8 @@ class Command(BaseCommand):
 
                 for media in json_results["results"]:
                     # Check to see if Movie Page exists
-                    if movie_exists(media["id"]):
-                        # if it does exist, update the rating
+                    if self.movie_exists(media["id"]):
+                        # if exists, update the rating
                         MoviePage.objects.filter(movie_id=media["id"]).update(
                             rating=media["rating"]
                         )
@@ -148,7 +150,7 @@ class Command(BaseCommand):
                         # if it does not exist, create a new Movie Page
                         self.save_media(media, movies_index_page, poster_size)
 
-                        # Fetch movie credits first that has the person_id we want to fetch next
+                        # Fetch movie credits has the person_id we would need to save in People
                         # See https://developer.themoviedb.org/reference/movie-credits
                         url = f"https://api.themoviedb.org/3/movie/{media['id']}/credits?api_key={api_key}&language=en-US&session_id={session_id}"
                         response = requests.get(url, headers=headers)

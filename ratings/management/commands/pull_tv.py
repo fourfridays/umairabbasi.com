@@ -94,14 +94,14 @@ class Command(BaseCommand):
                     character=person["character"],
                 )
 
-    def handle(self, *args, **options):
-        def tv_show_exists(tv_id):
-            try:
-                TvPage.objects.get(id=tv_id)
-                return True
-            except ObjectDoesNotExist:
-                return False
+    def tv_show_exists(self, tv_id):
+        try:
+            TvPage.objects.get(tv_id=tv_id)
+            return True
+        except ObjectDoesNotExist:
+            return False
 
+    def handle(self, *args, **options):
         # Check to see if TvIndexPage exists
         tv_index_page = TvIndexPage.objects.live().public().get()
 
@@ -139,7 +139,7 @@ class Command(BaseCommand):
 
                 for media in json_results["results"]:
                     # Check to see if Movie Page exists
-                    if tv_show_exists(media["id"]):
+                    if self.tv_show_exists(media["id"]):
                         # if it does exist, update the rating
                         TvPage.objects.filter(tv_id=media["id"]).update(
                             rating=media["rating"]
@@ -148,7 +148,7 @@ class Command(BaseCommand):
                         # if it does not exist, create a new Tv Page
                         self.save_media(media, tv_index_page, poster_size)
 
-                        # Fetch tv credits first that has the person_id we want to fetch next
+                        # Fetch tv credits that has the person_id
                         # See https://developer.themoviedb.org/reference/tv-credits
                         url = f"https://api.themoviedb.org/3/tv/{media['id']}/credits?api_key={api_key}&language=en-US&session_id={session_id}"
                         response = requests.get(url, headers=headers)
