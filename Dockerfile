@@ -1,4 +1,4 @@
-FROM python:3.11.7-slim-bookworm
+FROM python:3.11.9-slim-bullseye
 
 RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-recommends \
     build-essential \
@@ -8,7 +8,7 @@ RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-r
     zlib1g-dev \
     libwebp-dev \
     git \
- && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/*
 
 # set the working directory
 WORKDIR /app
@@ -17,7 +17,7 @@ COPY . /app
 
 COPY requirements.* /app/
 
-RUN pip install pip install -U pip pip-tools wheel \
+RUN pip install -U pip pip-tools wheel \
     && pip install -r requirements.txt
 
 RUN python manage.py collectstatic --noinput --clear
