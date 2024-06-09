@@ -36,7 +36,7 @@ const renderHits = (renderOptions, isFirstRender) => {
                             <a href="${item.url}">
                                 <figure class="mb-0">
                                     <picture>
-                                        <img class="img-fluid mb-1 rounded" src=${item.poster}>
+                                        <img class="img-fluid mb-1 rounded border border-white border-2" src=${item.poster}>
                                     </picture>
                                 </figure>
                             </a>
