@@ -61,8 +61,8 @@ class MoviePage(Page):
     )
 
     search_fields = Page.search_fields + [  # Inherit search_fields from Page
-        index.SearchField("title", partial_match=True),
-        index.FilterField("rating", partial_match=True),
+        index.SearchField("title"),
+        index.FilterField("rating"),
     ]
 
     content_panels = Page.content_panels + [
@@ -138,8 +138,8 @@ class TvPage(Page):
     )
 
     search_fields = Page.search_fields + [  # Inherit search_fields from Page
-        index.SearchField("title", partial_match=True),
-        index.FilterField("rating", partial_match=True),
+        index.SearchField("title"),
+        index.FilterField("rating"),
     ]
 
     content_panels = Page.content_panels + [
