@@ -111,21 +111,22 @@ class Command(BaseCommand):
         index = client.init_index("tv_index")
 
         tv_index = {
-            "objectID": tv_show.tv_id,
-            "title": tv_show.title,
-            "description": tv_show.description,
-            "language": tv_show.language,
-            "release_date_timestamp": time.mktime(tv_show.release_date.timetuple()),
-            "release_year": tv_show.release_date.year,
-            "rating": tv_show.rating,
-            "poster": tv_show.poster,
-            "genre": list(tv_show.genre.values_list("name", flat=True)),
+            "objectID": tv.tv_id,
+            "title": tv.title,
+            "description": tv.description,
+            "language": tv.language,
+            "release_date_timestamp": time.mktime(tv.release_date.timetuple()),
+            "release_year": tv.release_date.year,
+            "rating": tv.rating,
+            "poster": tv.poster,
+            "genre": list(tv.genre.values_list("name", flat=True)),
             "cast": list(
-                tv_show.tvcast_set.values_list("cast_member__name", flat=True)
+                tv.tvcast_set.values_list("cast_member__name", flat=True)
             ),
-            "url": tv_show.url,
+            "url": tv.url,
         }
         index.save_object(tv_index)
+
     def handle(self, *args, **options):
         # Check to see if TvIndexPage exists
         tv_index_page = TvIndexPage.objects.live().public().get()
@@ -138,6 +139,7 @@ class Command(BaseCommand):
             session_id = os.getenv("TMDB_SESSION_ID").strip('""').strip("''")
             headers = {"accept": "application/json"}
 
+            # TV Show Genres
             response = requests.get(
                 f"https://api.themoviedb.org/3/genre/tv/list?api_key={api_key}&language=en-US&session_id={session_id}, headers={headers}"
             )
@@ -149,6 +151,7 @@ class Command(BaseCommand):
                     name=genre["name"],
                 )
 
+            # Rated TV Shows
             response = requests.get(
                 f"https://api.themoviedb.org/3/account/{account_id}/rated/tv?api_key={api_key}&language=en-US&session_id={session_id}&sort_by=created_at.desc&page={page_number}, headers={headers}"
             )
@@ -187,8 +190,10 @@ class Command(BaseCommand):
             tv_shows = TvPage.objects.live().public().all()
             collection = Collection.objects.get(name="TV")
             for tv in tv_shows:
+                # If no poster, get poster
                 if not tv.image:
                     self.get_poster(tv, collection)
-                
+
+                # Index the movie if not debug
                 if not DEBUG:
                     self.index_tv(tv)
