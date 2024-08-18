@@ -1,4 +1,4 @@
-FROM python:3.11.9-slim-bullseye
+FROM python:3.12.5-slim-bookworm
 
 RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-recommends \
     build-essential \
