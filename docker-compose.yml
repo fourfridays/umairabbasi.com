@@ -12,7 +12,7 @@ services:
     command: python manage.py runserver 0.0.0.0:80
     env_file: .env-local
   db:
-    image: postgres:15.3-alpine
+    image: postgres
     container_name: umairabbasi-db
     environment:
       POSTGRES_DB: "db"
