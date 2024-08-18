@@ -15,7 +15,7 @@ from wagtail.snippets.views.snippets import SnippetViewSet
 
 
 node_name_validator = RegexValidator(
-    regex="^[\w][a-zA-Z &]+$",
+    regex=r"^[\w][a-zA-Z &]+$",
     message="Letters, numbers and '&' only plus must start with a letter.",
 )
 
