@@ -9,7 +9,6 @@ services:
     volumes:
       - ".:/app:rw"
       - "./data:/data:rw"
-    # See https://docs.divio.com/en/latest/how-to/local-in-live-mode.html.
     command: python manage.py runserver 0.0.0.0:80
     env_file: .env-local
   db:
