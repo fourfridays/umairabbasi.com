@@ -1,14 +1,11 @@
 FROM python:3.12.5-slim-bookworm
 
-RUN apt-get update --yes --quiet && apt-get install --yes --quiet --no-install-recommends \
-    build-essential \
-    libmagic1 \
-    libpq-dev \
-    libjpeg62-turbo-dev \
-    zlib1g-dev \
-    libwebp-dev \
-    git \
-    && rm -rf /var/lib/apt/lists/*
+RUN apt-get update \
+    # lipq-dev and gg for psycopg2 build
+    && apt-get install -y libpq-dev gcc libjpeg62-turbo-dev zlib1g-dev \
+    libwebp-dev libffi-dev \
+    && pip install --upgrade pip \
+    && pip install pip-tools
 
 # set the working directory
 WORKDIR /app
@@ -17,8 +14,7 @@ COPY . /app
 
 COPY requirements.* /app/
 
-RUN pip install -U pip pip-tools wheel \
-    && pip install -r requirements.txt
+RUN pip install -r requirements.txt
 
 RUN python manage.py collectstatic --noinput --clear
 
