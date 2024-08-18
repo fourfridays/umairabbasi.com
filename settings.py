@@ -127,10 +127,11 @@ WSGI_APPLICATION = "wsgi.application"
 
 DATABASE_URL = os.environ.get("DATABASE_URL", "sqlite://:memory:")
 
-DATABASES = {"default": dj_database_url.parse(DATABASE_URL)}
-
-# Password validation
-# https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
+DATABASES = {"default": dj_database_url.config(
+    default=DATABASE_URL,
+    conn_max_age=600,
+    conn_health_checks=True,
+)}
 
 AUTH_PASSWORD_VALIDATORS = [
     {
