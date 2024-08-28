@@ -129,6 +129,8 @@ DATABASE_URL = os.environ.get("DATABASE_URL", "sqlite://:memory:")
 
 DATABASES = {"default": dj_database_url.config(
     default=DATABASE_URL,
+    conn_max_age=0,
+    conn_health_checks=False,
 )}
 
 AUTH_PASSWORD_VALIDATORS = [
