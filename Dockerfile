@@ -1,8 +1,7 @@
 FROM python:3.12.5-slim-bookworm
 
 RUN apt-get update \
-    # lipq-dev and gg for psycopg2 build
-    && apt-get install -y libpq-dev gcc libjpeg62-turbo-dev zlib1g-dev \
+    && apt-get install -y gcc libjpeg62-turbo-dev zlib1g-dev \
     libwebp-dev libffi-dev \
     && pip install --upgrade pip \
     && pip install pip-tools
