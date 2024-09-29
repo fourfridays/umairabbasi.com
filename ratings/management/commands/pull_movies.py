@@ -9,7 +9,7 @@ from django.core.files.images import ImageFile
 from wagtail.models import Collection
 from wagtail.images.models import Image
 
-from algoliasearch.search_client import SearchClient
+from algoliasearch.search.client import SearchClientSync
 from ratings.models import Cast, MoviesIndexPage, MoviePage, MovieGenre, People
 
 from io import BytesIO
@@ -107,8 +107,8 @@ class Command(BaseCommand):
     def index_movies(self, movie):
         algolia_app_id = os.environ.get("ALGOLIA_APP_ID", "")
         algolia_api = os.environ.get("ALGOLIA_API", "")
-        client = SearchClient.create(algolia_app_id, algolia_api)
-        index = client.init_index("movie_index")
+        client = SearchClientSync(algolia_app_id, algolia_api)
+        index_name = "movie_index"
 
         movie_index = {
             "objectID": movie.movie_id,
@@ -125,7 +125,13 @@ class Command(BaseCommand):
             ),
             "url": movie.url,
         }
-        index.save_objects(movie_index)
+        save_resp = client.save_object(index_name=index_name, body=movie_index)
+
+        # Wait until indexing is done
+        client.wait_for_task(
+            index_name=index_name,
+            task_id=save_resp.task_id,
+        )
 
     def handle(self, *args, **options):
         # Check to see if MovieIndexPage exists
@@ -195,5 +201,4 @@ class Command(BaseCommand):
                     self.get_poster(movie, collection)
                 
                 # Index the movie if not debug
-                if not DEBUG:
-                    self.index_movies(movie)
+                self.index_movies(movie)

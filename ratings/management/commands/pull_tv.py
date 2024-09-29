@@ -9,7 +9,7 @@ from django.core.files.images import ImageFile
 from wagtail.models import Collection
 from wagtail.images.models import Image
 
-from algoliasearch.search_client import SearchClient
+from algoliasearch.search_client import SearchClientSync
 from ratings.models import TvCast, TvIndexPage, TvPage, TvGenre, People
 
 from io import BytesIO
@@ -107,8 +107,8 @@ class Command(BaseCommand):
     def index_tv(self, tv):
         algolia_app_id = os.environ.get("ALGOLIA_APP_ID", "")
         algolia_api = os.environ.get("ALGOLIA_API", "")
-        client = SearchClient.create(algolia_app_id, algolia_api)
-        index = client.init_index("tv_index")
+        client = SearchClientSync.create(algolia_app_id, algolia_api)
+        index_name = "tv_index"
 
         tv_index = {
             "objectID": tv.tv_id,
@@ -125,7 +125,13 @@ class Command(BaseCommand):
             ),
             "url": tv.url,
         }
-        index.save_objects(tv_index)
+        save_resp = client.save_object(index_name=index_name, body=tv_index)
+
+        # Wait until indexing is done
+        client.wait_for_task(
+            index_name=index_name,
+            task_id=save_resp.task_id,
+        )
 
     def handle(self, *args, **options):
         # Check to see if TvIndexPage exists
