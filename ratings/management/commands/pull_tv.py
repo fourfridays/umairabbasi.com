@@ -9,7 +9,7 @@ from django.core.files.images import ImageFile
 from wagtail.models import Collection
 from wagtail.images.models import Image
 
-from algoliasearch.search.client import SearchClient
+from algoliasearch.search_client import SearchClient
 from ratings.models import TvCast, TvIndexPage, TvPage, TvGenre, People
 
 from io import BytesIO
@@ -125,7 +125,7 @@ class Command(BaseCommand):
             ),
             "url": tv.url,
         }
-        index.save_object(tv_index)
+        index.save_objects(tv_index)
 
     def handle(self, *args, **options):
         # Check to see if TvIndexPage exists
