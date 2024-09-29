@@ -107,7 +107,7 @@ class Command(BaseCommand):
     def index_tv(self, tv):
         algolia_app_id = os.environ.get("ALGOLIA_APP_ID", "")
         algolia_api = os.environ.get("ALGOLIA_API", "")
-        client = SearchClientSync.create(algolia_app_id, algolia_api)
+        client = SearchClientSync(algolia_app_id, algolia_api)
         index_name = "tv_index"
 
         tv_index = {
