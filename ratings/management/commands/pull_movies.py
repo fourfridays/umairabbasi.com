@@ -9,7 +9,7 @@ from django.core.files.images import ImageFile
 from wagtail.models import Collection
 from wagtail.images.models import Image
 
-from algoliasearch.search_client import SearchClient
+from algoliasearch.search.client import SearchClient
 from ratings.models import Cast, MoviesIndexPage, MoviePage, MovieGenre, People
 
 from io import BytesIO
