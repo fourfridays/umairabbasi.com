@@ -125,13 +125,7 @@ class Command(BaseCommand):
             ),
             "url": movie.url,
         }
-        save_resp = client.save_object(index_name=index_name, body=movie_index)
-
-        # Wait until indexing is done
-        client.wait_for_task(
-            index_name=index_name,
-            task_id=save_resp.task_id,
-        )
+        client.save_object(index_name=index_name, body=movie_index)
 
     def handle(self, *args, **options):
         # Check to see if MovieIndexPage exists

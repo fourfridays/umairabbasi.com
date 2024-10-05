@@ -125,13 +125,7 @@ class Command(BaseCommand):
             ),
             "url": tv.url,
         }
-        save_resp = client.save_object(index_name=index_name, body=tv_index)
-
-        # Wait until indexing is done
-        client.wait_for_task(
-            index_name=index_name,
-            task_id=save_resp.task_id,
-        )
+        client.save_object(index_name=index_name, body=tv_index)
 
     def handle(self, *args, **options):
         # Check to see if TvIndexPage exists
@@ -201,5 +195,4 @@ class Command(BaseCommand):
                     self.get_poster(tv, collection)
 
                 # Index the movie if not debug
-                if not DEBUG:
-                    self.index_tv(tv)
+                self.index_tv(tv)
