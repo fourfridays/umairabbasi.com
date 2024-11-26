@@ -15,11 +15,8 @@ from io import BytesIO
 
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s %(levelname)s %(message)s',
-    handlers=[
-        logging.StreamHandler(),
-        logging.FileHandler('pull_movies.log')
-    ]
+    format="%(asctime)s %(levelname)s %(message)s",
+    handlers=[logging.StreamHandler(), logging.FileHandler("pull_movies.log")],
 )
 
 
@@ -130,9 +127,7 @@ class Command(BaseCommand):
             "rating": movie.rating,
             "poster": movie.poster,
             "genre": list(movie.genre.values_list("name", flat=True)),
-            "cast": list(
-                movie.cast_set.values_list("cast_member__name", flat=True)
-            ),
+            "cast": list(movie.cast_set.values_list("cast_member__name", flat=True)),
             "url": movie.url,
         }
         client.save_object(index_name=index_name, body=movie_index)
@@ -205,12 +200,11 @@ class Command(BaseCommand):
                 # If no poster, get poster
                 if not movie.image:
                     self.get_poster(movie, collection)
-                
+
                 # Index the movie if not debug
                 if not settings.DEBUG:
                     self.index_movies(movie)
-        
+
         end = datetime.datetime.now()
         duration = end - now
         logging.info(f"Finished the pull_movies command: {end}. Duration: {duration}")
-
