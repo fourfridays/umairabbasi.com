@@ -208,3 +208,43 @@ WAGTAILEMBEDS_FINDERS = [{"class": "wagtail.embeds.finders.oembed"}]
 # wagtailcodeblock
 WAGTAIL_CODE_BLOCK_LINE_NUMBERS = False
 WAGTAIL_CODE_BLOCK_THEME = "tomorrow"
+
+# Logging configuration
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
+        },
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'info.log'),
+            'formatter': 'verbose',
+        },
+        'sentry': {
+            'level': 'ERROR',  # Capture errors and above to Sentry
+            'class': 'sentry_sdk.integrations.logging.EventHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console', 'file', 'sentry'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    },
+}
