@@ -15,11 +15,8 @@ from io import BytesIO
 
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s %(levelname)s %(message)s',
-    handlers=[
-        logging.StreamHandler(),
-        logging.FileHandler('pull_tv.log')
-    ]
+    format="%(asctime)s %(levelname)s %(message)s",
+    handlers=[logging.StreamHandler(), logging.FileHandler("pull_tv.log")],
 )
 
 
@@ -130,9 +127,7 @@ class Command(BaseCommand):
             "rating": tv.rating,
             "poster": tv.poster,
             "genre": list(tv.genre.values_list("name", flat=True)),
-            "cast": list(
-                tv.tvcast_set.values_list("cast_member__name", flat=True)
-            ),
+            "cast": list(tv.tvcast_set.values_list("cast_member__name", flat=True)),
             "url": tv.url,
         }
         client.save_object(index_name=index_name, body=tv_index)
@@ -209,7 +204,7 @@ class Command(BaseCommand):
                 # Index the movie if not debug
                 if not settings.DEBUG:
                     self.index_tv(tv)
-                    
+
         end = datetime.datetime.now()
         duration = end - now
         logging.info(f"Finished the pull_tv command: {end}. Duration: {duration}")
