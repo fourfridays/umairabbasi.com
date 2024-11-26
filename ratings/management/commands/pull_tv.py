@@ -1,7 +1,6 @@
-import datetime, os, pathlib, requests, time
+import datetime, logging, os, pathlib, requests, time
 
-from settings import DEBUG
-
+from django.conf import settings
 from django.core.management.base import BaseCommand
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.core.files.images import ImageFile
@@ -14,10 +13,20 @@ from ratings.models import TvCast, TvIndexPage, TvPage, TvGenre, People
 
 from io import BytesIO
 
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s %(levelname)s %(message)s',
+    handlers=[
+        logging.StreamHandler(),
+        logging.FileHandler('pull_tv.log')
+    ]
+)
+
 
 class Command(BaseCommand):
     def save_media(self, media, tv_index_page, poster_size):
         try:
+            logging.info(f"Saving media: {media['name']}")
             child_page = TvPage(
                 tv_id=media["id"],
                 title=media["name"],
@@ -37,6 +46,7 @@ class Command(BaseCommand):
             child_page.genre.set(media["genre_ids"])
 
             child_page.save()
+            logging.info(f"Media saved successfully: {media['name']}")
 
         except ValidationError:
             media_page = TvPage.objects.get(tv_id=media["id"])
@@ -128,6 +138,8 @@ class Command(BaseCommand):
         client.save_object(index_name=index_name, body=tv_index)
 
     def handle(self, *args, **options):
+        now = datetime.datetime.now()
+        logging.info(f"Starting the pull_tv command: {now}")
         # Check to see if TvIndexPage exists
         tv_index_page = TvIndexPage.objects.live().public().get()
 
@@ -195,4 +207,9 @@ class Command(BaseCommand):
                     self.get_poster(tv, collection)
 
                 # Index the movie if not debug
-                self.index_tv(tv)
+                if not settings.DEBUG:
+                    self.index_tv(tv)
+                    
+        end = datetime.datetime.now()
+        duration = end - now
+        logging.info(f"Finished the pull_tv command: {end}. Duration: {duration}")
