@@ -15,7 +15,6 @@ INSTALLED_APPS = [
     "ratings",
     "taxonomy",
     "wagtailcodeblock",
-
     "wagtail.contrib.table_block",
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
@@ -31,7 +30,6 @@ INSTALLED_APPS = [
     "wagtail",
     "modelcluster",
     "taggit",
-
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -112,14 +110,12 @@ TEMPLATES = [
 ]
 
 # Authentication Backends
-AUTHENTICATION_BACKENDS = (
-    "django.contrib.auth.backends.ModelBackend",
-)
+AUTHENTICATION_BACKENDS = ("django.contrib.auth.backends.ModelBackend",)
 
 # Search Backends
 WAGTAILSEARCH_BACKENDS = {
-    'default': {
-        'BACKEND': 'wagtail.search.backends.database',
+    "default": {
+        "BACKEND": "wagtail.search.backends.database",
     }
 }
 
@@ -127,11 +123,13 @@ WSGI_APPLICATION = "wsgi.application"
 
 DATABASE_URL = os.environ.get("DATABASE_URL", "sqlite://:memory:")
 
-DATABASES = {"default": dj_database_url.config(
-    default=DATABASE_URL,
-    conn_max_age=0,
-    conn_health_checks=False,
-)}
+DATABASES = {
+    "default": dj_database_url.config(
+        default=DATABASE_URL,
+        conn_max_age=0,
+        conn_health_checks=False,
+    )
+}
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -211,40 +209,40 @@ WAGTAIL_CODE_BLOCK_THEME = "tomorrow"
 
 # Logging configuration
 LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format': '{levelname} {asctime} {module} {message}',
-            'style': '{',
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "{levelname} {asctime} {module} {message}",
+            "style": "{",
         },
-        'simple': {
-            'format': '{levelname} {message}',
-            'style': '{',
-        },
-    },
-    'handlers': {
-        'console': {
-            'level': 'INFO',
-            'class': 'logging.StreamHandler',
-            'formatter': 'simple',
-        },
-        'file': {
-            'level': 'INFO',
-            'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR, 'info.log'),
-            'formatter': 'verbose',
-        },
-        'sentry': {
-            'level': 'ERROR',  # Capture errors and above to Sentry
-            'class': 'sentry_sdk.integrations.logging.EventHandler',
+        "simple": {
+            "format": "{levelname} {message}",
+            "style": "{",
         },
     },
-    'loggers': {
-        'django': {
-            'handlers': ['console', 'file', 'sentry'],
-            'level': 'INFO',
-            'propagate': True,
+    "handlers": {
+        "console": {
+            "level": "INFO",
+            "class": "logging.StreamHandler",
+            "formatter": "simple",
+        },
+        "file": {
+            "level": "INFO",
+            "class": "logging.FileHandler",
+            "filename": os.path.join(BASE_DIR, "info.log"),
+            "formatter": "verbose",
+        },
+        "sentry": {
+            "level": "ERROR",  # Capture errors and above to Sentry
+            "class": "sentry_sdk.integrations.logging.EventHandler",
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console", "file", "sentry"],
+            "level": "INFO",
+            "propagate": True,
         },
     },
 }
