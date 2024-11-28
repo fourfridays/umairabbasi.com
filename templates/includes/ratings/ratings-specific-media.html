@@ -1,7 +1,7 @@
 {% load wagtailimages_tags %}
         <div class="row poster-bg p-4 rounded">
             <div class="col-12 col-md-4">
-                {% srcset_image page.image original format-{avif,webp,jpeg} class="img-fluid rounded border border-white border-4" %}
+                {% srcset_image page.image original format-{webp,jpeg} class="img-fluid rounded border border-white border-4" %}
             </div>
             <div class="col-12 col-md-8">
                 <h1 class="text-white mb-1"><small>{{ page.title }}</small></h1>
