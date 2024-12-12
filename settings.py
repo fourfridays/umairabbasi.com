@@ -149,7 +149,7 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = "en-us"
 USE_I18N = True
 USE_TZ = True
-TIME_ZONE = "America/New_York"
+TIME_ZONE = "UTC"
 
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
