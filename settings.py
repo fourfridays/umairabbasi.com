@@ -1,7 +1,6 @@
 from pathlib import Path
 import os
 import dj_database_url
-from django_storage_url import dsn_configured_storage_class
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -13,6 +12,7 @@ INSTALLED_APPS = [
     "microblog",
     "page",
     "ratings",
+    "storages",
     "taxonomy",
     "wagtailcodeblock",
     "wagtail.contrib.table_block",
@@ -162,21 +162,34 @@ STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-# Media files
-# DEFAULT_FILE_STORAGE is configured using DEFAULT_STORAGE_DSN
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_URL = "/media/"
 
-# read the setting value from the environment variable
-DEFAULT_STORAGE_DSN = os.environ.get("DEFAULT_STORAGE_DSN")
+STORAGE_BACKEND = "django.core.files.storage.FileSystemStorage"
 
-# dsn_configured_storage_class() requires the name of the setting
-DefaultStorageClass = dsn_configured_storage_class("DEFAULT_STORAGE_DSN")
+if DEBUG is False:
+    # AWS S3 storage configuration
+    AWS_STORAGE_BUCKET_NAME = os.environ.get('DEFAULT_STORAGE_BUCKET', '')
+    AWS_ACCESS_KEY_ID = os.environ.get('DEFAULT_STORAGE_ACCESS_KEY_ID', '')
+    AWS_SECRET_ACCESS_KEY = os.environ.get('DEFAULT_STORAGE_SECRET_ACCESS_KEY', '')
+    AWS_S3_CUSTOM_DOMAIN = os.environ.get('DEFAULT_STORAGE_CUSTOM_DOMAIN', '')
+    AWS_REGION_NAME = os.environ.get('DEFAULT_STORAGE_REGION', '')
+    AWS_S3_OBJECT_PARAMETERS = {
+        'ACL': 'public-read',
+        'CacheControl': 'max-age=86400',
+    }
+    AWS_S3_FILE_OVERWRITE = False
 
-# Django's DEFAULT_FILE_STORAGE requires the class name
-DEFAULT_FILE_STORAGE = "settings.DefaultStorageClass"
+    STORAGE_BACKEND = "storages.backends.s3boto3.S3Boto3Storage"
 
-# only required for local file storage and serving, in development
-MEDIA_URL = "media/"
-MEDIA_ROOT = os.path.join("/data/media/")
+STORAGES = {
+    "default": {
+        "BACKEND": STORAGE_BACKEND,
+    },
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+}
 
 WAGTAIL_SITE_NAME = "Umair Abbasi"
 WAGTAILADMIN_BASE_URL = "https://umairabbasi.com/"
