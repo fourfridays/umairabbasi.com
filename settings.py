@@ -1,7 +1,7 @@
 from pathlib import Path
 import os
 import dj_database_url
-from django_storage_url import dsn_configured_storage_class
+from django_storage_url import get_storage
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -151,32 +151,54 @@ USE_I18N = True
 USE_TZ = True
 TIME_ZONE = "UTC"
 
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATICFILES_DIRS = ["static"]
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/4.0/howto/static-files/
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
 ]
 
-STATICFILES_DIRS = ["static"]
-
+staticfiles_backend = "django.contrib.staticfiles.storage.StaticFilesStorage"
 STATIC_URL = "/static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-
-# Media files
-# DEFAULT_FILE_STORAGE is configured using DEFAULT_STORAGE_DSN
 
 # read the setting value from the environment variable
 DEFAULT_STORAGE_DSN = os.environ.get("DEFAULT_STORAGE_DSN")
+s3_storage = get_storage(DEFAULT_STORAGE_DSN)
 
-# dsn_configured_storage_class() requires the name of the setting
-DefaultStorageClass = dsn_configured_storage_class("DEFAULT_STORAGE_DSN")
+AWS_S3_ACCESS_KEY_ID = s3_storage.access_key
+AWS_S3_SECRET_ACCESS_KEY = s3_storage.secret_key
+AWS_STORAGE_BUCKET_NAME = s3_storage.bucket_name
+AWS_S3_CUSTOM_DOMAIN = s3_storage.custom_domain
+AWS_S3_REGION_NAME = s3_storage.region_name
+AWS_S3_OBJECT_PARAMETERS = s3_storage.object_parameters
+AWS_S3_FILE_OVERWRITE = False
+AWS_IS_GZIPPED = s3_storage.gzip
 
-# Django's DEFAULT_FILE_STORAGE requires the class name
-DEFAULT_FILE_STORAGE = "settings.DefaultStorageClass"
+# Default storage settings, with the staticfiles storage updated.
+# See https://docs.djangoproject.com/en/5.1/ref/settings/#std-setting-STORAGES
+STORAGE_BACKEND = "django.core.files.storage.FileSystemStorage"
+
+if AWS_S3_SECRET_ACCESS_KEY:
+    STORAGE_BACKEND = "storages.backends.s3boto3.S3Boto3Storage"
 
 # only required for local file storage and serving, in development
 MEDIA_URL = "media/"
 MEDIA_ROOT = os.path.join("/data/media/")
+
+STORAGES = {
+    "default": {
+        "BACKEND": STORAGE_BACKEND,
+    },
+    # ManifestStaticFilesStorage is recommended in production, to prevent
+    # outdated JavaScript / CSS assets being served from cache
+    # See https://docs.djangoproject.com/en/5.1/ref/contrib/staticfiles/#manifeststaticfilesstorage
+    "staticfiles": {
+        "BACKEND": staticfiles_backend,
+    },
+}
 
 WAGTAIL_SITE_NAME = "Umair Abbasi"
 WAGTAILADMIN_BASE_URL = "https://umairabbasi.com/"
