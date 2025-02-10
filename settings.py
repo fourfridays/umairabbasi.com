@@ -166,6 +166,7 @@ STATIC_URL = "/static/"
 
 # read the setting value from the environment variable
 DEFAULT_STORAGE_DSN = os.environ.get("DEFAULT_STORAGE_DSN")
+s3_storage = None
 if DEFAULT_STORAGE_DSN:
     s3_storage = get_storage(DEFAULT_STORAGE_DSN)
 
