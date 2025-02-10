@@ -166,7 +166,8 @@ STATIC_URL = "/static/"
 
 # read the setting value from the environment variable
 DEFAULT_STORAGE_DSN = os.environ.get("DEFAULT_STORAGE_DSN")
-s3_storage = get_storage(DEFAULT_STORAGE_DSN)
+if DEFAULT_STORAGE_DSN:
+    s3_storage = get_storage(DEFAULT_STORAGE_DSN)
 
 AWS_S3_ACCESS_KEY_ID = s3_storage.access_key
 AWS_S3_SECRET_ACCESS_KEY = s3_storage.secret_key
