@@ -169,15 +169,14 @@ DEFAULT_STORAGE_DSN = os.environ.get("DEFAULT_STORAGE_DSN")
 s3_storage = None
 if DEFAULT_STORAGE_DSN:
     s3_storage = get_storage(DEFAULT_STORAGE_DSN)
-
-AWS_S3_ACCESS_KEY_ID = s3_storage.access_key
-AWS_S3_SECRET_ACCESS_KEY = s3_storage.secret_key
-AWS_STORAGE_BUCKET_NAME = s3_storage.bucket_name
-AWS_S3_CUSTOM_DOMAIN = s3_storage.custom_domain
-AWS_S3_REGION_NAME = s3_storage.region_name
-AWS_S3_OBJECT_PARAMETERS = s3_storage.object_parameters
-AWS_S3_FILE_OVERWRITE = False
-AWS_IS_GZIPPED = s3_storage.gzip
+    AWS_S3_ACCESS_KEY_ID = s3_storage.access_key
+    AWS_S3_SECRET_ACCESS_KEY = s3_storage.secret_key
+    AWS_STORAGE_BUCKET_NAME = s3_storage.bucket_name
+    AWS_S3_CUSTOM_DOMAIN = s3_storage.custom_domain
+    AWS_S3_REGION_NAME = s3_storage.region_name
+    AWS_S3_OBJECT_PARAMETERS = s3_storage.object_parameters
+    AWS_S3_FILE_OVERWRITE = False
+    AWS_IS_GZIPPED = s3_storage.gzip
 
 # Default storage settings, with the staticfiles storage updated.
 # See https://docs.djangoproject.com/en/5.1/ref/settings/#std-setting-STORAGES
