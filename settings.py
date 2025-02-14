@@ -76,7 +76,7 @@ ROOT_URLCONF = "urls"
 SECRET_KEY = os.environ.get("SECRET_KEY", "<a string of random characters>")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get("DJANGO_DEBUG", "False") == "True"
+DEBUG = os.environ.get("DEBUG", "False") == "True"
 
 DIVIO_DOMAIN = os.environ.get("DOMAIN", "")
 DIVIO_DOMAIN_ALIASES = [
@@ -160,7 +160,6 @@ STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
 ]
 
-staticfiles_backend = "django.contrib.staticfiles.storage.StaticFilesStorage"
 STATIC_URL = "/static/"
 
 # read the setting value from the environment variable
@@ -169,18 +168,23 @@ DEFAULT_STORAGE_DSN = os.environ.get(
     "file:///data/media/?url=%2Fmedia%2F"
 )
 
+# AWS S3 storage configuration
+AWS_STORAGE_BUCKET_NAME = os.environ.get('DEFAULT_STORAGE_BUCKET', '')
+AWS_ACCESS_KEY_ID = os.environ.get('DEFAULT_STORAGE_ACCESS_KEY_ID', '')
+AWS_SECRET_ACCESS_KEY = os.environ.get('DEFAULT_STORAGE_SECRET_ACCESS_KEY', '')
+AWS_S3_CUSTOM_DOMAIN = os.environ.get('DEFAULT_STORAGE_CUSTOM_DOMAIN', '')
+AWS_S3_REGION_NAME = os.environ.get('DEFAULT_STORAGE_REGION', '')
+AWS_S3_OBJECT_PARAMETERS = {
+    'ACL': 'public-read',
+    'CacheControl': 'max-age=86400',
+}
+AWS_S3_FILE_OVERWRITE = False
+
+# Default storage settings, with the staticfiles storage updated.
+# See https://docs.djangoproject.com/en/5.1/ref/settings/#std-setting-STORAGES
 STORAGE_BACKEND = "django.core.files.storage.FileSystemStorage"
-from django_storage_url import get_storage
-s3_storage = get_storage(DEFAULT_STORAGE_DSN)
-if not "/data/media/" in s3_storage.location:
-    AWS_S3_ACCESS_KEY_ID = s3_storage.access_key
-    AWS_S3_SECRET_ACCESS_KEY = s3_storage.secret_key
-    AWS_STORAGE_BUCKET_NAME = s3_storage.bucket_name
-    AWS_S3_CUSTOM_DOMAIN = s3_storage.custom_domain
-    AWS_S3_REGION_NAME = s3_storage.region_name
-    AWS_S3_OBJECT_PARAMETERS = s3_storage.object_parameters
-    AWS_S3_FILE_OVERWRITE = False
-    AWS_IS_GZIPPED = s3_storage.gzip
+
+if AWS_SECRET_ACCESS_KEY:
     STORAGE_BACKEND = "storages.backends.s3boto3.S3Boto3Storage"
 
 # only required for local file storage and serving, in development
@@ -195,7 +199,7 @@ STORAGES = {
     # outdated JavaScript / CSS assets being served from cache
     # See https://docs.djangoproject.com/en/5.1/ref/contrib/staticfiles/#manifeststaticfilesstorage
     "staticfiles": {
-        "BACKEND": staticfiles_backend,
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
     },
 }
 
