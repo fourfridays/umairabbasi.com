@@ -172,7 +172,7 @@ DEFAULT_STORAGE_DSN = os.environ.get(
 STORAGE_BACKEND = "django.core.files.storage.FileSystemStorage"
 from django_storage_url import get_storage
 s3_storage = get_storage(DEFAULT_STORAGE_DSN)
-if not "/data/media/" in s3_storage.__dict__["_location"]:
+if not "/data/media/" in s3_storage._location:
     AWS_S3_ACCESS_KEY_ID = s3_storage.access_key
     AWS_S3_SECRET_ACCESS_KEY = s3_storage.secret_key
     AWS_STORAGE_BUCKET_NAME = s3_storage.bucket_name
