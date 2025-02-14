@@ -1,7 +1,6 @@
 from pathlib import Path
 import os
 import dj_database_url
-from django_storage_url import get_storage
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -165,12 +164,15 @@ staticfiles_backend = "django.contrib.staticfiles.storage.StaticFilesStorage"
 STATIC_URL = "/static/"
 
 # read the setting value from the environment variable
-DEFAULT_STORAGE_DSN = os.environ.get("DEFAULT_STORAGE_DSN")
+DEFAULT_STORAGE_DSN = os.environ.get(
+    "DEFAULT_STORAGE_DSN",
+    "file:///data/media/?url=%2Fmedia%2F"
+)
 
-if DEBUG:
-    STORAGE_BACKEND = "django.core.files.storage.FileSystemStorage"
-else:
-    s3_storage = get_storage(DEFAULT_STORAGE_DSN)
+STORAGE_BACKEND = "django.core.files.storage.FileSystemStorage"
+from django_storage_url import get_storage
+s3_storage = get_storage(DEFAULT_STORAGE_DSN)
+if not "/data/media/" in s3_storage.__dict__["_location"]:
     AWS_S3_ACCESS_KEY_ID = s3_storage.access_key
     AWS_S3_SECRET_ACCESS_KEY = s3_storage.secret_key
     AWS_STORAGE_BUCKET_NAME = s3_storage.bucket_name
