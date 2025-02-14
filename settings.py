@@ -77,7 +77,7 @@ ROOT_URLCONF = "urls"
 SECRET_KEY = os.environ.get("SECRET_KEY", "<a string of random characters>")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get("DJANGO_DEBUG") == "True"
+DEBUG = os.environ.get("DEBUG", True)
 
 DIVIO_DOMAIN = os.environ.get("DOMAIN", "")
 DIVIO_DOMAIN_ALIASES = [
@@ -166,8 +166,10 @@ STATIC_URL = "/static/"
 
 # read the setting value from the environment variable
 DEFAULT_STORAGE_DSN = os.environ.get("DEFAULT_STORAGE_DSN")
-s3_storage = None
-if DEFAULT_STORAGE_DSN:
+
+if DEBUG:
+    STORAGE_BACKEND = "django.core.files.storage.FileSystemStorage"
+else:
     s3_storage = get_storage(DEFAULT_STORAGE_DSN)
     AWS_S3_ACCESS_KEY_ID = s3_storage.access_key
     AWS_S3_SECRET_ACCESS_KEY = s3_storage.secret_key
@@ -177,12 +179,6 @@ if DEFAULT_STORAGE_DSN:
     AWS_S3_OBJECT_PARAMETERS = s3_storage.object_parameters
     AWS_S3_FILE_OVERWRITE = False
     AWS_IS_GZIPPED = s3_storage.gzip
-
-# Default storage settings, with the staticfiles storage updated.
-# See https://docs.djangoproject.com/en/5.1/ref/settings/#std-setting-STORAGES
-STORAGE_BACKEND = "django.core.files.storage.FileSystemStorage"
-
-if AWS_S3_SECRET_ACCESS_KEY:
     STORAGE_BACKEND = "storages.backends.s3boto3.S3Boto3Storage"
 
 # only required for local file storage and serving, in development
