@@ -2,7 +2,7 @@ import os
 import dj_database_url
 
 from pathlib import Path
-from urllib.parse import urlparse
+from urllib.parse import urlparse, parse_qs
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -173,8 +173,8 @@ DEFAULT_STORAGE_DSN = os.environ.get(
 def parse_s3_url(s3_url):
     parsed_url = urlparse(s3_url)
 
-    # Extracting credentials (if present)
-    if '@' in s3_url:
+    # Extract credentials (if present)
+    if '@' in parsed_url.netloc:
         auth, netloc = parsed_url.netloc.split('@')
         access_key, secret_key = auth.split(':')
     else:
@@ -182,24 +182,19 @@ def parse_s3_url(s3_url):
         netloc = parsed_url.netloc
 
     # Extract bucket and domain
-    domain_parts = netloc.split('.')
-    if "s3" in domain_parts:
-        bucket_name = domain_parts[0]  # e.g., bucket_name.s3.amazonaws.com
-        domain = ".".join(domain_parts[1:])
-    else:
-        bucket_name = parsed_url.path.split('/')[1]  # e.g., https://s3.amazonaws.com/bucket_name/
-        domain = netloc
+    domain_parts = netloc.split('.s3.amazonaws.com')
+    bucket_name = domain_parts[0] if len(domain_parts) > 1 else None
+    domain = "s3.amazonaws.com" if len(domain_parts) > 1 else netloc
 
-    # Extract object path (if present)
-    path_parts = parsed_url.path.lstrip('/').split('/')
-    object_path = '/'.join(path_parts[1:]) if len(path_parts) > 1 else ""
+    # Extract query parameters
+    query_params = parse_qs(parsed_url.query)
 
     return {
         "access_key": access_key,
         "secret_key": secret_key,
         "bucket_name": bucket_name,
         "domain": domain,
-        "object_path": object_path
+        "query_params": query_params
     }
 
 s3_url = DEFAULT_STORAGE_DSN
@@ -211,7 +206,6 @@ if parsed_result["access_key"] and parsed_result["secret_key"]:
     AWS_S3_SECRET_ACCESS_KEY = parsed_result.get("secret_key")
     AWS_STORAGE_BUCKET_NAME = parsed_result.get("bucket_name")
     AWS_S3_CUSTOM_DOMAIN = parsed_result.get("domain")
-    AWS_S3_FILE_OVERWRITE = False
     AWS_S3_FILE_OVERWRITE = False
 else:
     STORAGE_BACKEND = "django.core.files.storage.FileSystemStorage"
