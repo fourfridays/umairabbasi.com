@@ -1,6 +1,8 @@
-from pathlib import Path
 import os
 import dj_database_url
+
+from pathlib import Path
+from urllib.parse import urlparse
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -168,18 +170,48 @@ DEFAULT_STORAGE_DSN = os.environ.get(
     "file:///data/media/?url=%2Fmedia%2F"
 )
 
-from django_storage_url import get_storage
-s3_storage = get_storage(DEFAULT_STORAGE_DSN)
-if not "/data/media/" in s3_storage.location:
+def parse_s3_url(s3_url):
+    parsed_url = urlparse(s3_url)
+
+    # Extracting credentials (if present)
+    if '@' in s3_url:
+        auth, netloc = parsed_url.netloc.split('@')
+        access_key, secret_key = auth.split(':')
+    else:
+        access_key = secret_key = None
+        netloc = parsed_url.netloc
+
+    # Extract bucket and domain
+    domain_parts = netloc.split('.')
+    if "s3" in domain_parts:
+        bucket_name = domain_parts[0]  # e.g., bucket_name.s3.amazonaws.com
+        domain = ".".join(domain_parts[1:])
+    else:
+        bucket_name = parsed_url.path.split('/')[1]  # e.g., https://s3.amazonaws.com/bucket_name/
+        domain = netloc
+
+    # Extract object path (if present)
+    path_parts = parsed_url.path.lstrip('/').split('/')
+    object_path = '/'.join(path_parts[1:]) if len(path_parts) > 1 else ""
+
+    return {
+        "access_key": access_key,
+        "secret_key": secret_key,
+        "bucket_name": bucket_name,
+        "domain": domain,
+        "object_path": object_path
+    }
+
+s3_url = DEFAULT_STORAGE_DSN
+parsed_result = parse_s3_url(s3_url)
+
+if parsed_result["access_key"] and parsed_result["secret_key"]:
     STORAGE_BACKEND = "storages.backends.s3boto3.S3Boto3Storage"
-    AWS_S3_ACCESS_KEY_ID = s3_storage.access_key if s3_storage.access_key else ""
-    AWS_S3_SECRET_ACCESS_KEY = s3_storage.secret_key if s3_storage.secret_key else ""
-    AWS_STORAGE_BUCKET_NAME = s3_storage.bucket_name if s3_storage.bucket_name else ""
-    AWS_S3_CUSTOM_DOMAIN = s3_storage.custom_domain if s3_storage.custom_domain else ""
-    AWS_S3_REGION_NAME = s3_storage.region_name if s3_storage.region_name else ""
-    AWS_S3_OBJECT_PARAMETERS = s3_storage.object_parameters if s3_storage.object_parameters else {}
+    AWS_S3_ACCESS_KEY_ID = parsed_result.get("access_key")
+    AWS_S3_SECRET_ACCESS_KEY = parsed_result.get("secret_key")
+    AWS_STORAGE_BUCKET_NAME = parsed_result.get("bucket_name")
+    AWS_S3_CUSTOM_DOMAIN = parsed_result.get("domain")
     AWS_S3_FILE_OVERWRITE = False
-    AWS_IS_GZIPPED = s3_storage.gzip if s3_storage.gzip else False
     AWS_S3_FILE_OVERWRITE = False
 else:
     STORAGE_BACKEND = "django.core.files.storage.FileSystemStorage"
