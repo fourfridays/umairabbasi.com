@@ -206,7 +206,6 @@ if parsed_result["access_key"] and parsed_result["secret_key"]:
     AWS_S3_SECRET_ACCESS_KEY = parsed_result.get("secret_key")
     AWS_STORAGE_BUCKET_NAME = parsed_result.get("bucket_name")
     AWS_CUSTOM_DOMAIN = AWS_STORAGE_BUCKET_NAME
-    AWS_S3_ENDPOINT_URL = parsed_result.get("domain")
     AWS_DEFAULT_ACL = "public-read"
     AWS_S3_FILE_OVERWRITE = True
     AWS_QUERYSTRING_AUTH = False
