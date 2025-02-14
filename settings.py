@@ -171,6 +171,7 @@ DEFAULT_STORAGE_DSN = os.environ.get(
 from django_storage_url import get_storage
 s3_storage = get_storage(DEFAULT_STORAGE_DSN)
 if not "/data/media/" in s3_storage.location:
+    STORAGE_BACKEND = "storages.backends.s3boto3.S3Boto3Storage"
     AWS_S3_ACCESS_KEY_ID = s3_storage.access_key if s3_storage.access_key else ""
     AWS_S3_SECRET_ACCESS_KEY = s3_storage.secret_key if s3_storage.secret_key else ""
     AWS_STORAGE_BUCKET_NAME = s3_storage.bucket_name if s3_storage.bucket_name else ""
@@ -179,7 +180,6 @@ if not "/data/media/" in s3_storage.location:
     AWS_S3_OBJECT_PARAMETERS = s3_storage.object_parameters if s3_storage.object_parameters else {}
     AWS_S3_FILE_OVERWRITE = False
     AWS_IS_GZIPPED = s3_storage.gzip if s3_storage.gzip else False
-    STORAGE_BACKEND = "storages.backends.s3boto3.S3Boto3Storage"
     AWS_S3_FILE_OVERWRITE = False
 else:
     STORAGE_BACKEND = "django.core.files.storage.FileSystemStorage"
