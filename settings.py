@@ -186,10 +186,10 @@ STORAGE_BACKEND = "django.core.files.storage.FileSystemStorage"
 
 if AWS_SECRET_ACCESS_KEY:
     STORAGE_BACKEND = "storages.backends.s3boto3.S3Boto3Storage"
-
-# only required for local file storage and serving, in development
-MEDIA_URL = "media/"
-MEDIA_ROOT = os.path.join("/data/media/")
+else:
+    # only required for local file storage and serving, in development
+    MEDIA_URL = "media/"
+    MEDIA_ROOT = os.path.join("/data/media/")
 
 STORAGES = {
     "default": {
