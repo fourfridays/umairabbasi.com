@@ -191,7 +191,7 @@ urllib3==1.26.15
     #   sentry-sdk
 uwsgi==2.0.28
     # via -r requirements.in
-wagtail==6.4
+wagtail==6.4.1
     # via
     #   -r requirements.in
     #   wagtailcodeblock
