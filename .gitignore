@@ -34,3 +34,4 @@ node_modules
 /grunt/dist/umairabbasi.js
 /grunt/dist/umairabbasi.css
 /.env-local
+/.vscode
