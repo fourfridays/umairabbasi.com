@@ -80,7 +80,6 @@ class BlogPage(Page):
         blank=True,
         on_delete=models.PROTECT,
         limit_choices_to=Node.get_blog_categories,
-        default="",
     )
     flickr_photoset_id = models.CharField(max_length=25, blank=True)
 
