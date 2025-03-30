@@ -79,7 +79,6 @@ class MicroBlogPage(Page):
         blank=True,
         on_delete=models.PROTECT,
         limit_choices_to=Node.get_micro_blog_categories,
-        default="",
     )
 
     content_panels = Page.content_panels + [
