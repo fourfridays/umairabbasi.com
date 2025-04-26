@@ -1,11 +1,10 @@
-@import '../node_modules/bootstrap/scss/bootstrap';
-
+@import "../node_modules/bootstrap/scss/bootstrap";
 
 body {
-    font-family: 'Inter', sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: 1.1rem;
-    color: rgba(246, 247, 238, 1.00);
-    background-color: rgba(17, 28, 42, 1.00);
+    color: rgba(246, 247, 238, 1);
+    background-color: rgba(17, 28, 42, 1);
 }
 
 h1,
@@ -14,8 +13,8 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: 'Oswald', sans-serif;
-    color: rgba(249, 181, 55, 1.00);
+    font-family: "Oswald", sans-serif;
+    color: rgba(249, 181, 55, 1);
 }
 
 h1 {
@@ -23,14 +22,13 @@ h1 {
 }
 
 a {
-    color: rgba(84, 193, 220, 1.00);
+    color: rgba(84, 193, 220, 1);
 }
 
 i {
-
     &.fa,
     &.fas {
-        color: rgba(111, 78, 188, 1.00);
+        color: rgba(111, 78, 188, 1);
     }
 }
 
@@ -38,19 +36,19 @@ i {
     background-color: #4e4d4a !important;
 }
 
-$dark-gray: #403F3C;
+$dark-gray: #403f3c;
 
 .bg-dark-gray {
     background-color: $dark-gray;
-    color: #E6E6E6;
+    color: #e6e6e6;
 
     &:hover {
-        background-color: #4E4D4A !important;
+        background-color: #4e4d4a !important;
     }
 }
 
 .bg-cobalt {
-    background-color: rgba(249, 181, 55, 1.00);
+    background-color: rgba(249, 181, 55, 1);
     color: #000000;
 }
 
@@ -117,8 +115,8 @@ figure img {
 }
 
 code {
-    color: rgba(246, 247, 238, 1.00);
-    background-color: rgba(23, 33, 52, 1.00);
+    color: rgba(246, 247, 238, 1);
+    background-color: rgba(23, 33, 52, 1);
     padding: 12px;
     display: block;
 }
@@ -131,7 +129,7 @@ code {
 .navbar {
     li {
         &.active {
-            &>a {
+            & > a {
                 background-color: #b94a48 !important;
             }
         }
@@ -142,7 +140,7 @@ code {
         color: #fff !important;
 
         &.navbar-brand {
-            font-family: 'Montserrat', sans-serif;
+            font-family: "Montserrat", sans-serif;
             font-size: 16px;
             background-color: #235789;
             color: #fdfffc;
@@ -175,7 +173,6 @@ code {
     border-color: #b94a48;
 }
 
-
 /* ==========================================================================
   CONTENT
    ========================================================================== */
@@ -206,7 +203,7 @@ code {
 ==============================*/
 .tv {
     .ais-Dropdown-button {
-        background-color: #E6E6E6;
+        background-color: #e6e6e6;
     }
 }
 .movies {
@@ -237,19 +234,17 @@ code {
     }
 }
 
-
 /* CODE BLOCK */
 code[class*="language-"],
 pre[class*="language-"] {
     font-size: 15px !important;
 }
 
-
 /* ==========================================================================
     FOOTER
    ========================================================================== */
 footer {
-    background-color: #403F3C;
+    background-color: #403f3c;
     overflow: hidden;
 
     div {
@@ -298,31 +293,31 @@ code {
 
     code {
         &.swatchFooterGrey {
-            background-color: #403F3C;
+            background-color: #403f3c;
             padding: 20px;
             color: #fff;
         }
 
         &.swatchDarkGrey {
-            background-color: #4E4D4A;
+            background-color: #4e4d4a;
             padding: 20px;
             color: #fff;
         }
 
         &.swatchDarkBlue {
-            background-color: #2B4E72;
+            background-color: #2b4e72;
             padding: 20px;
             color: #fff;
         }
 
         &.swatchBlue {
-            background-color: #2790B0;
+            background-color: #2790b0;
             padding: 20px;
             color: #fff;
         }
 
         &.swatchRed {
-            background-color: #B94A48;
+            background-color: #b94a48;
             padding: 20px;
             color: #fff;
         }
@@ -334,7 +329,7 @@ code {
         }
 
         &.swatchLightGrey {
-            background-color: #E6E6E6;
+            background-color: #e6e6e6;
             padding: 20px;
             color: #fff;
         }
@@ -346,10 +341,12 @@ code {
    ========================================================================== */
 
 /* Large desktop */
-@media (min-width: 1200px) {}
+@media (min-width: 1200px) {
+}
 
 /* Portrait tablet to landscape and desktop */
-@media (min-width: 768px) and (max-width: 979px) {}
+@media (min-width: 768px) and (max-width: 979px) {
+}
 
 /* Landscape phone to portrait tablet */
 @media (max-width: 767px) {
@@ -370,7 +367,6 @@ code {
 
 /* Landscape phones and down */
 @media (max-width: 480px) {
-
     /* ==========================================================================
   BLOG
    ========================================================================== */
