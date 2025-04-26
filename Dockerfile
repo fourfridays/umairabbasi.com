@@ -1,4 +1,4 @@
-FROM python:3.12.7-slim-bookworm
+FROM python:3.12.10-slim-bookworm
 
 RUN apt-get update \
      # lipq-dev for psycopg build
@@ -20,4 +20,4 @@ RUN python manage.py collectstatic --noinput
 
 EXPOSE 80
 
-CMD uwsgi --http=0.0.0.0:80 --module=wsgi --ignore-sigpipe --ignore-write-errors --disable-write-exception
+CMD ["uwsgi", "--http=0.0.0.0:80", "--module=wsgi", "--ignore-sigpipe", "--ignore-write-errors", "--disable-write-exception"]
