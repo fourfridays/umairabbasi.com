@@ -22,6 +22,7 @@ urlpatterns = [
     ),
     path("ratings/movies/", MovieIndexView.as_view(), name="movie-index"),
     path("ratings/tv/", TvIndexView.as_view(), name="tv-index"),
+    path("__debug__/", include("debug_toolbar.urls")),
     re_path(r"^sitemap\.xml$", sitemap),
     re_path(r"^admin/", include(wagtailadmin_urls)),
     re_path(r"^documents/", include(wagtaildocs_urls)),

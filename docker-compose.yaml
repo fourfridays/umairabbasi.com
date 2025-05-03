@@ -10,8 +10,6 @@ services:
       - ".:/app:rw"
       - "./data:/data:rw"
     command: python manage.py runserver 0.0.0.0:80
-    environment:
-      DEBUG: "True"
     env_file: .env-local
   db:
     image: postgres
