@@ -100,6 +100,12 @@ frozenlist==1.4.1
     #   aiosignal
 furl==2.1.3
     # via django-storage-url
+gevent==24.2.1
+    # via -r requirements.in
+greenlet==3.2.1
+    # via gevent
+gunicorn==22.0.0
+    # via -r requirements.in
 idna==3.4
     # via
     #   requests
@@ -120,6 +126,8 @@ openpyxl==3.1.2
     # via wagtail
 orderedmultidict==1.0.1
     # via furl
+packaging==25.0
+    # via gunicorn
 pillow==11.2.1
     # via
     #   -r requirements.in
@@ -188,8 +196,6 @@ urllib3==1.26.15
     #   django-anymail
     #   requests
     #   sentry-sdk
-uwsgi==2.0.29
-    # via -r requirements.in
 wagtail==6.4.1
     # via
     #   -r requirements.in
@@ -204,3 +210,10 @@ willow[heif]==1.8.0
     #   willow
 yarl==1.18.0
     # via aiohttp
+zope-event==5.0
+    # via gevent
+zope-interface==7.2
+    # via gevent
+
+# The following packages are considered to be unsafe in a requirements file:
+# setuptools
