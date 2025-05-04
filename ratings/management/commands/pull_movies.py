@@ -199,6 +199,7 @@ class Command(BaseCommand):
             for movie in movies:
                 # If no poster, get poster
                 if not movie.image:
+                    logging.info(f"Fetching poster for movie: {movie.title}")
                     self.get_poster(movie, collection)
 
                 # Index the movie if not debug
