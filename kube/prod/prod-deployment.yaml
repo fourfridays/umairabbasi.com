@@ -29,7 +29,7 @@ spec:
               memory: "256Mi"
             limits:
               ephemeral-storage: "4Gi"
-              memory: "512Mi"
+              memory: "1024Mi"
           envFrom:
           - secretRef:
               name: secret
