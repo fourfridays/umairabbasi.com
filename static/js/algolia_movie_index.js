@@ -61,7 +61,7 @@ search.addWidgets([
     instantsearch.widgets.currentRefinements({
         container: '#current-refinements',
         cssClasses: {
-            root: 'MyCustomCurrentRefinements',
+            root: 'MyCustomCurrentRefinements float-end',
             item: [
                 'bg-dark',
             ],
