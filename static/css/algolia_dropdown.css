@@ -1,4 +1,5 @@
 .ais-Dropdown-button {
+    color: white;
     border: 1px solid #d6d6e7;
     padding: 0.75rem 1.5rem;
     border-radius: 0.25rem;
@@ -12,6 +13,7 @@
 }
 
 .ais-Dropdown-button:hover {
+    color: black;
     background-color: #f5f5fa;
 }
 
