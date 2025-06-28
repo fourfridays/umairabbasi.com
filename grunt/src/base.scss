@@ -201,7 +201,7 @@ code {
 /*==============================
 =       MOVIES & TV Shows      =
 ==============================*/
-.movies {
+.movies, .movie-cast {
     background: linear-gradient(#b94a48, #235789);
 }
 
@@ -210,6 +210,7 @@ code {
 }
 
 .movies,
+.movie-cast,
 .tv {
     .poster-bg {
         background: rgba(0, 0, 0, 0.38);

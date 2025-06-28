@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+{% block body_class %}movie-cast{% endblock %}
+{% block title %}{{ page.title }}Media Starring {{ person.name }}, Ratings by Umair Abbasi{% endblock %}
+
+
+{% block content %}
+    <div class="container text-light p-4">
+        {% if movies %}
+            <div class="row mt-lg-1 mb-2">
+                <div class="col-12 text-center text-md-start">
+                    <h1 class="text-white">Movies Starring: {{ person.name }}</h1>
+                </div>
+            </div>
+            <hr class="mt-0"/>
+            {% include "includes/ratings/ratings-all-media.html" with media=movies %}
+        {% endif %}
+        {% if tv_shows %}
+            <div class="row mt-lg-1 mb-2">
+                <div class="col-12 text-center text-md-start">
+                    <h1 class="text-white">TV Shows Starring: {{ person.name }}</h1>
+                </div>
+            </div>
+            <hr class="mt-0"/>
+            {% include "includes/ratings/ratings-all-media.html" with media=tv_shows %}
+        {% endif %}
+    </div>
+{% endblock %}

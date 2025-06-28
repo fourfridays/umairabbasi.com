@@ -13,7 +13,7 @@
                 
                 <h2>Cast Members</h2>
                 {% for cast in cast_members %}
-                    <span class="badge text-bg-secondary rounded-0">{{ cast.cast_member }} as {{ cast.character }}</span>
+                    <span class="badge text-bg-secondary rounded-0"><a class="text-decoration-none text-white" href="{% url 'cast' people_id=cast.cast_member.id %}">{{ cast.cast_member }} as {{ cast.character }}</a></span>
                 {% endfor %}
             </div>
         </div>
