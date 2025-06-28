@@ -12018,7 +12018,7 @@ code {
 /*==============================
 =       MOVIES & TV Shows      =
 ==============================*/
-.movies {
+.movies, .movie-cast {
   background: linear-gradient(#b94a48, #235789);
 }
 
@@ -12027,10 +12027,12 @@ code {
 }
 
 .movies .poster-bg,
+.movie-cast .poster-bg,
 .tv .poster-bg {
   background: rgba(0, 0, 0, 0.38);
 }
 .movies form input#inlineMediaSearch,
+.movie-cast form input#inlineMediaSearch,
 .tv form input#inlineMediaSearch {
   font-size: 14px;
   width: 199.33px;
@@ -12038,6 +12040,7 @@ code {
   padding: 8px;
 }
 .movies form select#inlineFormRatingSelect,
+.movie-cast form select#inlineFormRatingSelect,
 .tv form select#inlineFormRatingSelect {
   font-size: 12px;
 }

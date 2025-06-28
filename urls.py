@@ -8,7 +8,7 @@ from wagtail import urls as wagtail_urls
 from wagtail.documents import urls as wagtaildocs_urls
 from wagtail.contrib.sitemaps.views import sitemap
 
-from ratings.views import MovieIndexView, TvIndexView
+from ratings.views import MovieIndexView, CastView, TvIndexView
 
 
 urlpatterns = [
@@ -21,6 +21,11 @@ urlpatterns = [
         ),
     ),
     path("ratings/movies/", MovieIndexView.as_view(), name="movie-index"),
+    path(
+        "ratings/cast/<int:people_id>/",
+        CastView.as_view(),
+        name="cast",
+    ),
     path("ratings/tv/", TvIndexView.as_view(), name="tv-index"),
     path("__debug__/", include("debug_toolbar.urls")),
     re_path(r"^sitemap\.xml$", sitemap),
