@@ -5,6 +5,7 @@ const searchClient = algoliasearch(algoliaAppId, algoliaApi);
 const search = instantsearch({
     indexName: 'movie_index',
     searchClient,
+    routing: true,
     insights: true,
 });
 
