@@ -1,0 +1,96 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: pull-movies-tv-cronjob-robust
+  namespace: umairabbasi
+spec:
+  # Run every 6 hours at minute 0
+  schedule: "0 */6 * * *"
+  
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 1
+  concurrencyPolicy: Forbid
+  startingDeadlineSeconds: 86400
+  
+  jobTemplate:
+    spec:
+      backoffLimit: 2
+      activeDeadlineSeconds: 14400
+      
+      template:
+        metadata:
+          labels:
+            app: pull-movies-tv-job-robust
+        spec:
+          restartPolicy: Never
+          
+          containers:
+          - name: pull-movies-tv-robust
+            image: ghcr.io/fourfridays/umairabbasi.com:latest
+            imagePullPolicy: Always
+            
+            command: ["/bin/bash"]
+            args:
+              - "-c"
+              - |
+                set -e
+                
+                # Function to log with timestamp
+                log() {
+                    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1"
+                }
+                
+                # Function to run command with error handling
+                run_command() {
+                    local cmd="$1"
+                    local description="$2"
+                    
+                    log "Starting $description..."
+                    
+                    if $cmd; then
+                        log "$description completed successfully"
+                        return 0
+                    else
+                        log "ERROR: $description failed with exit code $?"
+                        return 1
+                    fi
+                }
+                
+                log "=== Starting movie and TV pull job ==="
+                
+                # Run pull_movies first
+                run_command "python manage.py pull_movies" "pull_movies command"
+                
+                # Only run pull_tv if pull_movies succeeded
+                run_command "python manage.py pull_tv" "pull_tv command"
+                
+                log "=== All commands completed successfully ==="
+            
+            resources:
+              requests:
+                memory: "256Mi"
+                cpu: "100m"
+                ephemeral-storage: "1Gi"
+              limits:
+                memory: "512Mi"
+                cpu: "500m"
+                ephemeral-storage: "2Gi"
+            
+            envFrom:
+            - secretRef:
+                name: secret
+            - configMapRef:
+                name: config
+            
+            workingDir: /app
+            
+            # Optional: Mount volume for persistent logs
+            # volumeMounts:
+            # - name: logs
+            #   mountPath: /app/logs
+          
+          # Optional: Add volume for persistent logs
+          # volumes:
+          # - name: logs
+          #   persistentVolumeClaim:
+          #     claimName: cronjob-logs-pvc
