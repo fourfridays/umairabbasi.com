@@ -90,8 +90,6 @@ et-xmlfile==1.1.0
     # via openpyxl
 filetype==1.2.0
     # via willow
-flickrapi==2.4.0
-    # via -r requirements.in
 fontawesomefree==6.6.0
     # via -r requirements.in
 frozenlist==1.4.1

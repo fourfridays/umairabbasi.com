@@ -299,7 +299,3 @@ LOGGING = {
 }
 
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10_000
-
-FLICKR_API_KEY = os.getenv("FLICKR_API_KEY", default="")
-FLICKR_API_SECRET = os.getenv("FLICKR_API_SECRET", default="")
-FLICKR_API_USER = os.getenv("FLICKR_API_USER", default="")

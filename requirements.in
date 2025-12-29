@@ -16,5 +16,4 @@ wagtail==7.1.1
 whitenoise==6.11.0
 
 algoliasearch==4.29.0
-flickrapi==2.4.0
 wagtailcodeblock==1.29.0.2
